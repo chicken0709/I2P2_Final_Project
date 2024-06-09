@@ -4,7 +4,7 @@
 #include <utility>
 
 #include "UI/Animation/DirtyEffect.hpp"
-#include "Enemy/Enemy.hpp"
+#include "Zombie/Enemy.hpp"
 #include "Engine/Group.hpp"
 #include "Engine/IObject.hpp"
 #include "MissileBullet.hpp"

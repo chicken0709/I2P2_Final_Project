@@ -11,7 +11,7 @@
 
 #include "Engine/AudioHelper.hpp"
 #include "UI/Animation/DirtyEffect.hpp"
-#include "Enemy/Enemy.hpp"
+#include "Zombie/Enemy.hpp"
 #include "Engine/GameEngine.hpp"
 #include "Engine/Group.hpp"
 #include "UI/Component/Label.hpp"
@@ -20,12 +20,12 @@
 #include "Turret/MissileTurret.hpp"
 #include "Turret/NewTurret.hpp"
 #include "UI/Animation/Plane.hpp"
-#include "Enemy/PlaneEnemy.hpp"
+#include "Zombie/PlaneEnemy.hpp"
 #include "PlayScene.hpp"
 #include "Engine/Resources.hpp"
-#include "Enemy/SoldierEnemy.hpp"
-#include "Enemy/TankEnemy.hpp"
-#include "Enemy/TankEnemy2.hpp"
+#include "Zombie/SoldierEnemy.hpp"
+#include "Zombie/TankEnemy.hpp"
+#include "Zombie/TankEnemy2.hpp"
 #include "Turret/TurretButton.hpp"
 
 bool PlayScene::DebugMode = false;
