@@ -3,15 +3,15 @@
 #include "Engine/GameEngine.hpp"
 #include "Engine/IScene.hpp"
 #include "Scene/PlayScene.hpp"
-#include "TurretButton.hpp"
+#include "PlantButton.hpp"
 
-PlayScene* TurretButton::getPlayScene() {
+PlayScene* PlantButton::getPlayScene() {
 	return dynamic_cast<PlayScene*>(Engine::GameEngine::GetInstance().GetActiveScene());
 }
-TurretButton::TurretButton(std::string img, std::string imgIn, Engine::Sprite Base, Engine::Sprite Turret, float x, float y, int money) :
+PlantButton::PlantButton(std::string img, std::string imgIn, Engine::Sprite Base, Engine::Sprite Turret, float x, float y, int money) :
 	ImageButton(img, imgIn, x, y), money(money), Base(Base), Turret(Turret) {
 }
-void TurretButton::Update(float deltaTime) {
+void PlantButton::Update(float deltaTime) {
 	ImageButton::Update(deltaTime);
 	if (getPlayScene()->GetMoney() >= money) {
 		Enabled = true;
@@ -21,7 +21,7 @@ void TurretButton::Update(float deltaTime) {
 		Base.Tint = Turret.Tint = al_map_rgba(0, 0, 0, 160);
 	}
 }
-void TurretButton::Draw() const {
+void PlantButton::Draw() const {
 	ImageButton::Draw();
 	Base.Draw();
 	Turret.Draw();

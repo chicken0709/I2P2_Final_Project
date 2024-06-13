@@ -42,8 +42,8 @@ add_executable(2024_I2P2_Final_Project
         // Bullet
         Bullet/Bullet.cpp
         Bullet/Bullet.hpp
-        Bullet/FireBullet.cpp
-        Bullet/FireBullet.hpp
+        Bullet/BasicPea.cpp
+        Bullet/BasicPea.hpp
         Bullet/LaserBullet.cpp
         Bullet/LaserBullet.hpp
         Bullet/MissileBullet.cpp
@@ -70,8 +70,8 @@ add_executable(2024_I2P2_Final_Project
         UI/Component/Slider.hpp
 
         // Zombie
-        Zombie/Enemy.cpp
-        Zombie/Enemy.hpp
+        Zombie/Zombie.cpp
+        Zombie/Zombie.hpp
         Zombie/PlaneEnemy.cpp
         Zombie/PlaneEnemy.hpp
         Zombie/TankEnemy.cpp
@@ -81,19 +81,19 @@ add_executable(2024_I2P2_Final_Project
         Zombie/SoldierEnemy.cpp
         Zombie/SoldierEnemy.hpp
 
-        // Turret
-        Turret/LaserTurret.cpp
-        Turret/LaserTurret.hpp
-        Turret/NewTurret.cpp
-        Turret/NewTurret.hpp
-        Turret/MachineGunTurret.cpp
-        Turret/MachineGunTurret.hpp
-        Turret/MissileTurret.cpp
-        Turret/MissileTurret.hpp
-        Turret/Turret.cpp
-        Turret/Turret.hpp
-        Turret/TurretButton.cpp
-        Turret/TurretButton.hpp
+        // Plant
+        Plant/LaserTurret.cpp
+        Plant/LaserTurret.hpp
+        Plant/NewTurret.cpp
+        Plant/NewTurret.hpp
+        Plant/Peashooter.cpp
+        Plant/Peashooter.hpp
+        Plant/MissileTurret.cpp
+        Plant/MissileTurret.hpp
+        Plant/Plant.cpp
+        Plant/Plant.hpp
+        Plant/PlantButton.cpp
+        Plant/PlantButton.hpp
 
         // Scene
         Scene/LoseScene.cpp

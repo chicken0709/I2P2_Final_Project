@@ -9,7 +9,7 @@
 #include "Engine/IScene.hpp"
 #include "Engine/Point.hpp"
 
-class Turret;
+class Plant;
 namespace Engine {
 	class Group;
 	class Image;
@@ -55,7 +55,7 @@ public:
 	Engine::Label* UILives;
 	Engine::Image* imgTarget;
 	Engine::Sprite* dangerIndicator;
-	Turret* preview;
+	Plant* preview;
 	std::vector<std::vector<TileType>> mapState;
 	std::vector<std::vector<int>> mapDistance;
 	std::list<std::pair<int, float>> enemyWaveData;
@@ -79,6 +79,5 @@ public:
 	void UIBtnClicked(int id);
 	bool CheckSpaceValid(int x, int y);
 	std::vector<std::vector<int>> CalculateBFSDistance();
-	// void ModifyReadMapTiles();
 };
 #endif // PLAYSCENE_HPP

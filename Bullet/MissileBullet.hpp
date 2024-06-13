@@ -5,8 +5,8 @@
 
 #include "Bullet.hpp"
 
-class Enemy;
-class Turret;
+class Zombie;
+class Plant;
 namespace Engine {
 struct Point;
 }  // namespace Engine
@@ -16,8 +16,8 @@ protected:
 	const float rotateRadian = 2 * ALLEGRO_PI;
 	std::list<Bullet*>::iterator lockedBulletIterator;
 public:
-	explicit MissileBullet(Engine::Point position, Engine::Point forwardDirection, float rotation, Turret* parent);
+	explicit MissileBullet(Engine::Point position, Engine::Point forwardDirection, float rotation, Plant* parent);
 	void Update(float deltaTime) override;
-	void OnExplode(Enemy* enemy) override;
+	void OnExplode(Zombie* enemy) override;
 };
 #endif // MISSILEBULLET_HPP

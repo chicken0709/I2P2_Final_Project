@@ -1,11 +1,11 @@
 #ifndef LASERTURRET_HPP
 #define LASERTURRET_HPP
-#include "Turret.hpp"
+#include "Plant.hpp"
 
-class LaserTurret: public Turret {
+class LaserTurret: public Plant {
 public:
 	static const int Price;
     LaserTurret(float x, float y);
-    void CreateBullet() override;
+    void CreatePea() override;
 };
 #endif // LASERTURRET_HPP

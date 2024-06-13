@@ -1,11 +1,11 @@
 #ifndef MISSILETURRET_HPP
 #define MISSILETURRET_HPP
-#include "Turret.hpp"
+#include "Plant.hpp"
 
-class MissileTurret: public Turret {
+class MissileTurret: public Plant {
 public:
 	static const int Price;
     MissileTurret(float x, float y);
-    void CreateBullet() override;
+    void CreatePea() override;
 };
 #endif // MISSILETURRET_HPP

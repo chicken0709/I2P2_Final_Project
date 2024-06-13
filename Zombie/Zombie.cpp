@@ -8,19 +8,19 @@
 #include "Engine/AudioHelper.hpp"
 #include "Bullet/Bullet.hpp"
 #include "UI/Animation/DirtyEffect.hpp"
-#include "Enemy.hpp"
+#include "Zombie.hpp"
 #include "UI/Animation/ExplosionEffect.hpp"
 #include "Engine/GameEngine.hpp"
 #include "Engine/Group.hpp"
 #include "Engine/IScene.hpp"
 #include "Engine/LOG.hpp"
 #include "Scene/PlayScene.hpp"
-#include "Turret/Turret.hpp"
+#include "Plant/Plant.hpp"
 
-PlayScene* Enemy::getPlayScene() {
+PlayScene* Zombie::getPlayScene() {
 	return dynamic_cast<PlayScene*>(Engine::GameEngine::GetInstance().GetActiveScene());
 }
-void Enemy::OnExplode() {
+void Zombie::OnExplode() {
 	getPlayScene()->EffectGroup->AddNewObject(new ExplosionEffect(Position.x, Position.y));
 	std::random_device dev;
 	std::mt19937 rng(dev());
@@ -31,12 +31,12 @@ void Enemy::OnExplode() {
 		getPlayScene()->GroundEffectGroup->AddNewObject(new DirtyEffect("play/dirty-" + std::to_string(distId(rng)) + ".png", dist(rng), Position.x, Position.y));
 	}
 }
-Enemy::Enemy(std::string img, float x, float y, float radius, float speed, float hp, int money) :
+Zombie::Zombie(std::string img, float x, float y, float radius, float speed, float hp, int money) :
 	Engine::Sprite(img, x, y), speed(speed), hp(hp), money(money) {
 	CollisionRadius = radius;
 	reachEndTime = 0;
 }
-void Enemy::Hit(float damage) {
+void Zombie::Hit(float damage) {
 	hp -= damage;
     if(this->money == 75 && this->hp <= 75) this->speed = 100;
 	if (hp <= 0) {
@@ -51,7 +51,7 @@ void Enemy::Hit(float damage) {
 		AudioHelper::PlayAudio("explosion.wav");
 	}
 }
-void Enemy::UpdatePath(const std::vector<std::vector<int>>& mapDistance) {
+void Zombie::UpdatePath(const std::vector<std::vector<int>>& mapDistance) {
 	int x = static_cast<int>(floor(Position.x / PlayScene::BlockSize));
 	int y = static_cast<int>(floor(Position.y / PlayScene::BlockSize));
 	if (x < 0) x = 0;
@@ -84,7 +84,7 @@ void Enemy::UpdatePath(const std::vector<std::vector<int>>& mapDistance) {
 	}
 	path[0] = PlayScene::EndGridPoint;
 }
-void Enemy::Update(float deltaTime) {
+void Zombie::Update(float deltaTime) {
 	// Pre-calculate the velocity.
 	float remainSpeed = speed * deltaTime;
 	while (remainSpeed != 0) {
@@ -117,7 +117,7 @@ void Enemy::Update(float deltaTime) {
 	Rotation = atan2(Velocity.y, Velocity.x);
 	Sprite::Update(deltaTime);
 }
-void Enemy::Draw() const {
+void Zombie::Draw() const {
 	Sprite::Draw();
 	if (PlayScene::DebugMode) {
 		// Draw collision radius.
@@ -125,6 +125,6 @@ void Enemy::Draw() const {
 	}
 }
 
-void Enemy::UpdateSpeed() {
+void Zombie::UpdateSpeed() {
     speed = speed / 1.5;
 }

@@ -4,7 +4,7 @@
 
 #include "Engine/AudioHelper.hpp"
 #include "Engine/Collider.hpp"
-#include "Zombie/Enemy.hpp"
+#include "Zombie/Zombie.hpp"
 #include "Engine/GameEngine.hpp"
 #include "Engine/Group.hpp"
 #include "Engine/IObject.hpp"
@@ -70,7 +70,7 @@ void Plane::Update(float deltaTime) {
 		CollisionRadius = shockWaveRadius * scale;
 		// Check if overlap with enemy.
 		for (auto& it : getPlayScene()->EnemyGroup->GetObjects()) {
-			Enemy* enemy = dynamic_cast<Enemy*>(it);
+			Zombie* enemy = dynamic_cast<Zombie*>(it);
 			if (Engine::Collider::IsCircleOverlap(Position, CollisionRadius, enemy->Position, enemy->CollisionRadius))
 				enemy->Hit(INFINITY);
 		}

@@ -1,11 +1,11 @@
 #ifndef NEWTURRET_HPP
 #define NEWTURRET_HPP
-#include "Turret.hpp"
+#include "Plant.hpp"
 
-class NewTurret: public Turret {
+class NewTurret: public Plant {
 public:
 	static const int Price;
     NewTurret(float x, float y);
-    void CreateBullet() override;
+    void CreatePea() override;
 };
 #endif // NEWTURRET_HPP

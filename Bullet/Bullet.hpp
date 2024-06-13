@@ -4,9 +4,9 @@
 
 #include "Engine/Sprite.hpp"
 
-class Enemy;
+class Zombie;
 class PlayScene;
-class Turret;
+class Plant;
 namespace Engine {
 struct Point;
 }  // namespace Engine
@@ -15,12 +15,12 @@ class Bullet : public Engine::Sprite {
 protected:
 	float speed;
 	float damage;
-	Turret* parent;
+	Plant* parent;
 	PlayScene* getPlayScene();
-	virtual void OnExplode(Enemy* enemy);
+	virtual void OnExplode(Zombie* enemy);
 public:
-	Enemy* Target = nullptr;
-	explicit Bullet(std::string img, float speed, float damage, Engine::Point position, Engine::Point forwardDirection, float rotation, Turret* parent);
+	Zombie* Target = nullptr;
+	explicit Bullet(std::string img, float speed, float damage, Engine::Point position, Engine::Point forwardDirection, float rotation, Plant* parent);
 	void Update(float deltaTime) override;
 };
 #endif // BULLET_HPP

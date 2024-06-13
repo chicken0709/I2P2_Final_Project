@@ -4,24 +4,24 @@
 #include <utility>
 
 #include "UI/Animation/DirtyEffect.hpp"
-#include "Zombie/Enemy.hpp"
+#include "Zombie/Zombie.hpp"
 #include "Engine/Group.hpp"
 #include "Engine/IObject.hpp"
 #include "MissileBullet.hpp"
 #include "Scene/PlayScene.hpp"
 #include "Engine/Point.hpp"
 
-class Turret;
+class Plant;
 
-MissileBullet::MissileBullet(Engine::Point position, Engine::Point forwardDirection, float rotation, Turret* parent) :
+MissileBullet::MissileBullet(Engine::Point position, Engine::Point forwardDirection, float rotation, Plant* parent) :
 	Bullet("play/bullet-3.png", 100, 4, position, forwardDirection, rotation + ALLEGRO_PI / 2, parent) {
 }
 void MissileBullet::Update(float deltaTime) {
 	if (!Target) {
 		float minDistance = INFINITY;
-		Enemy* enemy = nullptr;
+		Zombie* enemy = nullptr;
 		for (auto& it : getPlayScene()->EnemyGroup->GetObjects()) {
-			Enemy* e = dynamic_cast<Enemy*>(it);
+			Zombie* e = dynamic_cast<Zombie*>(it);
 			float distance = (e->Position - Position).Magnitude();
 			if (distance < minDistance) {
 				minDistance = distance;
@@ -52,7 +52,7 @@ void MissileBullet::Update(float deltaTime) {
 	Rotation = atan2(Velocity.y, Velocity.x) + ALLEGRO_PI / 2;
 	Bullet::Update(deltaTime);
 }
-void MissileBullet::OnExplode(Enemy* enemy) {
+void MissileBullet::OnExplode(Zombie* enemy) {
 	Target->lockedBullets.erase(lockedBulletIterator);
 	std::random_device dev;
 	std::mt19937 rng(dev());
