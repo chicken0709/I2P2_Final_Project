@@ -35,7 +35,7 @@ void StageSelectScene::Initialize() {
     AddNewObject(new Engine::Label("Scoreboard", "pirulen.ttf", 36, halfW, halfH / 2 + 300, 0, 0, 0, 255, 0.5, 0.5));
 
     // Not safe if release resource while playing, however we only free while change scene, so it's fine.
-	bgmInstance = AudioHelper::PlaySample("select.ogg", true, AudioHelper::BGMVolume);
+	bgmInstance = AudioHelper::PlaySample("theme.mp3", true, AudioHelper::BGMVolume);
 }
 void StageSelectScene::Terminate() {
 	AudioHelper::StopSample(bgmInstance);

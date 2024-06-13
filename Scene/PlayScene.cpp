@@ -45,18 +45,18 @@ void PlayScene::Initialize() {
 	ticks = 0;
 	deathCountDown = -1;
 	lives = 100;
-	money = 15000;
+	money = 15000; // change to 50 when done
 	SpeedMult = 1;
 	// Add groups from bottom to top.
 	AddNewObject(TileMapGroup = new Group());
 	AddNewObject(GroundEffectGroup = new Group());
 	AddNewObject(DebugIndicatorGroup = new Group());
+    // Should support buttons.
+    AddNewControlObject(UIGroup = new Group());
 	AddNewObject(TowerGroup = new Group());
 	AddNewObject(EnemyGroup = new Group());
 	AddNewObject(BulletGroup = new Group());
 	AddNewObject(EffectGroup = new Group());
-	// Should support buttons.
-	AddNewControlObject(UIGroup = new Group());
     TileMapGroup->AddNewObject(new Engine::Image("play/yard2.jpg", 0, 0, 1600, 900));
 	ReadMap();
 	ReadEnemyWave();
@@ -70,7 +70,7 @@ void PlayScene::Initialize() {
 	deathBGMInstance = Engine::Resources::GetInstance().GetSampleInstance("astronomia.ogg");
 	Engine::Resources::GetInstance().GetBitmap("lose/benjamin-happy.png");
 	// Start BGM.
-	//bgmId = AudioHelper::PlayBGM("play.ogg");
+	bgmId = AudioHelper::PlayBGM("play.mp3");
 }
 void PlayScene::Terminate() {
 	AudioHelper::StopBGM(bgmId);
@@ -217,7 +217,7 @@ void PlayScene::OnMouseMove(int mx, int my) {
 	}
 	imgTarget->Visible = true;
 	imgTarget->Position.x = x * BlockSize;
-	imgTarget->Position.y = y * BlockSize;
+	imgTarget->Position.y = y * BlockSize - 35;
 }
 void PlayScene::OnMouseUp(int button, int mx, int my) {
 	IScene::OnMouseUp(button, mx, my);
@@ -279,7 +279,6 @@ void PlayScene::OnKeyDown(int keyCode) {
 }
 void PlayScene::Hit() {
 	lives--;
-	UILives->Text = std::string("Life ") + std::to_string(lives);
 	if (lives <= 0) {
 		Engine::GameEngine::GetInstance().ChangeScene("lose");
 	}
@@ -289,7 +288,7 @@ int PlayScene::GetMoney() const {
 }
 void PlayScene::EarnMoney(int money) {
 	this->money += money;
-	UIMoney->Text = std::string("$") + std::to_string(this->money);
+	UIMoney->Text = std::to_string(this->money);
 }
 void PlayScene::ReadMap() {
 	std::string filename = std::string("Resource/map") + std::to_string(MapId) + ".txt";
@@ -332,41 +331,68 @@ void PlayScene::ReadEnemyWave() {
 }
 void PlayScene::ConstructUI() {
 	// Background
-	UIGroup->AddNewObject(new Engine::Image("play/sand.png", 1280, 0, 320, 832));
+    UIGroup->AddNewObject(new Engine::Image("play/sun_counter.png", 100, 0, 124, 136));
+	UIGroup->AddNewObject(new Engine::Image("play/plant_select.png", 224, 0, 792, 136));
 	// Text
-	UIGroup->AddNewObject(new Engine::Label(std::string("Stage ") + std::to_string(MapId), "pirulen.ttf", 32, 1294, 0));
-	UIGroup->AddNewObject(UIMoney = new Engine::Label(std::string("$") + std::to_string(money), "pirulen.ttf", 24, 1294, 48));
-	UIGroup->AddNewObject(UILives = new Engine::Label(std::string("Life ") + std::to_string(lives), "pirulen.ttf", 24, 1294, 88));
+	UIGroup->AddNewObject(UIMoney = new Engine::Label(std::to_string(money), "komika.ttf", 20, 132.5, 98.5));
 	PlantButton* btn;
 	// Button 1
-	btn = new PlantButton("play/floor.png", "play/dirt.png",
-                          Engine::Sprite("play/tower-base.png", 1294, 136, 0, 0, 0, 0),
-                          Engine::Sprite("play/peashooter.png", 1294, 136, 0, 0, 0, 0)
-		, 1294, 136, Peashooter::Price);
+	btn = new PlantButton("play/plant_button_background.png", "play/plant_button_background.png",
+                          Engine::Sprite("play/plant_button_background.png", 229, 8, 0, 0, 0, 0),
+                          Engine::Sprite("play/peashooter.png", 239, 20, 80, 80, 0, 0)
+		, 229, 8, Peashooter::Price);
 	// Reference: Class Member Function Pointer and std::bind.
 	btn->SetOnClickCallback(std::bind(&PlayScene::UIBtnClicked, this, 0));
 	UIGroup->AddNewControlObject(btn);
 	// Button 2
-	btn = new PlantButton("play/floor.png", "play/dirt.png",
-                          Engine::Sprite("play/tower-base.png", 1370, 136, 0, 0, 0, 0),
-                          Engine::Sprite("play/turret-2.png", 1370, 136 - 8, 0, 0, 0, 0)
-		, 1370, 136, LaserTurret::Price);
+	btn = new PlantButton("play/plant_button_background.png", "play/plant_button_background.png",
+                          Engine::Sprite("play/plant_button_background.png", 324, 8, 0, 0, 0, 0),
+                          Engine::Sprite("play/peashooter.png", 334, 20, 80, 80, 0, 0)
+		, 324, 8, LaserTurret::Price);
 	btn->SetOnClickCallback(std::bind(&PlayScene::UIBtnClicked, this, 1));
 	UIGroup->AddNewControlObject(btn);
 	// Button 3
-	btn = new PlantButton("play/floor.png", "play/dirt.png",
-                          Engine::Sprite("play/tower-base.png", 1446, 136, 0, 0, 0, 0),
-                          Engine::Sprite("play/turret-3.png", 1446, 136, 0, 0, 0, 0)
-		, 1446, 136, MissileTurret::Price);
+	btn = new PlantButton("play/plant_button_background.png", "play/plant_button_background.png",
+                          Engine::Sprite("play/plant_button_background.png", 419, 8, 0, 0, 0, 0),
+                          Engine::Sprite("play/peashooter.png", 429, 20, 80, 80, 0, 0)
+		, 419, 8, MissileTurret::Price);
 	btn->SetOnClickCallback(std::bind(&PlayScene::UIBtnClicked, this, 2));
 	UIGroup->AddNewControlObject(btn);
 	// Button 4
-	btn = new PlantButton("play/floor.png", "play/dirt.png",
-                          Engine::Sprite("play/tower-base.png", 1522, 136, 0, 0, 0, 0),
-                          Engine::Sprite("play/turret-6.png", 1522, 136, 0, 0, 0, 0)
-		, 1522, 136, NewTurret::Price);
+	btn = new PlantButton("play/plant_button_background.png", "play/plant_button_background.png",
+                          Engine::Sprite("play/plant_button_background.png", 514, 8, 0, 0, 0, 0),
+                          Engine::Sprite("play/peashooter.png", 524, 20, 80, 80, 0, 0)
+            , 514, 8, NewTurret::Price);
 	btn->SetOnClickCallback(std::bind(&PlayScene::UIBtnClicked, this, 3));
 	UIGroup->AddNewControlObject(btn);
+    // Button 5
+    btn = new PlantButton("play/plant_button_background.png", "play/plant_button_background.png",
+                          Engine::Sprite("play/plant_button_background.png", 609, 8, 0, 0, 0, 0),
+                          Engine::Sprite("play/peashooter.png", 619, 20, 80, 80, 0, 0)
+            , 609, 8, NewTurret::Price);
+    btn->SetOnClickCallback(std::bind(&PlayScene::UIBtnClicked, this, 3));
+    UIGroup->AddNewControlObject(btn);
+    // Button 6
+    btn = new PlantButton("play/plant_button_background.png", "play/plant_button_background.png",
+                          Engine::Sprite("play/plant_button_background.png", 704, 8, 0, 0, 0, 0),
+                          Engine::Sprite("play/peashooter.png", 714, 20, 80, 80, 0, 0)
+            , 704, 8, NewTurret::Price);
+    btn->SetOnClickCallback(std::bind(&PlayScene::UIBtnClicked, this, 3));
+    UIGroup->AddNewControlObject(btn);
+    // Button 7
+    btn = new PlantButton("play/plant_button_background.png", "play/plant_button_background.png",
+                          Engine::Sprite("play/plant_button_background.png", 799, 8, 0, 0, 0, 0),
+                          Engine::Sprite("play/peashooter.png", 809, 20, 80, 80, 0, 0)
+            , 799, 8, NewTurret::Price);
+    btn->SetOnClickCallback(std::bind(&PlayScene::UIBtnClicked, this, 3));
+    UIGroup->AddNewControlObject(btn);
+    // Button 8
+    btn = new PlantButton("play/plant_button_background.png", "play/plant_button_background.png",
+                          Engine::Sprite("play/plant_button_background.png", 894, 8, 0, 0, 0, 0),
+                          Engine::Sprite("play/peashooter.png", 904, 20, 80, 80, 0, 0)
+            , 894, 8, NewTurret::Price);
+    btn->SetOnClickCallback(std::bind(&PlayScene::UIBtnClicked, this, 3));
+    UIGroup->AddNewControlObject(btn);
 	// TODO: [CUSTOM-TURRET]: Create a button to support constructing the turret.
 	int w = Engine::GameEngine::GetInstance().GetScreenSize().x;
 	int h = Engine::GameEngine::GetInstance().GetScreenSize().y;
@@ -456,10 +482,5 @@ std::vector<std::vector<int>> PlayScene::CalculateBFSDistance() {
 			que.push(Engine::Point(p.x, p.y + 1));
 		}
 	}
-    /*for(int i = 0; i < MapHeight; i++) {
-        for(int j = 0; j < MapWidth; j++) {
-            map[i][j] = j + 1;
-        }
-    }*/
 	return map;
 }

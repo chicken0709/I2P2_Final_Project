@@ -105,7 +105,7 @@ add_executable(2024_I2P2_Final_Project
         Scene/WinScene.cpp
         Scene/WinScene.hpp
         Scene/StartScene.cpp
-        Scene/StartScene.h
+        Scene/StartScene.hpp
         Scene/SettingsScene.cpp
         Scene/SettingsScene.hpp
 

@@ -13,8 +13,8 @@ protected:
 public:
 	int money;
 	Engine::Sprite Base;
-	Engine::Sprite Turret;
-	PlantButton(std::string img, std::string imgIn, Engine::Sprite Base, Engine::Sprite Turret, float x, float y, int money);
+	Engine::Sprite Plant;
+	PlantButton(std::string img, std::string imgIn, Engine::Sprite Base, Engine::Sprite Plant, float x, float y, int money);
 	void Update(float deltaTime) override;
 	void Draw() const override;
 };
