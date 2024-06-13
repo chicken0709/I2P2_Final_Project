@@ -37,15 +37,11 @@ const int MapDiffY = 150;
 const float PlayScene::DangerTime = 7.61;
 const Engine::Point PlayScene::SpawnGridPoint = Engine::Point(-1, 0);
 const Engine::Point PlayScene::EndGridPoint = Engine::Point(MapWidth - 1, MapHeight - 1);
-const std::vector<int> PlayScene::code = { ALLEGRO_KEY_UP, ALLEGRO_KEY_UP, ALLEGRO_KEY_DOWN, ALLEGRO_KEY_DOWN,
-									ALLEGRO_KEY_LEFT, ALLEGRO_KEY_LEFT, ALLEGRO_KEY_RIGHT, ALLEGRO_KEY_RIGHT,
-									ALLEGRO_KEY_B, ALLEGRO_KEY_A, ALLEGRO_KEYMOD_SHIFT, ALLEGRO_KEY_ENTER };
 Engine::Point PlayScene::GetClientSize() {
 	return Engine::Point(MapWidth * BlockSize, MapHeight * BlockSize);
 }
 void PlayScene::Initialize() {
 	mapState.clear();
-	keyStrokes.clear();
 	ticks = 0;
 	deathCountDown = -1;
 	lives = 100;
@@ -261,24 +257,7 @@ void PlayScene::OnKeyDown(int keyCode) {
 	if (keyCode == ALLEGRO_KEY_TAB) {
 		DebugMode = !DebugMode;
 	}
-	else {
-		keyStrokes.push_back(keyCode);
-		if (keyStrokes.size() > code.size())
-			keyStrokes.pop_front();
-		if (keyCode == ALLEGRO_KEY_ENTER && keyStrokes.size() == code.size()) {
-			auto it = keyStrokes.begin();
-			for (int c : code) {
-				if (!((*it == c) ||
-					(c == ALLEGRO_KEYMOD_SHIFT &&
-					(*it == ALLEGRO_KEY_LSHIFT || *it == ALLEGRO_KEY_RSHIFT))))
-					return;
-				++it;
-			}
-			EffectGroup->AddNewObject(new Plane());
-			money += 10000;
-		}
-	}
-	if (keyCode == ALLEGRO_KEY_Q) {
+	else if (keyCode == ALLEGRO_KEY_Q) {
 		// Hotkey for Peashooter.
 		UIBtnClicked(0);
 	}
@@ -293,7 +272,6 @@ void PlayScene::OnKeyDown(int keyCode) {
 	else if(keyCode == ALLEGRO_KEY_R) {
 		UIBtnClicked(3);
 	}
-	// TODO: [CUSTOM-TURRET]: Make specific key to create the turret.
 	else if (keyCode >= ALLEGRO_KEY_0 && keyCode <= ALLEGRO_KEY_9) {
 		// Hotkey for Speed up.
 		SpeedMult = keyCode - ALLEGRO_KEY_0;

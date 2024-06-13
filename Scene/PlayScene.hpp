@@ -59,7 +59,6 @@ public:
 	std::vector<std::vector<TileType>> mapState;
 	std::vector<std::vector<int>> mapDistance;
 	std::list<std::pair<int, float>> enemyWaveData;
-	std::list<int> keyStrokes;
 	static Engine::Point GetClientSize();
 	explicit PlayScene() = default;
 	void Initialize() override;

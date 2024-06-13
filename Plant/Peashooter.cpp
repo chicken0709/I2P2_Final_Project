@@ -7,7 +7,6 @@
 #include "Engine/Group.hpp"
 #include "Peashooter.hpp"
 #include "Scene/PlayScene.hpp"
-#include "Engine/Point.hpp"
 
 const int Peashooter::Price = 50;
 Peashooter::Peashooter(float x, float y) :
