@@ -62,8 +62,6 @@ add_executable(2024_I2P2_Final_Project
         UI/Component/ImageButton.hpp
         UI/Component/Label.cpp
         UI/Component/Label.hpp
-        UI/Animation/Plane.cpp
-        UI/Animation/Plane.hpp
         UI/Component/TextInput.cpp
         UI/Component/TextInput.hpp
         UI/Component/Slider.cpp

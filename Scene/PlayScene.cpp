@@ -1,6 +1,4 @@
 #include <allegro5/allegro.h>
-#include <algorithm>
-#include <cmath>
 #include <fstream>
 #include <functional>
 #include <vector>
@@ -20,10 +18,8 @@
 #include "Plant/MissileTurret.hpp"
 #include "Plant/NewTurret.hpp"
 #include "Plant/PlantButton.hpp"
-#include "UI/Animation/Plane.hpp"
 #include "Zombie/PlaneEnemy.hpp"
 #include "PlayScene.hpp"
-#include "Engine/Resources.hpp"
 #include "Zombie/SoldierEnemy.hpp"
 #include "Zombie/TankEnemy.hpp"
 #include "Zombie/TankEnemy2.hpp"
@@ -32,18 +28,14 @@ bool PlayScene::DebugMode = false;
 const std::vector<Engine::Point> PlayScene::directions = { Engine::Point(-1, 0), Engine::Point(0, -1), Engine::Point(1, 0), Engine::Point(0, 1) };
 const int PlayScene::MapWidth = 9, PlayScene::MapHeight = 5;
 const int PlayScene::BlockSize = 150;
-const int MapDiffX = 150;
-const int MapDiffY = 150;
-const float PlayScene::DangerTime = 7.61;
 const Engine::Point PlayScene::SpawnGridPoint = Engine::Point(-1, 0);
 const Engine::Point PlayScene::EndGridPoint = Engine::Point(MapWidth - 1, MapHeight - 1);
 Engine::Point PlayScene::GetClientSize() {
-	return Engine::Point(MapWidth * BlockSize, MapHeight * BlockSize);
+	return Engine::Point((MapWidth + 1) * BlockSize, MapHeight * BlockSize);
 }
 void PlayScene::Initialize() {
 	mapState.clear();
 	ticks = 0;
-	deathCountDown = -1;
 	lives = 100;
 	money = 15000; // change to 50 when done
 	SpeedMult = 1;
@@ -66,64 +58,17 @@ void PlayScene::Initialize() {
 	imgTarget->Visible = false;
 	preview = nullptr;
 	UIGroup->AddNewObject(imgTarget);
-	// Preload Lose Scene
-	deathBGMInstance = Engine::Resources::GetInstance().GetSampleInstance("astronomia.ogg");
-	Engine::Resources::GetInstance().GetBitmap("lose/benjamin-happy.png");
 	// Start BGM.
 	bgmId = AudioHelper::PlayBGM("play.mp3");
 }
 void PlayScene::Terminate() {
 	AudioHelper::StopBGM(bgmId);
-	AudioHelper::StopSample(deathBGMInstance);
-	deathBGMInstance = std::shared_ptr<ALLEGRO_SAMPLE_INSTANCE>();
 	IScene::Terminate();
 }
 void PlayScene::Update(float deltaTime) {
 	// If we use deltaTime directly, then we might have Bullet-through-paper problem.
 	// Reference: Bullet-Through-Paper
     bool win = false;
-	if (SpeedMult == 0)
-		deathCountDown = -1;
-	else if (deathCountDown != -1)
-		SpeedMult = 1;
-	// Calculate danger zone.
-	std::vector<float> reachEndTimes;
-	for (auto& it : EnemyGroup->GetObjects()) {
-		reachEndTimes.push_back(dynamic_cast<Zombie*>(it)->reachEndTime);
-	}
-	// Can use Heap / Priority-Queue instead. But since we won't have too many enemies, sorting is fast enough.
-	std::sort(reachEndTimes.begin(), reachEndTimes.end());
-	float newDeathCountDown = -1;
-	int danger = lives;
-	for (auto& it : reachEndTimes) {
-		if (it <= DangerTime) {
-			danger--;
-			if (danger <= 0) {
-				// Death Countdown
-				float pos = DangerTime - it;
-				if (it > deathCountDown) {
-					// Restart Death Count Down BGM.
-					AudioHelper::StopSample(deathBGMInstance);
-					if (SpeedMult != 0)
-						deathBGMInstance = AudioHelper::PlaySample("astronomia.ogg", false, AudioHelper::BGMVolume, pos);
-				}
-				float alpha = pos / DangerTime;
-				alpha = std::max(0, std::min(255, static_cast<int>(alpha * alpha * 255)));
-				dangerIndicator->Tint = al_map_rgba(255, 255, 255, alpha);
-				newDeathCountDown = it;
-				break;
-			}
-		}
-	}
-	deathCountDown = newDeathCountDown;
-	if (SpeedMult == 0)
-		AudioHelper::StopSample(deathBGMInstance);
-	if (deathCountDown == -1 && lives > 0) {
-		AudioHelper::StopSample(deathBGMInstance);
-		dangerIndicator->Tint.a = 0;
-	}
-	if (SpeedMult == 0)
-		deathCountDown = -1;
 	for (int i = 0; i < SpeedMult; i++) {
 		IScene::Update(deltaTime);
 		// Check if we should create new enemy.
@@ -146,7 +91,7 @@ void PlayScene::Update(float deltaTime) {
 			continue;
 		ticks -= current.second;
 		enemyWaveData.pop_front();
-		const Engine::Point SpawnCoordinate = Engine::Point(SpawnGridPoint.x * BlockSize + BlockSize / 2 + MapDiffX, SpawnGridPoint.y * BlockSize + BlockSize / 2 + MapDiffY);
+		const Engine::Point SpawnCoordinate = Engine::Point(SpawnGridPoint.x * BlockSize + BlockSize / 2 + BlockSize, SpawnGridPoint.y * BlockSize + BlockSize / 2 + BlockSize);
 		Zombie* enemy;
 		switch (current.first) {
 		case 1:
@@ -161,9 +106,6 @@ void PlayScene::Update(float deltaTime) {
 		case 4:
 			EnemyGroup->AddNewObject(enemy = new TankEnemy2(SpawnCoordinate.x, SpawnCoordinate.y));
 			break;
-		// TODO: [CUSTOM-ENEMY]: You need to modify 'Resource/enemy1.txt', or 'Resource/enemy2.txt' to spawn the 4th enemy.
-        //         The format is "[EnemyId] [TimeDelay] [Repeat]".
-        // TODO: [CUSTOM-ENEMY]: Enable the creation of the enemy.
 		default:
 			continue;
 		}
@@ -191,7 +133,7 @@ void PlayScene::Draw() const {
                     } else {
                         str = std::string("empty");
                     }
-					Engine::Label label(str, "pirulen.ttf", 12, (j + 0.5) * BlockSize + MapDiffX, (i + 0.5) * BlockSize + MapDiffY);
+					Engine::Label label(str, "komika.ttf", 12, (j + 0.5) * BlockSize + BlockSize, (i + 0.5) * BlockSize + BlockSize);
 					label.Anchor = Engine::Point(0.5, 0.5);
 					label.Draw();
 				//}
@@ -230,6 +172,8 @@ void PlayScene::OnMouseUp(int button, int mx, int my) {
 		if (mapState[y - 1][x - 1] != TILE_OCCUPIED) {
 			if (!preview)
 				return;
+            // Plant sound
+            AudioHelper::PlayAudio("plant.ogg");
 			// Purchase.
 			EarnMoney(-preview->GetPrice());
 			// Remove Preview.
@@ -424,33 +368,6 @@ void PlayScene::UIBtnClicked(int id) {
 	OnMouseMove(Engine::GameEngine::GetInstance().GetMousePosition().x, Engine::GameEngine::GetInstance().GetMousePosition().y);
 }
 
-bool PlayScene::CheckSpaceValid(int x, int y) {
-	if (x < 0 || x >= MapWidth || y < 0 || y >= MapHeight)
-		return false;
-	auto map00 = mapState[y][x];
-	mapState[y][x] = TILE_OCCUPIED;
-	std::vector<std::vector<int>> map = CalculateBFSDistance();
-	mapState[y][x] = map00;
-	if (map[0][0] == -1)
-		return false;
-	for (auto& it : EnemyGroup->GetObjects()) {
-		Engine::Point pnt;
-		pnt.x = floor(it->Position.x / BlockSize);
-		pnt.y = floor(it->Position.y / BlockSize);
-		if (pnt.x < 0) pnt.x = 0;
-		if (pnt.x >= MapWidth) pnt.x = MapWidth - 1;
-		if (pnt.y < 0) pnt.y = 0;
-		if (pnt.y >= MapHeight) pnt.y = MapHeight - 1;
-		if (map[pnt.y][pnt.x] == -1)
-			return false;
-	}
-	// All enemy have path to exit.
-	mapState[y][x] = TILE_OCCUPIED;
-	mapDistance = map;
-	for (auto& it : EnemyGroup->GetObjects())
-		dynamic_cast<Zombie*>(it)->UpdatePath(mapDistance);
-	return true;
-}
 std::vector<std::vector<int>> PlayScene::CalculateBFSDistance() {
 	// Reverse BFS to find path.
 	std::vector<std::vector<int>> map(MapHeight, std::vector<int>(std::vector<int>(MapWidth, -1)));

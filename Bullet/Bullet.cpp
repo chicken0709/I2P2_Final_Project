@@ -3,11 +3,8 @@
 #include "Zombie/Zombie.hpp"
 #include "Engine/GameEngine.hpp"
 #include "Engine/Group.hpp"
-#include "Engine/IObject.hpp"
 #include "Engine/IScene.hpp"
 #include "Scene/PlayScene.hpp"
-#include "Engine/Point.hpp"
-#include "Engine/Sprite.hpp"
 
 PlayScene* Bullet::getPlayScene() {
 	return dynamic_cast<PlayScene*>(Engine::GameEngine::GetInstance().GetActiveScene());
@@ -37,6 +34,6 @@ void Bullet::Update(float deltaTime) {
 		}
 	}
 	// Check if out of boundary.
-	if (!Engine::Collider::IsRectOverlap(Position - Size / 2, Position + Size / 2, Engine::Point(0, 0), PlayScene::GetClientSize()))
+	if (!Engine::Collider::IsRectOverlap(Position - Size / 2, Position + Size / 2, Engine::Point(1, 1), PlayScene::GetClientSize()))
 		getPlayScene()->BulletGroup->RemoveObject(objectIterator);
 }

@@ -19,5 +19,5 @@ void Peashooter::CreatePea() {
 	Engine::Point normalized = Engine::Point(50, -35);
 	// Change bullet position to the front of the gun barrel.
 	getPlayScene()->BulletGroup->AddNewObject(new BasicPea(Position + normalized, diff, 0, this));
-	AudioHelper::PlayAudio("gun.wav");
+	AudioHelper::PlayAudio("throw.mp3");
 }

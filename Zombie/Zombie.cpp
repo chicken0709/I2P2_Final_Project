@@ -38,7 +38,6 @@ Zombie::Zombie(std::string img, float x, float y, float radius, float speed, flo
 }
 void Zombie::Hit(float damage) {
 	hp -= damage;
-    if(this->money == 75 && this->hp <= 75) this->speed = 100;
 	if (hp <= 0) {
 		OnExplode();
 		// Remove all turret's reference to target.
@@ -46,7 +45,6 @@ void Zombie::Hit(float damage) {
 			it->Target = nullptr;
 		for (auto& it: lockedBullets)
 			it->Target = nullptr;
-		getPlayScene()->EarnMoney(money);
 		getPlayScene()->EnemyGroup->RemoveObject(objectIterator);
 		AudioHelper::PlayAudio("explosion.wav");
 	}
