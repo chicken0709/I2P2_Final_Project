@@ -2,6 +2,6 @@
 
 #include "TankEnemy2.hpp"
 
-TankEnemy2::TankEnemy2(int x, int y) : Enemy("play/enemy-4.png", x, y, 30, 40, 150, 75) {
+TankEnemy2::TankEnemy2(int x, int y) : Zombie("play/enemy-4.png", x, y, 30, 40, 150, 75) {
 
 }

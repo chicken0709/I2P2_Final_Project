@@ -1,8 +1,8 @@
 #ifndef TANKENEMY2_HPP
 #define TANKENEMY2_HPP
-#include "Enemy.hpp"
+#include "Zombie.hpp"
 
-class TankEnemy2 : public Enemy {
+class TankEnemy2 : public Zombie {
 public:
 	TankEnemy2(int x, int y);
 };

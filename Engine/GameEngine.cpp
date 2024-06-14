@@ -9,7 +9,6 @@
 #include <memory>
 #include <stdexcept>
 #include <string>
-#include <utility>
 
 #include "Allegro5Exception.hpp"
 #include "GameEngine.hpp"

@@ -1,9 +1,9 @@
 #ifndef TANKENEMY_HPP
 #define TANKENEMY_HPP
-#include "Enemy.hpp"
+#include "Zombie.hpp"
 #include "Engine/Sprite.hpp"
 
-class TankEnemy : public Enemy {
+class TankEnemy : public Zombie {
 private:
 	Sprite head;
 	float targetRotation;
