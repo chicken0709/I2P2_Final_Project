@@ -9,14 +9,17 @@
 PlayScene* Bullet::getPlayScene() {
 	return dynamic_cast<PlayScene*>(Engine::GameEngine::GetInstance().GetActiveScene());
 }
+
 void Bullet::OnExplode(Zombie* enemy) {
 }
+
 Bullet::Bullet(std::string img, float speed, float damage, Engine::Point position, Engine::Point forwardDirection, float rotation, Plant* parent) :
 	Sprite(img, position.x, position.y), speed(speed), damage(damage), parent(parent) {
 	Velocity = forwardDirection.Normalize() * speed;
 	Rotation = rotation;
 	CollisionRadius = 4;
 }
+
 void Bullet::Update(float deltaTime) {
 	Sprite::Update(deltaTime);
 	PlayScene* scene = getPlayScene();

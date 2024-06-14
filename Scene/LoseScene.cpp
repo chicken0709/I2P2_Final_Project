@@ -7,7 +7,6 @@
 #include "UI/Component/ImageButton.hpp"
 #include "UI/Component/Label.hpp"
 #include "LoseScene.hpp"
-#include "PlayScene.hpp"
 
 void LoseScene::Initialize() {
 	// TODO: [HACKATHON-1-SCENE] (1/4): You can imitate the 2 files: 'LoseScene.hpp', 'LoseScene.cpp' to implement your start scene.
@@ -24,11 +23,13 @@ void LoseScene::Initialize() {
 	AddNewObject(new Engine::Label("Back", "pirulen.ttf", 48, halfW, halfH * 7 / 4, 0, 0, 0, 255, 0.5, 0.5));
     bgmInstance = AudioHelper::PlaySample("astronomia.ogg", false, AudioHelper::BGMVolume);
 }
+
 void LoseScene::Terminate() {
 	AudioHelper::StopSample(bgmInstance);
 	bgmInstance = std::shared_ptr<ALLEGRO_SAMPLE_INSTANCE>();
 	IScene::Terminate();
 }
+
 void LoseScene::BackOnClick(int stage) {
 	// Change to select scene.
 	Engine::GameEngine::GetInstance().ChangeScene("start");

@@ -9,11 +9,13 @@
 #include "Scene/PlayScene.hpp"
 
 const int Peashooter::Price = 50;
+
 Peashooter::Peashooter(float x, float y) :
-	Plant("play/peashooter.png", x, y, 200, Price, 1.5) {
+	Plant("play/peashooter.png", x, y, 1000, Price, 1.5) {
 	// Move center downward, since we the turret head is slightly biased upward.
 	Anchor.y += 8.0f / GetBitmapHeight();
 }
+
 void Peashooter::CreatePea() {
 	Engine::Point diff = Engine::Point(cos(Rotation - ALLEGRO_PI / 2), sin(Rotation));
 	Engine::Point normalized = Engine::Point(50, -35);

@@ -20,19 +20,19 @@
 #include "Plant/PlantButton.hpp"
 #include "Zombie/PlaneEnemy.hpp"
 #include "PlayScene.hpp"
-#include "Zombie/SoldierEnemy.hpp"
+#include "Zombie/BasicZombie.hpp"
 #include "Zombie/TankEnemy.hpp"
 #include "Zombie/TankEnemy2.hpp"
 
 bool PlayScene::DebugMode = false;
-const std::vector<Engine::Point> PlayScene::directions = { Engine::Point(-1, 0), Engine::Point(0, -1), Engine::Point(1, 0), Engine::Point(0, 1) };
 const int PlayScene::MapWidth = 9, PlayScene::MapHeight = 5;
 const int PlayScene::BlockSize = 150;
-const Engine::Point PlayScene::SpawnGridPoint = Engine::Point(-1, 0);
-const Engine::Point PlayScene::EndGridPoint = Engine::Point(MapWidth - 1, MapHeight - 1);
+const Engine::Point PlayScene::SpawnGridPoint = Engine::Point(MapWidth + 2, 2);
+
 Engine::Point PlayScene::GetClientSize() {
 	return Engine::Point((MapWidth + 1) * BlockSize, MapHeight * BlockSize);
 }
+
 void PlayScene::Initialize() {
 	mapState.clear();
 	ticks = 0;
@@ -58,13 +58,16 @@ void PlayScene::Initialize() {
 	imgTarget->Visible = false;
 	preview = nullptr;
 	UIGroup->AddNewObject(imgTarget);
+    mapState = std::vector<std::vector<TileType>>(MapHeight, std::vector<TileType>(MapWidth));
 	// Start BGM.
 	bgmId = AudioHelper::PlayBGM("play.mp3");
 }
+
 void PlayScene::Terminate() {
 	AudioHelper::StopBGM(bgmId);
 	IScene::Terminate();
 }
+
 void PlayScene::Update(float deltaTime) {
 	// If we use deltaTime directly, then we might have Bullet-through-paper problem.
 	// Reference: Bullet-Through-Paper
@@ -91,11 +94,11 @@ void PlayScene::Update(float deltaTime) {
 			continue;
 		ticks -= current.second;
 		enemyWaveData.pop_front();
-		const Engine::Point SpawnCoordinate = Engine::Point(SpawnGridPoint.x * BlockSize + BlockSize / 2 + BlockSize, SpawnGridPoint.y * BlockSize + BlockSize / 2 + BlockSize);
+		const Engine::Point SpawnCoordinate = Engine::Point(SpawnGridPoint.x * BlockSize, SpawnGridPoint.y * BlockSize + 10);
 		Zombie* enemy;
 		switch (current.first) {
 		case 1:
-			EnemyGroup->AddNewObject(enemy = new SoldierEnemy(SpawnCoordinate.x, SpawnCoordinate.y));
+			EnemyGroup->AddNewObject(enemy = new BasicZombie(SpawnCoordinate.x, SpawnCoordinate.y));
 			break;
 		case 2:
 			EnemyGroup->AddNewObject(enemy = new PlaneEnemy(SpawnCoordinate.x, SpawnCoordinate.y));
@@ -119,28 +122,27 @@ void PlayScene::Update(float deltaTime) {
 		preview->Update(deltaTime);
 	}
 }
+
 void PlayScene::Draw() const {
 	IScene::Draw();
 	if (DebugMode) {
 		// Draw reverse BFS distance on all reachable blocks.
 		for (int i = 0; i < MapHeight; i++) {
 			for (int j = 0; j < MapWidth; j++) {
-				//if (mapDistance[i][j] != -1) {
-					// Not elegant nor efficient, but it's quite enough for debugging.
-                    std::string str;
-                    if(mapState[i][j] == TILE_OCCUPIED) {
-                        str = std::string("occupied");
-                    } else {
-                        str = std::string("empty");
-                    }
-					Engine::Label label(str, "komika.ttf", 12, (j + 0.5) * BlockSize + BlockSize, (i + 0.5) * BlockSize + BlockSize);
-					label.Anchor = Engine::Point(0.5, 0.5);
-					label.Draw();
-				//}
+                std::string str;
+                if(mapState[i][j] == TILE_OCCUPIED) {
+                    str = std::string("occupied");
+                } else {
+                    str = std::string("empty");
+                }
+                Engine::Label label(str, "komika.ttf", 12, (j + 0.5) * BlockSize + BlockSize, (i + 0.5) * BlockSize + BlockSize);
+                label.Anchor = Engine::Point(0.5, 0.5);
+                label.Draw();
 			}
 		}
 	}
 }
+
 void PlayScene::OnMouseDown(int button, int mx, int my) {
 	if ((button & 1) && !imgTarget->Visible && preview) {
 		// Cancel turret construct.
@@ -149,6 +151,7 @@ void PlayScene::OnMouseDown(int button, int mx, int my) {
 	}
 	IScene::OnMouseDown(button, mx, my);
 }
+
 void PlayScene::OnMouseMove(int mx, int my) {
 	IScene::OnMouseMove(mx, my);
 	const int x = mx / BlockSize;
@@ -161,6 +164,7 @@ void PlayScene::OnMouseMove(int mx, int my) {
 	imgTarget->Position.x = x * BlockSize;
 	imgTarget->Position.y = y * BlockSize - 35;
 }
+
 void PlayScene::OnMouseUp(int button, int mx, int my) {
 	IScene::OnMouseUp(button, mx, my);
 	if (!imgTarget->Visible)
@@ -196,6 +200,7 @@ void PlayScene::OnMouseUp(int button, int mx, int my) {
 		}
 	}
 }
+
 void PlayScene::OnKeyDown(int keyCode) {
 	IScene::OnKeyDown(keyCode);
 	if (keyCode == ALLEGRO_KEY_TAB) {
@@ -221,44 +226,28 @@ void PlayScene::OnKeyDown(int keyCode) {
 		SpeedMult = keyCode - ALLEGRO_KEY_0;
 	}
 }
+
 void PlayScene::Hit() {
 	lives--;
 	if (lives <= 0) {
 		Engine::GameEngine::GetInstance().ChangeScene("lose");
 	}
 }
+
 int PlayScene::GetMoney() const {
 	return money;
 }
+
 void PlayScene::EarnMoney(int money) {
 	this->money += money;
 	UIMoney->Text = std::to_string(this->money);
 }
+
 void PlayScene::ReadMap() {
-	std::string filename = std::string("Resource/map") + std::to_string(MapId) + ".txt";
-	// Read map file.
-	char c;
-	std::vector<bool> mapData;
-	std::ifstream fin(filename);
-	while (fin >> c) {
-		switch (c) {
-		case '0': mapData.push_back(false); break;
-		case '1': mapData.push_back(true); break;
-		case '\n':
-		case '\r':
-			if (static_cast<int>(mapData.size()) / MapWidth != 0)
-				throw std::ios_base::failure("Map data is corrupted.");
-			break;
-		default: throw std::ios_base::failure("Map data is corrupted.");
-		}
-	}
-	fin.close();
-	// Validate map data.
-	if (static_cast<int>(mapData.size()) != MapWidth * MapHeight)
-		throw std::ios_base::failure("Map data is corrupted.");
 	// Store map in 2d array.
 	mapState = std::vector<std::vector<TileType>>(MapHeight, std::vector<TileType>(MapWidth));
 }
+
 void PlayScene::ReadEnemyWave() {
     // TODO: [HACKATHON-3-BUG] (3/5): Trace the code to know how the enemies are created.
     // TODO: [HACKATHON-3-BUG] (3/5): There is a bug in these files, which let the game only spawn the first enemy, try to fix it.
@@ -273,6 +262,7 @@ void PlayScene::ReadEnemyWave() {
 	}
 	fin.close();
 }
+
 void PlayScene::ConstructUI() {
 	// Background
     UIGroup->AddNewObject(new Engine::Image("play/sun_counter.png", 100, 0, 124, 136));
@@ -349,7 +339,6 @@ void PlayScene::ConstructUI() {
 void PlayScene::UIBtnClicked(int id) {
 	if (preview)
 		UIGroup->RemoveObject(preview->GetObjectIterator());
-    // TODO: [CUSTOM-TURRET]: On callback, create the turret.
 	if (id == 0 && money >= Peashooter::Price)
 		preview = new Peashooter(0, 0);
 	else if (id == 1 && money >= LaserTurret::Price)

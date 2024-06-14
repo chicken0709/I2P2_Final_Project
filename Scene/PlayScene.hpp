@@ -21,7 +21,6 @@ class PlayScene final : public Engine::IScene {
 private:
 	enum TileType {
 		TILE_DIRT,
-		TILE_FLOOR,
 		TILE_OCCUPIED,
 	};
 	ALLEGRO_SAMPLE_ID bgmId;
@@ -31,11 +30,9 @@ protected:
 	int SpeedMult;
 public:
 	static bool DebugMode;
-	static const std::vector<Engine::Point> directions;
 	static const int MapWidth, MapHeight;
 	static const int BlockSize;
 	static const Engine::Point SpawnGridPoint;
-	static const Engine::Point EndGridPoint;
 	int MapId;
 	float ticks;
 	// Map tiles.

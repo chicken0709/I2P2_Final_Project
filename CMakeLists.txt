@@ -76,8 +76,8 @@ add_executable(2024_I2P2_Final_Project
         Zombie/TankEnemy.hpp
         Zombie/TankEnemy2.cpp
         Zombie/TankEnemy2.hpp
-        Zombie/SoldierEnemy.cpp
-        Zombie/SoldierEnemy.hpp
+        Zombie/BasicZombie.cpp
+        Zombie/BasicZombie.hpp
 
         // Plant
         Plant/LaserTurret.cpp
