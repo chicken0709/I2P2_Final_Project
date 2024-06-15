@@ -13,7 +13,7 @@ class Plant;
 
 class Zombie : public Engine::Sprite {
 protected:
- 	std::vector<Engine::Point> path;
+	std::vector<Engine::Point> path;
 	float speed;
 	float hp;
 	int money;
@@ -24,10 +24,10 @@ public:
 	std::list<Plant*> lockedTurrets;
 	std::list<Bullet*> lockedBullets;
 	Zombie(std::string img, float x, float y, float radius, float speed, float hp, int money);
- 	void Hit(float damage);
-	void UpdatePath(const std::vector<std::vector<int>>& mapDistance);
+	void Hit(float damage);
+	//void UpdatePath(const std::vector<std::vector<int>>& mapDistance);
 	void Update(float deltaTime) override;
 	void Draw() const override;
-    void UpdateSpeed();
+	void UpdateSpeed();
 };
 #endif // ENEMY_HPP
