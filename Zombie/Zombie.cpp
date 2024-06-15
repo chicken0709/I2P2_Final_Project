@@ -52,20 +52,74 @@ void Zombie::Hit(float damage) {
 	}
 }
 
+/*
 void Zombie::UpdatePath(const std::vector<std::vector<int>>& mapDistance) {
     // modify to detect plants and lawnmower
     // maybe use mapState to update the "path" variable
 }
+*/
+
 
 void Zombie::Update(float deltaTime) {
-	// Pre-calculate the velocity.
+
+
 	float remainSpeed = speed * deltaTime;
-	while (remainSpeed != 0) {
-		Engine::Point normalized(-1, 0);
-        Velocity = normalized * remainSpeed / deltaTime;
-        remainSpeed = 0;
+	while (remainSpeed > 0) {
+		//calc current block
+		int x = static_cast<int>(floor(Position.x / PlayScene::BlockSize) - 1);//somehow need to magically -1
+		int y = static_cast<int>(floor(Position.y / PlayScene::BlockSize));
+
+		//reach house
+		if (x < 0) {
+			getPlayScene()->Hit(Position.y);
+			Sprite::Update(deltaTime);
+			return;
+		}
+
+		//check outside lawn
+		bool outside = false;
+		if (x >= PlayScene::MapWidth) {
+			x = PlayScene::MapWidth - 1;
+			outside = true;
+		}
+
+		//make sure inrange
+		if (y < 0) y = 0;
+		if (y >= PlayScene::MapHeight) y = PlayScene::MapHeight - 1;
+
+		//stop at plant
+		if (!outside) {
+			if (getPlayScene()->mapState[y - 1][x] == TILE_OCCUPIED) {//is 1-base so weird
+				Velocity = Engine::Point(0, 0);
+				Sprite::Update(deltaTime);
+				return;
+			}
+		}
+
+
+		//calc move target
+		Engine::Point target((x - 1) * PlayScene::BlockSize + PlayScene::BlockSize / 2, Position.y);
+		Engine::Point vec = target - Position;
+		float distance = vec.Magnitude();
+
+		//if can reach,than reach XD
+		if (remainSpeed > distance) {
+			Position = target;
+			remainSpeed -= distance;
+		}
+		else {
+			Engine::Point normalized = vec.Normalize();
+			Velocity = normalized * remainSpeed / deltaTime;
+			Position.x += normalized.x * remainSpeed;
+			Position.y += normalized.y * remainSpeed;
+			remainSpeed = 0;
+		}
+
 	}
+	//somehow -1
+	Rotation = atan2(Velocity.y, Velocity.x * -1);
 	Sprite::Update(deltaTime);
+
 }
 
 void Zombie::Draw() const {
