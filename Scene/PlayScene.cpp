@@ -28,7 +28,7 @@ bool PlayScene::DebugMode = false;
 const int PlayScene::MapWidth = 9, PlayScene::MapHeight = 5;
 const int PlayScene::BlockSize = 150;
 const Engine::Point PlayScene::SpawnGridPoint = Engine::Point(MapWidth + 2, 2);
-
+const Engine::Point PlayScene::EndGridPoint = Engine::Point(MapWidth, MapHeight - 1);
 Engine::Point PlayScene::GetClientSize() {
 	return Engine::Point((MapWidth + 1) * BlockSize, MapHeight * BlockSize);
 }
@@ -36,6 +36,8 @@ Engine::Point PlayScene::GetClientSize() {
 void PlayScene::Initialize() {
 	mapState.clear();
 	ticks = 0;
+	for(int i = 0;i < 5;i++)
+		mower_available[i] = true;
 	lives = 100;
 	money = 15000; // change to 50 when done
 	SpeedMult = 1;
@@ -52,7 +54,7 @@ void PlayScene::Initialize() {
     TileMapGroup->AddNewObject(new Engine::Image("play/yard2.jpg", 0, 0, 1600, 900));
 	ReadMap();
 	ReadEnemyWave();
-	mapDistance = CalculateBFSDistance();
+	//mapDistance = CalculateDistance();
 	ConstructUI();
 	imgTarget = new Engine::Image("play/target.png", 0, 0);
 	imgTarget->Visible = false;
@@ -112,7 +114,7 @@ void PlayScene::Update(float deltaTime) {
 		default:
 			continue;
 		}
-		enemy->UpdatePath(mapDistance);
+		//enemy->UpdatePath(mapDistance);
 		// Compensate the time lost.
 		enemy->Update(ticks);
 	}
@@ -227,11 +229,21 @@ void PlayScene::OnKeyDown(int keyCode) {
 	}
 }
 
-void PlayScene::Hit() {
+void PlayScene::Hit(int row) {
+	if(mower_available[row]) {
+		mower_available[row] = false;
+	}
+	else {
+		Engine::GameEngine::GetInstance().ChangeScene("lose");
+	}
+
+	//Original Code
+	/*
 	lives--;
 	if (lives <= 0) {
 		Engine::GameEngine::GetInstance().ChangeScene("lose");
 	}
+	*/
 }
 
 int PlayScene::GetMoney() const {
@@ -356,7 +368,7 @@ void PlayScene::UIBtnClicked(int id) {
 	UIGroup->AddNewObject(preview);
 	OnMouseMove(Engine::GameEngine::GetInstance().GetMousePosition().x, Engine::GameEngine::GetInstance().GetMousePosition().y);
 }
-
+/*
 std::vector<std::vector<int>> PlayScene::CalculateBFSDistance() {
 	// Reverse BFS to find path.
 	std::vector<std::vector<int>> map(MapHeight, std::vector<int>(std::vector<int>(MapWidth, -1)));
@@ -390,3 +402,8 @@ std::vector<std::vector<int>> PlayScene::CalculateBFSDistance() {
 	}
 	return map;
 }
+*/
+
+
+
+
