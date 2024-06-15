@@ -8,7 +8,10 @@
 
 #include "Engine/IScene.hpp"
 #include "Engine/Point.hpp"
-
+enum TileType {
+	TILE_DIRT,
+	TILE_OCCUPIED,
+};
 class Plant;
 namespace Engine {
 	class Group;
@@ -19,12 +22,9 @@ namespace Engine {
 
 class PlayScene final : public Engine::IScene {
 private:
-	enum TileType {
-		TILE_DIRT,
-		TILE_OCCUPIED,
-	};
 	ALLEGRO_SAMPLE_ID bgmId;
 protected:
+	bool mower_available[5];
 	int lives;
 	int money;
 	int SpeedMult;
@@ -51,6 +51,8 @@ public:
 	std::vector<std::vector<TileType>> mapState;
 	std::vector<std::vector<int>> mapDistance;
 	std::list<std::pair<int, float>> enemyWaveData;
+	static const Engine::Point EndGridPoint;
+
 	static Engine::Point GetClientSize();
 	explicit PlayScene() = default;
 	void Initialize() override;
@@ -61,13 +63,14 @@ public:
 	void OnMouseMove(int mx, int my) override;
 	void OnMouseUp(int button, int mx, int my) override;
 	void OnKeyDown(int keyCode) override;
-	void Hit();
+	void Hit(int row);
 	int GetMoney() const;
 	void EarnMoney(int money);
 	void ReadMap();
 	void ReadEnemyWave();
 	void ConstructUI();
 	void UIBtnClicked(int id);
-	std::vector<std::vector<int>> CalculateBFSDistance();
+	//std::vector<std::vector<int>> CalculateBFSDistance();
+
 };
 #endif // PLAYSCENE_HPP
