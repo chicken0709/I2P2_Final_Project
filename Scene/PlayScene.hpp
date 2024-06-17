@@ -38,7 +38,6 @@ public:
 	// Map tiles.
 	Group* TileMapGroup;
 	Group* GroundEffectGroup;
-	Group* DebugIndicatorGroup;
 	Group* BulletGroup;
 	Group* TowerGroup;
 	Group* EnemyGroup;
@@ -46,7 +45,6 @@ public:
 	Group* UIGroup;
 	Engine::Label* UIMoney;
 	Engine::Image* imgTarget;
-	Engine::Sprite* dangerIndicator;
 	Plant* preview;
 	std::vector<std::vector<TileType>> mapState;
 	std::vector<std::vector<int>> mapDistance;
@@ -70,7 +68,6 @@ public:
 	void ReadEnemyWave();
 	void ConstructUI();
 	void UIBtnClicked(int id);
-	//std::vector<std::vector<int>> CalculateBFSDistance();
 
 };
 #endif // PLAYSCENE_HPP

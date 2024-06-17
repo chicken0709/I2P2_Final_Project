@@ -14,8 +14,7 @@ protected:
     int price;
     float coolDown;
     float reload = 0;
-    float rotateRadian = 2 * ALLEGRO_PI;
-    std::list<Plant*>::iterator lockedTurretIterator;
+    std::list<Plant*>::iterator lockedPlantIterator;
     PlayScene* getPlayScene();
     // Reference: Design Patterns - Factory Method.
     virtual void CreatePea() = 0;

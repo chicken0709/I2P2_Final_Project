@@ -44,12 +44,6 @@ add_executable(2024_I2P2_Final_Project
         Bullet/Bullet.hpp
         Bullet/BasicPea.cpp
         Bullet/BasicPea.hpp
-        Bullet/LaserBullet.cpp
-        Bullet/LaserBullet.hpp
-        Bullet/MissileBullet.cpp
-        Bullet/MissileBullet.hpp
-        Bullet/RocketBullet.cpp
-        Bullet/RocketBullet.hpp
 
         // UI
         UI/Animation/DirtyEffect.cpp
@@ -80,14 +74,8 @@ add_executable(2024_I2P2_Final_Project
         Zombie/BasicZombie.hpp
 
         // Plant
-        Plant/LaserTurret.cpp
-        Plant/LaserTurret.hpp
-        Plant/NewTurret.cpp
-        Plant/NewTurret.hpp
         Plant/Peashooter.cpp
         Plant/Peashooter.hpp
-        Plant/MissileTurret.cpp
-        Plant/MissileTurret.hpp
         Plant/Plant.cpp
         Plant/Plant.hpp
         Plant/PlantButton.cpp
@@ -108,6 +96,14 @@ add_executable(2024_I2P2_Final_Project
         Scene/SettingsScene.hpp
 
         main.cpp
+        Plant/Repeater.cpp
+        Plant/Repeater.hpp
+        Plant/SnowPeashooter.cpp
+        Plant/SnowPeashooter.hpp
+        Bullet/SnowPea.cpp
+        Bullet/SnowPea.hpp
+        Plant/GatlinPeashooter.cpp
+        Plant/GatlinPeashooter.hpp
 )
 
 IF (WIN32)

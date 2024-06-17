@@ -20,9 +20,9 @@ void Plant::Update(float deltaTime) {
 	if (Target) {
 		Engine::Point diff = Target->Position - Position;
 		if (diff.Magnitude() > CollisionRadius) {
-			Target->lockedTurrets.erase(lockedTurretIterator);
+			Target->lockedPlants.erase(lockedPlantIterator);
 			Target = nullptr;
-			lockedTurretIterator = std::list<Plant*>::iterator();
+			lockedPlantIterator = std::list<Plant*>::iterator();
 		}
 	}
 	if (!Target) {
@@ -33,8 +33,8 @@ void Plant::Update(float deltaTime) {
 			Engine::Point diff = it->Position - Position;
 			if (diff.Magnitude() <= CollisionRadius) {
 				Target = dynamic_cast<Zombie*>(it);
-				Target->lockedTurrets.push_back(this);
-				lockedTurretIterator = std::prev(Target->lockedTurrets.end());
+				Target->lockedPlants.push_back(this);
+				lockedPlantIterator = std::prev(Target->lockedPlants.end());
 				break;
 			}
 		}

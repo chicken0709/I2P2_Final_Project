@@ -8,7 +8,7 @@
 #include "Peashooter.hpp"
 #include "Scene/PlayScene.hpp"
 
-const int Peashooter::Price = 50;
+const int Peashooter::Price = 100;
 
 Peashooter::Peashooter(float x, float y) :
 	Plant("play/peashooter.png", x, y, 1000, Price, 1.5) {

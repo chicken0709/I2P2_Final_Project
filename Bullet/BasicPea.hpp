@@ -1,5 +1,5 @@
-#ifndef FIREBULLET_HPP
-#define FIREBULLET_HPP
+#ifndef BASICPEA_HPP
+#define BASICPEA_HPP
 #include "Bullet.hpp"
 
 class Zombie;
@@ -13,4 +13,4 @@ public:
 	explicit BasicPea(Engine::Point position, Engine::Point forwardDirection, float rotation, Plant* parent);
 	void OnExplode(Zombie* enemy) override;
 };
-#endif // FIREBULLET_HPP
+#endif // BASICPEA_HPP

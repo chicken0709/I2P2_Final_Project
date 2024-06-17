@@ -2,7 +2,6 @@
 #include <fstream>
 #include <functional>
 #include <vector>
-#include <queue>
 #include <string>
 #include <memory>
 #include <iostream>
@@ -13,22 +12,21 @@
 #include "Engine/GameEngine.hpp"
 #include "Engine/Group.hpp"
 #include "UI/Component/Label.hpp"
-#include "Plant/LaserTurret.hpp"
-#include "Plant/Peashooter.hpp"
-#include "Plant/MissileTurret.hpp"
-#include "Plant/NewTurret.hpp"
 #include "Plant/PlantButton.hpp"
-#include "Zombie/PlaneEnemy.hpp"
+#include "Plant/Peashooter.hpp"
+#include "Plant/Repeater.hpp"
+#include "Plant/SnowPeashooter.hpp"
+#include "Plant/GatlinPeashooter.hpp"
 #include "PlayScene.hpp"
 #include "Zombie/BasicZombie.hpp"
-#include "Zombie/TankEnemy.hpp"
-#include "Zombie/TankEnemy2.hpp"
 
 bool PlayScene::DebugMode = false;
 const int PlayScene::MapWidth = 9, PlayScene::MapHeight = 5;
 const int PlayScene::BlockSize = 150;
+const int PlantButtonImageSize = 70;
+const int PlantButtonImageDiffX = 5;
+const int PlantButtonImageDiffY = 27;
 const Engine::Point PlayScene::SpawnGridPoint = Engine::Point(MapWidth + 2, 2);
-const Engine::Point PlayScene::EndGridPoint = Engine::Point(MapWidth, MapHeight - 1);
 Engine::Point PlayScene::GetClientSize() {
 	return Engine::Point((MapWidth + 1) * BlockSize, MapHeight * BlockSize);
 }
@@ -44,7 +42,6 @@ void PlayScene::Initialize() {
 	// Add groups from bottom to top.
 	AddNewObject(TileMapGroup = new Group());
 	AddNewObject(GroundEffectGroup = new Group());
-	AddNewObject(DebugIndicatorGroup = new Group());
     // Should support buttons.
     AddNewControlObject(UIGroup = new Group());
 	AddNewObject(TowerGroup = new Group());
@@ -103,13 +100,13 @@ void PlayScene::Update(float deltaTime) {
 			EnemyGroup->AddNewObject(enemy = new BasicZombie(SpawnCoordinate.x, SpawnCoordinate.y));
 			break;
 		case 2:
-			EnemyGroup->AddNewObject(enemy = new PlaneEnemy(SpawnCoordinate.x, SpawnCoordinate.y));
+			EnemyGroup->AddNewObject(enemy = new BasicZombie(SpawnCoordinate.x, SpawnCoordinate.y));
 			break;
 		case 3:
-			EnemyGroup->AddNewObject(enemy = new TankEnemy(SpawnCoordinate.x, SpawnCoordinate.y));
+			EnemyGroup->AddNewObject(enemy = new BasicZombie(SpawnCoordinate.x, SpawnCoordinate.y));
 			break;
 		case 4:
-			EnemyGroup->AddNewObject(enemy = new TankEnemy2(SpawnCoordinate.x, SpawnCoordinate.y));
+			EnemyGroup->AddNewObject(enemy = new BasicZombie(SpawnCoordinate.x, SpawnCoordinate.y));
 			break;
 		default:
 			continue;
@@ -282,70 +279,63 @@ void PlayScene::ConstructUI() {
 	// Text
 	UIGroup->AddNewObject(UIMoney = new Engine::Label(std::to_string(money), "komika.ttf", 20, 132.5, 98.5));
 	PlantButton* btn;
-	// Button 1
+	// Button 1 Sunflower
 	btn = new PlantButton("play/plant_button_background.png", "play/plant_button_background.png",
                           Engine::Sprite("play/plant_button_background.png", 229, 8, 0, 0, 0, 0),
-                          Engine::Sprite("play/peashooter.png", 239, 20, 80, 80, 0, 0)
+                          Engine::Sprite("play/sunflower.png", 239 + PlantButtonImageDiffX, PlantButtonImageDiffY, PlantButtonImageSize, PlantButtonImageSize, 0, 0)
 		, 229, 8, Peashooter::Price);
 	// Reference: Class Member Function Pointer and std::bind.
 	btn->SetOnClickCallback(std::bind(&PlayScene::UIBtnClicked, this, 0));
 	UIGroup->AddNewControlObject(btn);
-	// Button 2
+	// Button 2 TwinSunflower
 	btn = new PlantButton("play/plant_button_background.png", "play/plant_button_background.png",
                           Engine::Sprite("play/plant_button_background.png", 324, 8, 0, 0, 0, 0),
-                          Engine::Sprite("play/peashooter.png", 334, 20, 80, 80, 0, 0)
-		, 324, 8, LaserTurret::Price);
+                          Engine::Sprite("play/twin_sunflower.png", 334 + PlantButtonImageDiffX, PlantButtonImageDiffY, PlantButtonImageSize, PlantButtonImageSize, 0, 0)
+		, 324, 8, Repeater::Price);
 	btn->SetOnClickCallback(std::bind(&PlayScene::UIBtnClicked, this, 1));
 	UIGroup->AddNewControlObject(btn);
-	// Button 3
+	// Button 3 Peashooter
 	btn = new PlantButton("play/plant_button_background.png", "play/plant_button_background.png",
                           Engine::Sprite("play/plant_button_background.png", 419, 8, 0, 0, 0, 0),
-                          Engine::Sprite("play/peashooter.png", 429, 20, 80, 80, 0, 0)
-		, 419, 8, MissileTurret::Price);
+                          Engine::Sprite("play/peashooter.png", 429 + PlantButtonImageDiffX,  PlantButtonImageDiffY, PlantButtonImageSize, PlantButtonImageSize, 0, 0)
+		, 419, 8, Peashooter::Price);
 	btn->SetOnClickCallback(std::bind(&PlayScene::UIBtnClicked, this, 2));
 	UIGroup->AddNewControlObject(btn);
-	// Button 4
+	// Button 4 Repeater
 	btn = new PlantButton("play/plant_button_background.png", "play/plant_button_background.png",
                           Engine::Sprite("play/plant_button_background.png", 514, 8, 0, 0, 0, 0),
-                          Engine::Sprite("play/peashooter.png", 524, 20, 80, 80, 0, 0)
-            , 514, 8, NewTurret::Price);
+                          Engine::Sprite("play/repeater.png", 524 + PlantButtonImageDiffX, PlantButtonImageDiffY, PlantButtonImageSize, PlantButtonImageSize, 0, 0)
+            , 514, 8, Repeater::Price);
 	btn->SetOnClickCallback(std::bind(&PlayScene::UIBtnClicked, this, 3));
 	UIGroup->AddNewControlObject(btn);
-    // Button 5
+    // Button 5 SnowPeashooter
     btn = new PlantButton("play/plant_button_background.png", "play/plant_button_background.png",
                           Engine::Sprite("play/plant_button_background.png", 609, 8, 0, 0, 0, 0),
-                          Engine::Sprite("play/peashooter.png", 619, 20, 80, 80, 0, 0)
-            , 609, 8, NewTurret::Price);
-    btn->SetOnClickCallback(std::bind(&PlayScene::UIBtnClicked, this, 3));
+                          Engine::Sprite("play/snow_peashooter.png", 619 + PlantButtonImageDiffX, PlantButtonImageDiffY, PlantButtonImageSize, PlantButtonImageSize, 0, 0)
+            , 609, 8, SnowPeashooter::Price);
+    btn->SetOnClickCallback(std::bind(&PlayScene::UIBtnClicked, this, 4));
     UIGroup->AddNewControlObject(btn);
-    // Button 6
+    // Button 6 GatlinPeashooter
     btn = new PlantButton("play/plant_button_background.png", "play/plant_button_background.png",
                           Engine::Sprite("play/plant_button_background.png", 704, 8, 0, 0, 0, 0),
-                          Engine::Sprite("play/peashooter.png", 714, 20, 80, 80, 0, 0)
-            , 704, 8, NewTurret::Price);
-    btn->SetOnClickCallback(std::bind(&PlayScene::UIBtnClicked, this, 3));
+                          Engine::Sprite("play/gatlin_peashooter.png", 714 + PlantButtonImageDiffX, PlantButtonImageDiffY, PlantButtonImageSize, PlantButtonImageSize, 0, 0)
+            , 704, 8, SnowPeashooter::Price);
+    btn->SetOnClickCallback(std::bind(&PlayScene::UIBtnClicked, this, 5));
     UIGroup->AddNewControlObject(btn);
-    // Button 7
+    // Button 7 Wallnut
     btn = new PlantButton("play/plant_button_background.png", "play/plant_button_background.png",
                           Engine::Sprite("play/plant_button_background.png", 799, 8, 0, 0, 0, 0),
-                          Engine::Sprite("play/peashooter.png", 809, 20, 80, 80, 0, 0)
-            , 799, 8, NewTurret::Price);
+                          Engine::Sprite("play/wallnut.png", 809 + PlantButtonImageDiffX, PlantButtonImageDiffY, PlantButtonImageSize, PlantButtonImageSize, 0, 0)
+            , 799, 8, SnowPeashooter::Price);
     btn->SetOnClickCallback(std::bind(&PlayScene::UIBtnClicked, this, 3));
     UIGroup->AddNewControlObject(btn);
-    // Button 8
+    // Button 8 Chili
     btn = new PlantButton("play/plant_button_background.png", "play/plant_button_background.png",
                           Engine::Sprite("play/plant_button_background.png", 894, 8, 0, 0, 0, 0),
-                          Engine::Sprite("play/peashooter.png", 904, 20, 80, 80, 0, 0)
-            , 894, 8, NewTurret::Price);
+                          Engine::Sprite("play/chili.png", 904 + PlantButtonImageDiffX, PlantButtonImageDiffY, PlantButtonImageSize, PlantButtonImageSize, 0, 0)
+            , 894, 8, SnowPeashooter::Price);
     btn->SetOnClickCallback(std::bind(&PlayScene::UIBtnClicked, this, 3));
     UIGroup->AddNewControlObject(btn);
-	// TODO: [CUSTOM-TURRET]: Create a button to support constructing the turret.
-	int w = Engine::GameEngine::GetInstance().GetScreenSize().x;
-	int h = Engine::GameEngine::GetInstance().GetScreenSize().y;
-	int shift = 135 + 25;
-	dangerIndicator = new Engine::Sprite("play/benjamin.png", w - shift, h - shift);
-	dangerIndicator->Tint.a = 0;
-	UIGroup->AddNewObject(dangerIndicator);
 }
 
 void PlayScene::UIBtnClicked(int id) {
@@ -353,12 +343,16 @@ void PlayScene::UIBtnClicked(int id) {
 		UIGroup->RemoveObject(preview->GetObjectIterator());
 	if (id == 0 && money >= Peashooter::Price)
 		preview = new Peashooter(0, 0);
-	else if (id == 1 && money >= LaserTurret::Price)
-		preview = new LaserTurret(0, 0);
-	else if (id == 2 && money >= MissileTurret::Price)
-		preview = new MissileTurret(0, 0);
-	else if (id == 3 && money >= NewTurret::Price)
-		preview = new NewTurret(0, 0);
+	else if (id == 1 && money >= Peashooter::Price)
+		preview = new Peashooter(0, 0);
+	else if (id == 2 && money >= Peashooter::Price)
+		preview = new Peashooter(0, 0);
+	else if (id == 3 && money >= Repeater::Price)
+		preview = new Repeater(0, 0);
+    else if (id == 4 && money >= SnowPeashooter::Price)
+        preview = new SnowPeashooter(0, 0);
+    else if (id == 5 && money >= GatlinPeashooter::Price)
+        preview = new GatlinPeashooter(0, 0);
 	if (!preview)
 		return;
 	preview->Position = Engine::GameEngine::GetInstance().GetMousePosition();
@@ -368,41 +362,6 @@ void PlayScene::UIBtnClicked(int id) {
 	UIGroup->AddNewObject(preview);
 	OnMouseMove(Engine::GameEngine::GetInstance().GetMousePosition().x, Engine::GameEngine::GetInstance().GetMousePosition().y);
 }
-/*
-std::vector<std::vector<int>> PlayScene::CalculateBFSDistance() {
-	// Reverse BFS to find path.
-	std::vector<std::vector<int>> map(MapHeight, std::vector<int>(std::vector<int>(MapWidth, -1)));
-	std::queue<Engine::Point> que;
-	// Push end point.
-	// BFS from end point.
-	if (mapState[MapHeight - 1][MapWidth - 1] != TILE_DIRT)
-		return map;
-	que.push(Engine::Point(MapWidth - 1, MapHeight - 1));
-	map[MapHeight - 1][MapWidth - 1] = 0;
-	while (!que.empty()) {
-		Engine::Point p = que.front();
-		que.pop();
-
-		if(p.x - 1 >= 0 && map[p.y][p.x - 1] == -1 && mapState[p.y][p.x - 1] == TILE_DIRT) {
-			map[p.y][p.x - 1] = 1 + map[p.y][p.x];
-			que.push(Engine::Point(p.x - 1, p.y));
-		}
-		if(p.y - 1 >= 0 && map[p.y - 1][p.x] == -1 && mapState[p.y - 1][p.x] == TILE_DIRT) {
-			map[p.y - 1][p.x] = 1 + map[p.y][p.x];
-			que.push(Engine::Point(p.x, p.y - 1));
-		}
-		if(p.x + 1 < MapWidth && map[p.y][p.x + 1] == -1 && mapState[p.y][p.x + 1] == TILE_DIRT) {
-			map[p.y][p.x + 1] = 1 + map[p.y][p.x];
-			que.push(Engine::Point(p.x + 1, p.y));
-		}
-		if(p.y + 1 < MapHeight && map[p.y + 1][p.x] == -1 && mapState[p.y + 1][p.x] == TILE_DIRT) {
-			map[p.y + 1][p.x] = 1 + map[p.y][p.x];
-			que.push(Engine::Point(p.x, p.y + 1));
-		}
-	}
-	return map;
-}
-*/
 
 
 

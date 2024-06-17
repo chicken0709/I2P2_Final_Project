@@ -1,5 +1,5 @@
-#ifndef ENEMY_HPP
-#define ENEMY_HPP
+#ifndef ZOMBIE_HPP
+#define ZOMBIE_HPP
 #include <list>
 #include <vector>
 #include <string>
@@ -15,19 +15,18 @@ class Zombie : public Engine::Sprite {
 protected:
 	std::vector<Engine::Point> path;
 	float speed;
+    float originalSpeed;
 	float hp;
 	int money;
 	PlayScene* getPlayScene();
 	virtual void OnExplode();
 public:
-	float reachEndTime;
-	std::list<Plant*> lockedTurrets;
+	std::list<Plant*> lockedPlants;
 	std::list<Bullet*> lockedBullets;
-	Zombie(std::string img, float x, float y, float radius, float speed, float hp, int money);
+	Zombie(std::string img, float x, float y, float radius, float speed, float originalSpeed, float hp, int money);
 	void Hit(float damage);
-	//void UpdatePath(const std::vector<std::vector<int>>& mapDistance);
 	void Update(float deltaTime) override;
 	void Draw() const override;
 	void UpdateSpeed();
 };
-#endif // ENEMY_HPP
+#endif // ZOMBIE_HPP
