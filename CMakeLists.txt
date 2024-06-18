@@ -104,6 +104,12 @@ add_executable(2024_I2P2_Final_Project
         Bullet/SnowPea.hpp
         Plant/GatlinPeashooter.cpp
         Plant/GatlinPeashooter.hpp
+        Plant/Sunflower.cpp
+        Plant/Sunflower.hpp
+        Plant/Sun.cpp
+        Plant/Sun.hpp
+        Plant/TwinSunflower.cpp
+        Plant/TwinSunflower.hpp
 )
 
 IF (WIN32)

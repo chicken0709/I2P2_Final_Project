@@ -11,7 +11,7 @@
 const int GatlinPeashooter::Price = 450;
 
 GatlinPeashooter::GatlinPeashooter(float x, float y) :
-        Plant("play/gatlin_peashooter.png", x, y, 1000, Price, 0.3) {
+        Plant("play/gatlin_peashooter.png", x, y, 1000, Price, 0.3, PlantType::PEASHOOTER) {
     // Move center downward, since we the turret head is slightly biased upward.
     Anchor.y += 8.0f / GetBitmapHeight();
 }

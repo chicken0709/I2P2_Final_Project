@@ -13,6 +13,8 @@
 #include "Engine/Group.hpp"
 #include "UI/Component/Label.hpp"
 #include "Plant/PlantButton.hpp"
+#include "Plant/Sunflower.hpp"
+#include "Plant/TwinSunflower.hpp"
 #include "Plant/Peashooter.hpp"
 #include "Plant/Repeater.hpp"
 #include "Plant/SnowPeashooter.hpp"
@@ -283,7 +285,7 @@ void PlayScene::ConstructUI() {
 	btn = new PlantButton("play/plant_button_background.png", "play/plant_button_background.png",
                           Engine::Sprite("play/plant_button_background.png", 229, 8, 0, 0, 0, 0),
                           Engine::Sprite("play/sunflower.png", 239 + PlantButtonImageDiffX, PlantButtonImageDiffY, PlantButtonImageSize, PlantButtonImageSize, 0, 0)
-		, 229, 8, Peashooter::Price);
+		, 229, 8, Sunflower::Price);
 	// Reference: Class Member Function Pointer and std::bind.
 	btn->SetOnClickCallback(std::bind(&PlayScene::UIBtnClicked, this, 0));
 	UIGroup->AddNewControlObject(btn);
@@ -291,7 +293,7 @@ void PlayScene::ConstructUI() {
 	btn = new PlantButton("play/plant_button_background.png", "play/plant_button_background.png",
                           Engine::Sprite("play/plant_button_background.png", 324, 8, 0, 0, 0, 0),
                           Engine::Sprite("play/twin_sunflower.png", 334 + PlantButtonImageDiffX, PlantButtonImageDiffY, PlantButtonImageSize, PlantButtonImageSize, 0, 0)
-		, 324, 8, Repeater::Price);
+		, 324, 8, TwinSunflower::Price);
 	btn->SetOnClickCallback(std::bind(&PlayScene::UIBtnClicked, this, 1));
 	UIGroup->AddNewControlObject(btn);
 	// Button 3 Peashooter
@@ -341,10 +343,10 @@ void PlayScene::ConstructUI() {
 void PlayScene::UIBtnClicked(int id) {
 	if (preview)
 		UIGroup->RemoveObject(preview->GetObjectIterator());
-	if (id == 0 && money >= Peashooter::Price)
-		preview = new Peashooter(0, 0);
-	else if (id == 1 && money >= Peashooter::Price)
-		preview = new Peashooter(0, 0);
+	if (id == 0 && money >= Sunflower::Price)
+		preview = new Sunflower(0, 0);
+	else if (id == 1 && money >= TwinSunflower::Price)
+		preview = new TwinSunflower(0, 0);
 	else if (id == 2 && money >= Peashooter::Price)
 		preview = new Peashooter(0, 0);
 	else if (id == 3 && money >= Repeater::Price)

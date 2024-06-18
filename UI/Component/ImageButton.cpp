@@ -1,11 +1,7 @@
-#include <functional>
-#include <memory>
-
 #include "Engine/Collider.hpp"
 #include "Engine/GameEngine.hpp"
 #include "Image.hpp"
 #include "ImageButton.hpp"
-#include "Engine/Point.hpp"
 #include "Engine/Resources.hpp"
 
 namespace Engine {

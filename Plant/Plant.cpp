@@ -8,8 +8,8 @@
 PlayScene* Plant::getPlayScene() {
 	return dynamic_cast<PlayScene*>(Engine::GameEngine::GetInstance().GetActiveScene());
 }
-Plant::Plant(std::string img, float x, float y, float radius, int price, float coolDown) :
-	Sprite(img, x, y), price(price), coolDown(coolDown) {
+Plant::Plant(std::string img, float x, float y, float radius, int price, float coolDown, PlantType plantType) :
+	Sprite(img, x, y), price(price), coolDown(coolDown), plantType(plantType) {
 	CollisionRadius = radius;
 }
 void Plant::Update(float deltaTime) {
@@ -17,6 +17,15 @@ void Plant::Update(float deltaTime) {
 	PlayScene* scene = getPlayScene();
 	if (!Enabled)
 		return;
+    if(plantType == PlantType::SUNFLOWER) {
+        reload -= deltaTime;
+        if (reload <= 0) {
+            // shoot.
+            reload = coolDown;
+            CreatePea();
+        }
+        return;
+    }
 	if (Target) {
 		Engine::Point diff = Target->Position - Position;
 		if (diff.Magnitude() > CollisionRadius) {

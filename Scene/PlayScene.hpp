@@ -26,9 +26,9 @@ private:
 protected:
 	bool mower_available[5];
 	int lives;
-	int money;
 	int SpeedMult;
 public:
+    int money;
 	static bool DebugMode;
 	static const int MapWidth, MapHeight;
 	static const int BlockSize;
@@ -49,7 +49,6 @@ public:
 	std::vector<std::vector<TileType>> mapState;
 	std::vector<std::vector<int>> mapDistance;
 	std::list<std::pair<int, float>> enemyWaveData;
-	static const Engine::Point EndGridPoint;
 
 	static Engine::Point GetClientSize();
 	explicit PlayScene() = default;
