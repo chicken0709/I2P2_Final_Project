@@ -52,7 +52,7 @@ void Zombie::Update(float deltaTime) {
 
 		//reach house
 		if (x < 0) {
-			getPlayScene()->Hit(Position.y);
+			getPlayScene()->ReachHouse(Position.y);
 			Sprite::Update(deltaTime);
 			return;
 		}

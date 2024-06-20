@@ -62,7 +62,10 @@ public:
 	void OnMouseMove(int mx, int my) override;
 	void OnMouseUp(int button, int mx, int my) override;
 	void OnKeyDown(int keyCode) override;
-	void Hit(int row);
+	void ReachHouse(int row);
+
+	void CreateLawnMower(Engine::Point position);
+
 	int GetMoney() const;
 	void EarnMoney(int money);
 	void ReadMap();

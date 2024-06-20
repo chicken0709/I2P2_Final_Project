@@ -20,6 +20,8 @@
 #include "Plant/SnowPeashooter.hpp"
 #include "Plant/GatlinPeashooter.hpp"
 #include "PlayScene.hpp"
+
+#include "Bullet/Mower.hpp"
 #include "Zombie/BasicZombie.hpp"
 
 bool PlayScene::DebugMode = false;
@@ -231,8 +233,10 @@ void PlayScene::OnKeyDown(int keyCode) {
 	}
 }
 
-void PlayScene::Hit(int row) {
+void PlayScene::ReachHouse(int row) {
 	if(mower_available[row]) {
+		Engine::Point pos(row, 0);
+		CreateLawnMower(pos);
 		mower_available[row] = false;
 	}
 	else {
