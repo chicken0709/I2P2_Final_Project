@@ -114,6 +114,10 @@ add_executable(2024_I2P2_Final_Project
         Plant/Wallnut.hpp
         Plant/Shovel.cpp
         Plant/Shovel.hpp
+        Plant/LawnMower.hpp
+        Plant/LawnMower.cpp
+        Bullet/Mower.hpp
+        Bullet/Mower.cpp
 )
 
 IF (WIN32)

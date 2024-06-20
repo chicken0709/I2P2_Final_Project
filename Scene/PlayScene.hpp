@@ -24,10 +24,10 @@ class PlayScene final : public Engine::IScene {
 private:
 	ALLEGRO_SAMPLE_ID bgmId;
 protected:
-	bool mower_available[5];
 	int lives;
 	int SpeedMult;
 public:
+	Plant* mower_available[5];
     int money;
     bool shovelClicked;
 	static bool DebugMode;
@@ -63,7 +63,9 @@ public:
 	void OnMouseMove(int mx, int my) override;
 	void OnMouseUp(int button, int mx, int my) override;
 	void OnKeyDown(int keyCode) override;
-	void Hit(int row);
+	void ReachHouse();
+
+
 	int GetMoney() const;
 	void EarnMoney(int money);
 	void ReadMap();

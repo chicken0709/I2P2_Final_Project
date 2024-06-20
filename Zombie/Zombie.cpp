@@ -50,7 +50,13 @@ void Zombie::Update(float deltaTime) {
 
 		//reach house
 		if (x < 0) {
-			getPlayScene()->Hit(Position.y);
+			if(getPlayScene()->mower_available[y - 1] != nullptr) {
+				getPlayScene()->mower_available[y - 1]->Target = this;
+				getPlayScene()->mower_available[y - 1] = nullptr;
+			}else {
+				if(x <= -2)
+					getPlayScene()->ReachHouse();
+			}
 			Sprite::Update(deltaTime);
 			return;
 		}

@@ -22,6 +22,9 @@
 #include "Plant/Wallnut.hpp"
 #include "Plant/Shovel.hpp"
 #include "PlayScene.hpp"
+
+#include "Bullet/Mower.hpp"
+#include "Plant/LawnMower.hpp"
 #include "Zombie/BasicZombie.hpp"
 
 bool PlayScene::DebugMode = false;
@@ -38,8 +41,6 @@ Engine::Point PlayScene::GetClientSize() {
 void PlayScene::Initialize() {
 	mapState.clear();
 	ticks = 0;
-	for(int i = 0;i < 5;i++)
-		mower_available[i] = true;
 	lives = 100;
 	money = 15000; // change to 50 when done
 	SpeedMult = 1;
@@ -66,6 +67,26 @@ void PlayScene::Initialize() {
 	// Start BGM.
 	bgmId = AudioHelper::PlayBGM("play.mp3");
     shovelClicked = false;
+
+	//generate lawn mowers
+	for(int i = 1;i <= MapHeight;i++) {
+		int x = 0;
+		int y = i;
+		preview = new LawnMower(0, 0);
+		// Construct real turret.
+		preview->Position.x = x * BlockSize + BlockSize / 2;
+		preview->Position.y = y * BlockSize + BlockSize / 2 - 35;
+		preview->Enabled = true;
+		preview->Preview = false;
+		preview->Tint = al_map_rgba(255, 255, 255, 255);
+		TowerGroup->AddNewObject(preview);
+		// To keep responding when paused.
+		preview->Update(0);
+		// Remove Preview.
+		mower_available[i - 1] = preview;
+		preview = nullptr;
+
+	}
 }
 
 void PlayScene::Terminate() {
@@ -232,13 +253,8 @@ void PlayScene::OnKeyDown(int keyCode) {
 	}
 }
 
-void PlayScene::Hit(int row) {
-	if(mower_available[row]) {
-		mower_available[row] = false;
-	}
-	else {
+void PlayScene::ReachHouse() {
 		Engine::GameEngine::GetInstance().ChangeScene("lose");
-	}
 
 	//Original Code
 	/*
