@@ -7,7 +7,6 @@
 
 #include "Engine/AudioHelper.hpp"
 #include "Engine/LOG.hpp"
-#include "UI/Animation/ExplosionEffect.hpp"
 
 PlayScene* Plant::getPlayScene() {
 	return dynamic_cast<PlayScene*>(Engine::GameEngine::GetInstance().GetActiveScene());
@@ -75,7 +74,7 @@ void Plant::TakeDamage(float damage) {
 	if (hp <= 0) {
 		getPlayScene()->lawn[pos_x][pos_y] = nullptr;
 		getPlayScene()->mapState[pos_x][pos_y] = TILE_DIRT;
-		getPlayScene()->EnemyGroup->RemoveObject(objectIterator);
+		getPlayScene()->TowerGroup->RemoveObject(objectIterator);
 	}
 }
 

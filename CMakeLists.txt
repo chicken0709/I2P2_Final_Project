@@ -112,6 +112,8 @@ add_executable(2024_I2P2_Final_Project
         Plant/TwinSunflower.hpp
         Plant/Wallnut.cpp
         Plant/Wallnut.hpp
+        Plant/Shovel.cpp
+        Plant/Shovel.hpp
 )
 
 IF (WIN32)

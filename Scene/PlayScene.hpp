@@ -29,6 +29,7 @@ protected:
 	int SpeedMult;
 public:
     int money;
+    bool shovelClicked;
 	static bool DebugMode;
 	static const int MapWidth, MapHeight;
 	static const int BlockSize;

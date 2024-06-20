@@ -20,6 +20,7 @@
 #include "Plant/SnowPeashooter.hpp"
 #include "Plant/GatlinPeashooter.hpp"
 #include "Plant/Wallnut.hpp"
+#include "Plant/Shovel.hpp"
 #include "PlayScene.hpp"
 #include "Zombie/BasicZombie.hpp"
 
@@ -64,6 +65,7 @@ void PlayScene::Initialize() {
 	lawn = std::vector<std::vector<Plant*>>(MapHeight, std::vector<Plant*>(MapWidth));
 	// Start BGM.
 	bgmId = AudioHelper::PlayBGM("play.mp3");
+    shovelClicked = false;
 }
 
 void PlayScene::Terminate() {
@@ -174,6 +176,19 @@ void PlayScene::OnMouseUp(int button, int mx, int my) {
 		return;
 	const int x = mx / BlockSize;
 	const int y = my / BlockSize;
+    if(shovelClicked) {
+        if (mapState[y - 1][x - 1] == TILE_OCCUPIED) {
+            Plant *plant = lawn[y - 1][x - 1];
+            plant->TakeDamage(10000);
+            mapState[y - 1][x - 1] = TILE_DIRT;
+            EarnMoney(plant->GetPrice());
+            AudioHelper::PlayAudio("chomp.mp3");
+        }
+        UIGroup->RemoveObject(preview->GetObjectIterator());
+        preview = nullptr;
+        shovelClicked = false;
+        return;
+    }
 	if (button & 1) {
         if(x <= 0 || y <= 0) return;
 		if (mapState[y - 1][x - 1] != TILE_OCCUPIED) {
@@ -210,21 +225,6 @@ void PlayScene::OnKeyDown(int keyCode) {
 	IScene::OnKeyDown(keyCode);
 	if (keyCode == ALLEGRO_KEY_TAB) {
 		DebugMode = !DebugMode;
-	}
-	else if (keyCode == ALLEGRO_KEY_Q) {
-		// Hotkey for Peashooter.
-		UIBtnClicked(0);
-	}
-	else if (keyCode == ALLEGRO_KEY_W) {
-		// Hotkey for LaserTurret.
-		UIBtnClicked(1);
-	}
-	else if (keyCode == ALLEGRO_KEY_E) {
-		// Hotkey for MissileTurret.
-		UIBtnClicked(2);
-	}
-	else if(keyCode == ALLEGRO_KEY_R) {
-		UIBtnClicked(3);
 	}
 	else if (keyCode >= ALLEGRO_KEY_0 && keyCode <= ALLEGRO_KEY_9) {
 		// Hotkey for Speed up.
@@ -355,7 +355,7 @@ void PlayScene::ConstructUI() {
                           Engine::Sprite("play/shovel_button.png", 1030, 0, 0, 0, 0, 0),
                           Engine::Sprite("play/shovel.png", 1036, 6, 100, 104, 0, 0)
             , 1030, 0, SnowPeashooter::Price);
-    btn->SetOnClickCallback(std::bind(&PlayScene::UIBtnClicked, this, 3));
+    btn->SetOnClickCallback(std::bind(&PlayScene::UIBtnClicked, this, 8));
     UIGroup->AddNewControlObject(btn);
 }
 
@@ -376,6 +376,11 @@ void PlayScene::UIBtnClicked(int id) {
         preview = new GatlinPeashooter(0, 0);
     else if (id == 6 && money >= Wallnut::Price)
         preview = new Wallnut(0, 0);
+    else if (id == 8) {
+        preview = new Shovel(0, 0);
+        shovelClicked = true;
+    }
+
     //else if (id == 8)
 
 	if (!preview)
