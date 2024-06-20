@@ -19,6 +19,7 @@
 #include "Plant/Repeater.hpp"
 #include "Plant/SnowPeashooter.hpp"
 #include "Plant/GatlinPeashooter.hpp"
+#include "Plant/Wallnut.hpp"
 #include "PlayScene.hpp"
 #include "Zombie/BasicZombie.hpp"
 
@@ -329,7 +330,7 @@ void PlayScene::ConstructUI() {
     btn = new PlantButton("play/plant_button_background.png", "play/plant_button_background.png",
                           Engine::Sprite("play/plant_button_background.png", 704, 8, 0, 0, 0, 0),
                           Engine::Sprite("play/gatlin_peashooter.png", 714 + PlantButtonImageDiffX, PlantButtonImageDiffY, PlantButtonImageSize, PlantButtonImageSize, 0, 0)
-            , 704, 8, SnowPeashooter::Price);
+            , 704, 8, GatlinPeashooter::Price);
     btn->SetOnClickCallback(std::bind(&PlayScene::UIBtnClicked, this, 5));
     UIGroup->AddNewControlObject(btn);
     UIGroup->AddNewObject(new Engine::Label(std::to_string(GatlinPeashooter::Price), "komika.ttf", 16, 734, 92.5));
@@ -337,18 +338,25 @@ void PlayScene::ConstructUI() {
     btn = new PlantButton("play/plant_button_background.png", "play/plant_button_background.png",
                           Engine::Sprite("play/plant_button_background.png", 799, 8, 0, 0, 0, 0),
                           Engine::Sprite("play/wallnut.png", 809 + PlantButtonImageDiffX, PlantButtonImageDiffY, PlantButtonImageSize, PlantButtonImageSize, 0, 0)
-            , 799, 8, SnowPeashooter::Price);
-    btn->SetOnClickCallback(std::bind(&PlayScene::UIBtnClicked, this, 3));
+            , 799, 8, Wallnut::Price);
+    btn->SetOnClickCallback(std::bind(&PlayScene::UIBtnClicked, this, 6));
     UIGroup->AddNewControlObject(btn);
-    UIGroup->AddNewObject(new Engine::Label(std::to_string(SnowPeashooter::Price), "komika.ttf", 16, 829, 92.5));
+    UIGroup->AddNewObject(new Engine::Label(std::to_string(Wallnut::Price), "komika.ttf", 16, 834, 92.5));
     // Button 8 Chili
     btn = new PlantButton("play/plant_button_background.png", "play/plant_button_background.png",
                           Engine::Sprite("play/plant_button_background.png", 894, 8, 0, 0, 0, 0),
                           Engine::Sprite("play/chili.png", 904 + PlantButtonImageDiffX, PlantButtonImageDiffY, PlantButtonImageSize, PlantButtonImageSize, 0, 0)
-            , 894, 8, SnowPeashooter::Price);
+            , 894, 8, Peashooter::Price);
     btn->SetOnClickCallback(std::bind(&PlayScene::UIBtnClicked, this, 3));
     UIGroup->AddNewControlObject(btn);
     UIGroup->AddNewObject(new Engine::Label(std::to_string(SnowPeashooter::Price), "komika.ttf", 16, 924, 92.5));
+    // Button 8 shovel
+    btn = new PlantButton("play/shovel_button.png", "play/shovel_button.png",
+                          Engine::Sprite("play/shovel_button.png", 1030, 0, 0, 0, 0, 0),
+                          Engine::Sprite("play/shovel.png", 1036, 6, 100, 104, 0, 0)
+            , 1030, 0, SnowPeashooter::Price);
+    btn->SetOnClickCallback(std::bind(&PlayScene::UIBtnClicked, this, 3));
+    UIGroup->AddNewControlObject(btn);
 }
 
 void PlayScene::UIBtnClicked(int id) {
@@ -366,6 +374,10 @@ void PlayScene::UIBtnClicked(int id) {
         preview = new SnowPeashooter(0, 0);
     else if (id == 5 && money >= GatlinPeashooter::Price)
         preview = new GatlinPeashooter(0, 0);
+    else if (id == 6 && money >= Wallnut::Price)
+        preview = new Wallnut(0, 0);
+    //else if (id == 8)
+
 	if (!preview)
 		return;
 	preview->Position = Engine::GameEngine::GetInstance().GetMousePosition();

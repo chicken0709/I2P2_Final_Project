@@ -18,7 +18,7 @@ protected:
     float originalSpeed;
 	float hp;
 	int money;
-	int reload = 0;
+	float reload = 0;
 	float coolDown;
 	PlayScene* getPlayScene();
 	virtual void OnExplode();

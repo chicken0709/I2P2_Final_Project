@@ -11,8 +11,7 @@
 const int Repeater::Price = 200;
 
 Repeater::Repeater(float x, float y) :
-        Plant("play/repeater.png", x, y, 1000,6, Price, 0.3, PlantType::PEASHOOTER) {
-    // Move center downward, since we the turret head is slightly biased upward.
+        Plant("play/repeater.png", x, y, 10,1000, Price, 0.3, PlantType::PEASHOOTER) {
     Anchor.y += 8.0f / GetBitmapHeight();
 }
 

@@ -110,6 +110,8 @@ add_executable(2024_I2P2_Final_Project
         Plant/Sun.hpp
         Plant/TwinSunflower.cpp
         Plant/TwinSunflower.hpp
+        Plant/Wallnut.cpp
+        Plant/Wallnut.hpp
 )
 
 IF (WIN32)
