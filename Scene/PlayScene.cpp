@@ -74,8 +74,8 @@ void PlayScene::Initialize() {
 		int y = i;
 		preview = new LawnMower(0, 0);
 		// Construct real turret.
-		preview->Position.x = x * BlockSize + BlockSize / 2;
-		preview->Position.y = y * BlockSize + BlockSize / 2 - 35;
+		preview->Position.x = x * BlockSize + BlockSize / 2 + 25;
+		preview->Position.y = y * BlockSize + BlockSize / 2;
 		preview->Enabled = true;
 		preview->Preview = false;
 		preview->Tint = al_map_rgba(255, 255, 255, 255);
@@ -201,9 +201,9 @@ void PlayScene::OnMouseUp(int button, int mx, int my) {
         if (mapState[y - 1][x - 1] == TILE_OCCUPIED) {
             Plant *plant = lawn[y - 1][x - 1];
             plant->TakeDamage(10000);
-            mapState[y - 1][x - 1] = TILE_DIRT;
+            mapState[y - 1][x - 1] = TILE_EMPTY;
             EarnMoney(plant->GetPrice());
-            AudioHelper::PlayAudio("chomp.mp3");
+            AudioHelper::PlayAudio("shovel.ogg");
         }
         UIGroup->RemoveObject(preview->GetObjectIterator());
         preview = nullptr;
@@ -254,15 +254,7 @@ void PlayScene::OnKeyDown(int keyCode) {
 }
 
 void PlayScene::ReachHouse() {
-		Engine::GameEngine::GetInstance().ChangeScene("lose");
-
-	//Original Code
-	/*
-	lives--;
-	if (lives <= 0) {
-		Engine::GameEngine::GetInstance().ChangeScene("lose");
-	}
-	*/
+    Engine::GameEngine::GetInstance().ChangeScene("lose");
 }
 
 int PlayScene::GetMoney() const {
@@ -280,8 +272,6 @@ void PlayScene::ReadMap() {
 }
 
 void PlayScene::ReadEnemyWave() {
-    // TODO: [HACKATHON-3-BUG] (3/5): Trace the code to know how the enemies are created.
-    // TODO: [HACKATHON-3-BUG] (3/5): There is a bug in these files, which let the game only spawn the first enemy, try to fix it.
     std::string filename = std::string("Resource/enemy") + std::to_string(MapId) + ".txt";
 	// Read enemy file.
 	float type, wait, repeat;
@@ -396,8 +386,6 @@ void PlayScene::UIBtnClicked(int id) {
         preview = new Shovel(0, 0);
         shovelClicked = true;
     }
-
-    //else if (id == 8)
 
 	if (!preview)
 		return;

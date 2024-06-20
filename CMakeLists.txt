@@ -64,12 +64,6 @@ add_executable(2024_I2P2_Final_Project
         // Zombie
         Zombie/Zombie.cpp
         Zombie/Zombie.hpp
-        Zombie/PlaneEnemy.cpp
-        Zombie/PlaneEnemy.hpp
-        Zombie/TankEnemy.cpp
-        Zombie/TankEnemy.hpp
-        Zombie/TankEnemy2.cpp
-        Zombie/TankEnemy2.hpp
         Zombie/BasicZombie.cpp
         Zombie/BasicZombie.hpp
 

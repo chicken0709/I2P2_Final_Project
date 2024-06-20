@@ -10,6 +10,8 @@
 #include "Engine/IScene.hpp"
 #include "Scene/PlayScene.hpp"
 #include "Plant/Plant.hpp"
+#include "Engine/LOG.hpp"
+
 const int ZDMG = 1;
 
 PlayScene* Zombie::getPlayScene() {
@@ -17,8 +19,8 @@ PlayScene* Zombie::getPlayScene() {
 }
 
 void Zombie::OnExplode() {
-	//getPlayScene()->EffectGroup->AddNewObject(new ExplosionEffect(Position.x, Position.y));
     AudioHelper::PlayAudio("limbs_pop.mp3");
+    Engine::LOG(Engine::INFO) << "zombie dead";
 }
 
 Zombie::Zombie(std::string img, float x, float y, float radius, float speed, float originalSpeed, float hp, int money,float cooldown) :
@@ -28,7 +30,6 @@ Zombie::Zombie(std::string img, float x, float y, float radius, float speed, flo
 
 void Zombie::TakeDamage(float damage) {
 	hp -= damage;
-    AudioHelper::PlayAudio("splat.ogg");
 	if (hp <= 0) {
 		OnExplode();
 		// Remove all turret's reference to target.
@@ -37,7 +38,9 @@ void Zombie::TakeDamage(float damage) {
 		for (auto& it: lockedBullets)
 			it->Target = nullptr;
 		getPlayScene()->EnemyGroup->RemoveObject(objectIterator);
+        return;
 	}
+    AudioHelper::PlayAudio("splat.ogg");
 }
 
 void Zombie::Update(float deltaTime) {
@@ -74,7 +77,7 @@ void Zombie::Update(float deltaTime) {
 
 		//stop at plant
 		if (!outside) {
-			if (getPlayScene()->mapState[y - 1][x] == TILE_OCCUPIED) {//is 1-base so weird
+			if (getPlayScene()->mapState[y - 1][x] == TILE_OCCUPIED) {
                 Velocity = Engine::Point(0, 0);
                 Sprite::Update(deltaTime);
                 reload -= deltaTime;

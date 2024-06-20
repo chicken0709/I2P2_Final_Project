@@ -81,7 +81,7 @@ void Plant::TakeDamage(float damage) {
 	hp -= damage;
 	if (hp <= 0) {
 		getPlayScene()->lawn[pos_x][pos_y] = nullptr;
-		getPlayScene()->mapState[pos_x][pos_y] = TILE_DIRT;
+		getPlayScene()->mapState[pos_x][pos_y] = TILE_EMPTY;
 		getPlayScene()->TowerGroup->RemoveObject(objectIterator);
 	}
 }

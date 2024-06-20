@@ -9,7 +9,7 @@
 #include "Engine/IScene.hpp"
 #include "Engine/Point.hpp"
 enum TileType {
-	TILE_DIRT,
+	TILE_EMPTY,
 	TILE_OCCUPIED,
 };
 class Plant;

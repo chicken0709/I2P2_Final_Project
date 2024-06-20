@@ -10,14 +10,14 @@ class Plant;
 namespace Engine {
 struct Point;
 }  // namespace Engine
-enum class Bullettype {
+enum class BulletType {
 	PEA, MOWER
 };
 class Bullet : public Engine::Sprite {
 protected:
 	float speed;
 	float damage;
-	Bullettype bullettype = Bullettype::PEA;
+	BulletType bulletType = BulletType::PEA;
 	Plant* parent;
 	PlayScene* getPlayScene();
 	virtual void OnExplode(Zombie* enemy);
