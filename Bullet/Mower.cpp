@@ -1,5 +1,3 @@
-#include <allegro5/base.h>
-
 #include "Mower.hpp"
 #include "Zombie/Zombie.hpp"
 #include "Engine/Group.hpp"
