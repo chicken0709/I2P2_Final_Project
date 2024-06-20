@@ -40,8 +40,6 @@ Engine::Point PlayScene::GetClientSize() {
 void PlayScene::Initialize() {
 	mapState.clear();
 	ticks = 0;
-	for(int i = 0;i < 5;i++)
-		mower_available[i] = true;
 	lives = 100;
 	money = 15000; // change to 50 when done
 	SpeedMult = 1;
@@ -69,10 +67,13 @@ void PlayScene::Initialize() {
 	bgmId = AudioHelper::PlayBGM("play.mp3");
 
 	//generate lawn mowers
-	for(int i = 0;i < MapHeight;i++) {
-		preview = new Sunflower(0, 0);
-		preview->Position.x = 0;
-		preview->Position.y = i;
+	for(int i = 1;i <= MapHeight;i++) {
+		int x = 0;
+		int y = i;
+		preview = new LawnMower(0, 0);
+		// Construct real turret.
+		preview->Position.x = x * BlockSize + BlockSize / 2;
+		preview->Position.y = y * BlockSize + BlockSize / 2 - 35;
 		preview->Enabled = true;
 		preview->Preview = false;
 		preview->Tint = al_map_rgba(255, 255, 255, 255);
@@ -80,9 +81,9 @@ void PlayScene::Initialize() {
 		// To keep responding when paused.
 		preview->Update(0);
 		// Remove Preview.
-		lawn[i][0] = preview;
-		preview->SetPos(i,0);
+		mower_available[i - 1] = preview;
 		preview = nullptr;
+
 	}
 }
 
@@ -252,14 +253,8 @@ void PlayScene::OnKeyDown(int keyCode) {
 	}
 }
 
-void PlayScene::ReachHouse(int row) {
-	if(mower_available[row]) {
-
-		mower_available[row] = false;
-	}
-	else {
+void PlayScene::ReachHouse() {
 		Engine::GameEngine::GetInstance().ChangeScene("lose");
-	}
 
 	//Original Code
 	/*

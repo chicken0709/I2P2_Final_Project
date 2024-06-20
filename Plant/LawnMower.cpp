@@ -7,6 +7,7 @@
 #include "Engine/Group.hpp"
 #include "LawnMower.hpp"
 
+#include "Engine/LOG.hpp"
 #include "Scene/PlayScene.hpp"
 
 
@@ -17,6 +18,7 @@ LawnMower::LawnMower(float x, float y) :
 }
 
 void LawnMower::CreatePea() {
+    Engine::LOG(Engine::INFO) << "launch mower";
     Engine::Point diff = Engine::Point(cos(Rotation - ALLEGRO_PI / 2), sin(Rotation));
     Engine::Point normalized = Engine::Point(50, -35);
     // Change bullet position to the front of the gun barrel.

@@ -32,7 +32,8 @@ void Bullet::Update(float deltaTime) {
 		if (Engine::Collider::IsCircleOverlap(Position, CollisionRadius, enemy->Position, enemy->CollisionRadius)) {
 			OnExplode(enemy);
 			enemy->TakeDamage(damage);
-			getPlayScene()->BulletGroup->RemoveObject(objectIterator);
+			if(bullettype != Bullettype::MOWER)
+				getPlayScene()->BulletGroup->RemoveObject(objectIterator);
 			return;
 		}
 	}

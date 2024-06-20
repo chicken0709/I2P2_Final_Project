@@ -30,6 +30,14 @@ void Plant::Update(float deltaTime) {
         }
         return;
     }
+	if(plantType == PlantType::LAWNMOWER) {
+		if (Target) {
+			CreatePea();
+			Target = nullptr;
+			TakeDamage(INT8_MAX);
+		}
+		return;
+	}
 	if (Target) {
 		Engine::Point diff = Target->Position - Position;
 		if (diff.Magnitude() > CollisionRadius) {
