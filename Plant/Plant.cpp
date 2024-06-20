@@ -5,11 +5,15 @@
 #include "Scene/PlayScene.hpp"
 #include "Plant.hpp"
 
+#include "Engine/AudioHelper.hpp"
+#include "Engine/LOG.hpp"
+#include "UI/Animation/ExplosionEffect.hpp"
+
 PlayScene* Plant::getPlayScene() {
 	return dynamic_cast<PlayScene*>(Engine::GameEngine::GetInstance().GetActiveScene());
 }
-Plant::Plant(std::string img, float x, float y, float radius, int price, float coolDown, PlantType plantType) :
-	Sprite(img, x, y), price(price), coolDown(coolDown), plantType(plantType) {
+Plant::Plant(std::string img, float x, float y,int hp,float radius, int price, float coolDown, PlantType plantType) :
+	Sprite(img, x, y), hp(hp), price(price), coolDown(coolDown), plantType(plantType) {
 	CollisionRadius = radius;
 }
 void Plant::Update(float deltaTime) {
@@ -63,4 +67,26 @@ void Plant::Draw() const {
 }
 int Plant::GetPrice() const {
 	return price;
+}
+
+void Plant::TakeDamage(float damage) {
+	Engine::LOG(Engine::INFO) << "taking damage";
+	hp -= damage;
+	AudioHelper::PlayAudio("splat.ogg");
+	if (hp <= 0) {
+		OnExplode();
+		getPlayScene()->lawn[pos_x][pos_y] = nullptr;
+		getPlayScene()->mapState[pos_x][pos_y] = TILE_DIRT;
+		getPlayScene()->EnemyGroup->RemoveObject(objectIterator);
+	}
+}
+
+void Plant::OnExplode() {
+	getPlayScene()->EffectGroup->AddNewObject(new ExplosionEffect(Position.x, Position.y));
+	AudioHelper::PlayAudio("limbs_pop.mp3");
+}
+
+void Plant::SetPos(int x, int y) {
+	pos_x = x;
+	pos_y = y;
 }

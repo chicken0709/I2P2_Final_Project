@@ -11,6 +11,7 @@
 #include "Engine/IScene.hpp"
 #include "Scene/PlayScene.hpp"
 #include "Plant/Plant.hpp"
+const int ZDMG = 1;
 
 PlayScene* Zombie::getPlayScene() {
 	return dynamic_cast<PlayScene*>(Engine::GameEngine::GetInstance().GetActiveScene());
@@ -21,12 +22,12 @@ void Zombie::OnExplode() {
     AudioHelper::PlayAudio("limbs_pop.mp3");
 }
 
-Zombie::Zombie(std::string img, float x, float y, float radius, float speed, float originalSpeed, float hp, int money) :
-	Engine::Sprite(img, x, y), speed(speed), originalSpeed(originalSpeed), hp(hp), money(money) {
+Zombie::Zombie(std::string img, float x, float y, float radius, float speed, float originalSpeed, float hp, int money,float cooldown) :
+	Engine::Sprite(img, x, y), speed(speed), originalSpeed(originalSpeed), hp(hp), money(money), coolDown(cooldown){
 	CollisionRadius = radius;
 }
 
-void Zombie::Hit(float damage) {
+void Zombie::TakeDamage(float damage) {
 	hp -= damage;
     AudioHelper::PlayAudio("splat.ogg");
 	if (hp <= 0) {
@@ -72,6 +73,13 @@ void Zombie::Update(float deltaTime) {
 			if (getPlayScene()->mapState[y - 1][x] == TILE_OCCUPIED) {//is 1-base so weird
 				Velocity = Engine::Point(0, 0);
 				Sprite::Update(deltaTime);
+				reload -= deltaTime;
+				//eat
+				if(reload <= 0) {
+					reload = coolDown;
+					Plant* plant = getPlayScene()->lawn[y - 1][x];
+					plant->TakeDamage(ZDMG);
+				}
 				return;
 			}
 		}

@@ -50,6 +50,8 @@ public:
 	std::vector<std::vector<int>> mapDistance;
 	std::list<std::pair<int, float>> enemyWaveData;
 
+	std::vector<std::vector<Plant*>> lawn;;
+
 	static Engine::Point GetClientSize();
 	explicit PlayScene() = default;
 	void Initialize() override;
