@@ -23,6 +23,7 @@
 #include "PlayScene.hpp"
 
 #include "Bullet/Mower.hpp"
+#include "Plant/LawnMower.hpp"
 #include "Zombie/BasicZombie.hpp"
 
 bool PlayScene::DebugMode = false;
@@ -66,6 +67,23 @@ void PlayScene::Initialize() {
 	lawn = std::vector<std::vector<Plant*>>(MapHeight, std::vector<Plant*>(MapWidth));
 	// Start BGM.
 	bgmId = AudioHelper::PlayBGM("play.mp3");
+
+	//generate lawn mowers
+	for(int i = 0;i < MapHeight;i++) {
+		preview = new Sunflower(0, 0);
+		preview->Position.x = 0;
+		preview->Position.y = i;
+		preview->Enabled = true;
+		preview->Preview = false;
+		preview->Tint = al_map_rgba(255, 255, 255, 255);
+		TowerGroup->AddNewObject(preview);
+		// To keep responding when paused.
+		preview->Update(0);
+		// Remove Preview.
+		lawn[i][0] = preview;
+		preview->SetPos(i,0);
+		preview = nullptr;
+	}
 }
 
 void PlayScene::Terminate() {
@@ -236,8 +254,7 @@ void PlayScene::OnKeyDown(int keyCode) {
 
 void PlayScene::ReachHouse(int row) {
 	if(mower_available[row]) {
-		Engine::Point pos(row, 0);
-		CreateLawnMower(pos);
+
 		mower_available[row] = false;
 	}
 	else {
