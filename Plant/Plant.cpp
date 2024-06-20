@@ -72,18 +72,11 @@ int Plant::GetPrice() const {
 void Plant::TakeDamage(float damage) {
 	Engine::LOG(Engine::INFO) << "taking damage";
 	hp -= damage;
-	AudioHelper::PlayAudio("splat.ogg");
 	if (hp <= 0) {
-		OnExplode();
 		getPlayScene()->lawn[pos_x][pos_y] = nullptr;
 		getPlayScene()->mapState[pos_x][pos_y] = TILE_DIRT;
 		getPlayScene()->EnemyGroup->RemoveObject(objectIterator);
 	}
-}
-
-void Plant::OnExplode() {
-	getPlayScene()->EffectGroup->AddNewObject(new ExplosionEffect(Position.x, Position.y));
-	AudioHelper::PlayAudio("limbs_pop.mp3");
 }
 
 void Plant::SetPos(int x, int y) {

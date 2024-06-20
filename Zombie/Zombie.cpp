@@ -5,7 +5,6 @@
 #include "Engine/AudioHelper.hpp"
 #include "Bullet/Bullet.hpp"
 #include "Zombie.hpp"
-#include "UI/Animation/ExplosionEffect.hpp"
 #include "Engine/GameEngine.hpp"
 #include "Engine/Group.hpp"
 #include "Engine/IScene.hpp"
@@ -18,7 +17,7 @@ PlayScene* Zombie::getPlayScene() {
 }
 
 void Zombie::OnExplode() {
-	getPlayScene()->EffectGroup->AddNewObject(new ExplosionEffect(Position.x, Position.y));
+	//getPlayScene()->EffectGroup->AddNewObject(new ExplosionEffect(Position.x, Position.y));
     AudioHelper::PlayAudio("limbs_pop.mp3");
 }
 
@@ -42,7 +41,6 @@ void Zombie::TakeDamage(float damage) {
 }
 
 void Zombie::Update(float deltaTime) {
-
 
 	float remainSpeed = speed * deltaTime;
 	while (remainSpeed > 0) {
@@ -71,17 +69,18 @@ void Zombie::Update(float deltaTime) {
 		//stop at plant
 		if (!outside) {
 			if (getPlayScene()->mapState[y - 1][x] == TILE_OCCUPIED) {//is 1-base so weird
-				Velocity = Engine::Point(0, 0);
-				Sprite::Update(deltaTime);
-				reload -= deltaTime;
-				//eat
-				if(reload <= 0) {
-					reload = coolDown;
-					Plant* plant = getPlayScene()->lawn[y - 1][x];
-					plant->TakeDamage(ZDMG);
-				}
-				return;
-			}
+                Velocity = Engine::Point(0, 0);
+                Sprite::Update(deltaTime);
+                reload -= deltaTime;
+                //eat
+                if (reload <= 0) {
+                    reload = coolDown;
+                    Plant *plant = getPlayScene()->lawn[y - 1][x];
+                    plant->TakeDamage(ZDMG);
+                    AudioHelper::PlayAudio("chomp.mp3");
+                }
+                return;
+            }
 		}
 
 
