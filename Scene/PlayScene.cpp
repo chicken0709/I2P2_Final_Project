@@ -60,6 +60,7 @@ void PlayScene::Initialize() {
 	preview = nullptr;
 	UIGroup->AddNewObject(imgTarget);
     mapState = std::vector<std::vector<TileType>>(MapHeight, std::vector<TileType>(MapWidth));
+	lawn = std::vector<std::vector<Plant*>>(MapHeight, std::vector<Plant*>(MapWidth));
 	// Start BGM.
 	bgmId = AudioHelper::PlayBGM("play.mp3");
 }
@@ -194,6 +195,8 @@ void PlayScene::OnMouseUp(int button, int mx, int my) {
 			// To keep responding when paused.
 			preview->Update(0);
 			// Remove Preview.
+			lawn[y - 1][x - 1] = preview;
+			preview->SetPos(y - 1,x - 1);
 			preview = nullptr;
 
 			mapState[y - 1][x - 1] = TILE_OCCUPIED;
