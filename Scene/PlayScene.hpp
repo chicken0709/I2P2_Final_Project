@@ -40,7 +40,7 @@ public:
 	Group* TileMapGroup;
 	Group* GroundEffectGroup;
 	Group* BulletGroup;
-	Group* TowerGroup;
+	Group* PlantGroup;
 	Group* EnemyGroup;
 	Group* EffectGroup;
 	Group* UIGroup;

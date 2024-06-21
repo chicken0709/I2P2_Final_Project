@@ -85,7 +85,7 @@ void Zombie::Update(float deltaTime) {
                 if (reload <= 0) {
                     reload = coolDown;
                     Plant *plant = getPlayScene()->lawn[y - 1][x];
-                    plant->TakeDamage(ZDMG);
+                    plant->TakeDamage(ZDMG, false);
                     AudioHelper::PlayAudio("chomp.mp3");
                 }
                 return;

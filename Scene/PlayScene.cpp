@@ -20,6 +20,7 @@
 #include "Plant/SnowPeashooter.hpp"
 #include "Plant/GatlinPeashooter.hpp"
 #include "Plant/Wallnut.hpp"
+#include "Plant/CherryBomb.hpp"
 #include "Plant/Shovel.hpp"
 #include "PlayScene.hpp"
 
@@ -49,14 +50,13 @@ void PlayScene::Initialize() {
 	AddNewObject(GroundEffectGroup = new Group());
     // Should support buttons.
     AddNewControlObject(UIGroup = new Group());
-	AddNewObject(TowerGroup = new Group());
+	AddNewObject(PlantGroup = new Group());
 	AddNewObject(EnemyGroup = new Group());
 	AddNewObject(BulletGroup = new Group());
 	AddNewObject(EffectGroup = new Group());
     TileMapGroup->AddNewObject(new Engine::Image("play/yard2.jpg", 0, 0, 1600, 900));
 	ReadMap();
 	ReadEnemyWave();
-	//mapDistance = CalculateDistance();
 	ConstructUI();
 	imgTarget = new Engine::Image("play/target.png", 0, 0);
 	imgTarget->Visible = false;
@@ -79,7 +79,7 @@ void PlayScene::Initialize() {
 		preview->Enabled = true;
 		preview->Preview = false;
 		preview->Tint = al_map_rgba(255, 255, 255, 255);
-		TowerGroup->AddNewObject(preview);
+		PlantGroup->AddNewObject(preview);
 		// To keep responding when paused.
 		preview->Update(0);
 		// Remove Preview.
@@ -200,7 +200,7 @@ void PlayScene::OnMouseUp(int button, int mx, int my) {
     if(shovelClicked) {
         if (mapState[y - 1][x - 1] == TILE_OCCUPIED) {
             Plant *plant = lawn[y - 1][x - 1];
-            plant->TakeDamage(10000);
+            plant->TakeDamage(INT16_MAX, true);
             mapState[y - 1][x - 1] = TILE_EMPTY;
             EarnMoney(plant->GetPrice());
             AudioHelper::PlayAudio("shovel.ogg");
@@ -222,13 +222,13 @@ void PlayScene::OnMouseUp(int button, int mx, int my) {
 			// Remove Preview.
 			preview->GetObjectIterator()->first = false;
 			UIGroup->RemoveObject(preview->GetObjectIterator());
-			// Construct real turret.
+			// Construct real plant
 			preview->Position.x = x * BlockSize + BlockSize / 2;
 			preview->Position.y = y * BlockSize + BlockSize / 2 - 35;
 			preview->Enabled = true;
 			preview->Preview = false;
 			preview->Tint = al_map_rgba(255, 255, 255, 255);
-			TowerGroup->AddNewObject(preview);
+			PlantGroup->AddNewObject(preview);
 			// To keep responding when paused.
 			preview->Update(0);
 			// Remove Preview.
@@ -351,9 +351,9 @@ void PlayScene::ConstructUI() {
     // Button 8 Chili
     btn = new PlantButton("play/plant_button_background.png", "play/plant_button_background.png",
                           Engine::Sprite("play/plant_button_background.png", 894, 8, 0, 0, 0, 0),
-                          Engine::Sprite("play/chili.png", 904 + PlantButtonImageDiffX, PlantButtonImageDiffY, PlantButtonImageSize, PlantButtonImageSize, 0, 0)
+                          Engine::Sprite("play/cherrybomb.png", 904 + PlantButtonImageDiffX, PlantButtonImageDiffY, PlantButtonImageSize, PlantButtonImageSize, 0, 0)
             , 894, 8, Peashooter::Price);
-    btn->SetOnClickCallback(std::bind(&PlayScene::UIBtnClicked, this, 3));
+    btn->SetOnClickCallback(std::bind(&PlayScene::UIBtnClicked, this, 7));
     UIGroup->AddNewControlObject(btn);
     UIGroup->AddNewObject(new Engine::Label(std::to_string(SnowPeashooter::Price), "komika.ttf", 16, 924, 92.5));
     // Button 8 shovel
@@ -382,6 +382,8 @@ void PlayScene::UIBtnClicked(int id) {
         preview = new GatlinPeashooter(0, 0);
     else if (id == 6 && money >= Wallnut::Price)
         preview = new Wallnut(0, 0);
+    else if (id == 7 && money >= CherryBomb::Price)
+        preview = new CherryBomb(0, 0);
     else if (id == 8) {
         preview = new Shovel(0, 0);
         shovelClicked = true;

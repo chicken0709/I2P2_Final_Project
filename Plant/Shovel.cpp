@@ -4,14 +4,11 @@
 #include "Shovel.hpp"
 #include "Scene/PlayScene.hpp"
 
-const int Shovel::Price = 0;
-
 Shovel::Shovel(float x, float y) :
-        Plant("play/shovel.png", x, y,100, Price, 1000, PlantType::PEASHOOTER) {
+        Plant("play/shovel.png", x, y,0, 0, 0, PlantType::OTHER) {
     // Move center downward, since we the turret head is slightly biased upward.
     Anchor.y += 8.0f / GetBitmapHeight();
 }
 
 void Shovel::CreatePea() {
-
 }

@@ -19,7 +19,7 @@ void Plant::Update(float deltaTime) {
 	PlayScene* scene = getPlayScene();
 	if (!Enabled)
 		return;
-    if(plantType == PlantType::SUNFLOWER) {
+    if(plantType == PlantType::SUNFLOWER || plantType == PlantType::OTHER) {
         reload -= deltaTime;
         if (reload <= 0) {
             // shoot.
@@ -32,7 +32,7 @@ void Plant::Update(float deltaTime) {
 		if (Target) {
 			CreatePea();
 			Target = nullptr;
-			TakeDamage(INT8_MAX);
+			TakeDamage(INT16_MAX, true);
 		}
 		return;
 	}
@@ -46,8 +46,6 @@ void Plant::Update(float deltaTime) {
 	}
 	if (!Target) {
 		// Lock first seen target.
-		// Can be improved by Spatial Hash, Quad Tree, ...
-		// However, simply loop through all enemies is enough for this program.
 		for (auto& it : scene->EnemyGroup->GetObjects()) {
 			if (static_cast<int>(it->Position.y / 150) == static_cast<int>(Position.y / 150)) {
 				Target = dynamic_cast<Zombie*>(it);
@@ -74,14 +72,15 @@ int Plant::GetPrice() const {
 	return price;
 }
 
-void Plant::TakeDamage(float damage) {
+void Plant::TakeDamage(float damage, bool shovel) {
 	Engine::LOG(Engine::INFO) << "taking damage";
 	hp -= damage;
 	if (hp <= 0) {
-        AudioHelper::PlayAudio("gulp.ogg");
+        if(!shovel)
+            AudioHelper::PlayAudio("gulp.ogg");
 		getPlayScene()->lawn[pos_x][pos_y] = nullptr;
 		getPlayScene()->mapState[pos_x][pos_y] = TILE_EMPTY;
-		getPlayScene()->TowerGroup->RemoveObject(objectIterator);
+		getPlayScene()->PlantGroup->RemoveObject(objectIterator);
 	}
 }
 
