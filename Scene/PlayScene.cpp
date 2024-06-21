@@ -26,6 +26,7 @@
 
 #include "Bullet/Mower.hpp"
 #include "Plant/LawnMower.hpp"
+#include "UI/Animation/Animation.hpp"
 #include "Zombie/BasicZombie.hpp"
 
 bool PlayScene::DebugMode = false;
@@ -227,15 +228,16 @@ void PlayScene::OnMouseUp(int button, int mx, int my) {
 			preview->Position.y = y * BlockSize + BlockSize / 2 - 35;
 			preview->Enabled = true;
 			preview->Preview = false;
-			preview->Tint = al_map_rgba(255, 255, 255, 255);
+			preview->Tint = al_map_rgba(255, 255, 255, 0);
 			PlantGroup->AddNewObject(preview);
+			//play animation
+			EffectGroup->AddNewObject(new Animation(preview->GetName(),x * BlockSize + BlockSize / 2, y * BlockSize + BlockSize / 2 - 35,x,y));
 			// To keep responding when paused.
 			preview->Update(0);
 			// Remove Preview.
 			lawn[y - 1][x - 1] = preview;
 			preview->SetPos(y - 1,x - 1);
 			preview = nullptr;
-
 			mapState[y - 1][x - 1] = TILE_OCCUPIED;
 			OnMouseMove(mx, my);
 		}

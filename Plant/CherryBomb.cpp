@@ -10,7 +10,7 @@
 const int CherryBomb::Price = 150;
 
 CherryBomb::CherryBomb(float x, float y) :
-        Plant("play/cherrybomb.png", x, y, INT16_MAX, Price, 0, PlantType::OTHER) {
+        Plant("play/cherrybomb.png", x, y, INT16_MAX, Price, 0, PlantType::OTHER,"cherrybomb") {
     // Move center downward, since we the turret head is slightly biased upward.
     Anchor.y += 8.0f / GetBitmapHeight();
     reload = 1.5;

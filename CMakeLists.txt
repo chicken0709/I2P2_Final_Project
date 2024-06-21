@@ -114,6 +114,8 @@ add_executable(2024_I2P2_Final_Project
         Bullet/Mower.cpp
         Plant/CherryBomb.cpp
         Plant/CherryBomb.hpp
+        UI/Animation/Animation.cpp
+        UI/Animation/Animation.hpp
 )
 
 IF (WIN32)
