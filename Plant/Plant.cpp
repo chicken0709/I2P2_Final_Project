@@ -80,6 +80,7 @@ void Plant::TakeDamage(float damage) {
 	Engine::LOG(Engine::INFO) << "taking damage";
 	hp -= damage;
 	if (hp <= 0) {
+        AudioHelper::PlayAudio("gulp.ogg");
 		getPlayScene()->lawn[pos_x][pos_y] = nullptr;
 		getPlayScene()->mapState[pos_x][pos_y] = TILE_EMPTY;
 		getPlayScene()->TowerGroup->RemoveObject(objectIterator);
