@@ -7,7 +7,6 @@
 #include <iostream>
 
 #include "Engine/AudioHelper.hpp"
-#include "UI/Animation/DirtyEffect.hpp"
 #include "Zombie/Zombie.hpp"
 #include "Engine/GameEngine.hpp"
 #include "Engine/Group.hpp"
@@ -21,7 +20,6 @@
 #include "Plant/GatlinPeashooter.hpp"
 #include "Plant/Wallnut.hpp"
 #include "Plant/CherryBomb.hpp"
-#include "Plant/Torchwood.hpp"
 #include "Plant/Shovel.hpp"
 #include "PlayScene.hpp"
 
@@ -288,7 +286,7 @@ void PlayScene::ReadEnemyWave() {
 void PlayScene::ConstructUI() {
 	// Background
     UIGroup->AddNewObject(new Engine::Image("play/sun_counter.png", 100, 0, 124, 136));
-	UIGroup->AddNewObject(new Engine::Image("play/plant_select.png", 224, 0, 885, 136));
+	UIGroup->AddNewObject(new Engine::Image("play/plant_select.png", 224, 0, 792, 136));
 	// Text
 	UIGroup->AddNewObject(UIMoney = new Engine::Label(std::to_string(money), "komika.ttf", 20, 132.5, 98.5));
 	PlantButton* btn;
@@ -357,20 +355,12 @@ void PlayScene::ConstructUI() {
     btn->SetOnClickCallback(std::bind(&PlayScene::UIBtnClicked, this, 7));
     UIGroup->AddNewControlObject(btn);
     UIGroup->AddNewObject(new Engine::Label(std::to_string(CherryBomb::Price), "komika.ttf", 16, 924, 92.5));
-    // Button 9 torchwood
-    btn = new PlantButton("play/plant_button_background.png", "play/plant_button_background.png",
-                          Engine::Sprite("play/plant_button_background.png", 989, 8, 0, 0, 0, 0),
-                          Engine::Sprite("play/torchwood.png", 999 + PlantButtonImageDiffX, PlantButtonImageDiffY, PlantButtonImageSize, PlantButtonImageSize, 0, 0)
-            , 989, 8, Torchwood::Price);
-    btn->SetOnClickCallback(std::bind(&PlayScene::UIBtnClicked, this, 8));
-    UIGroup->AddNewControlObject(btn);
-    UIGroup->AddNewObject(new Engine::Label(std::to_string(Torchwood::Price), "komika.ttf", 16, 1019, 92.5));
-    // Button 10 shovel
+    // Button 9 shovel
     btn = new PlantButton("play/shovel_button.png", "play/shovel_button.png",
-                          Engine::Sprite("play/shovel_button.png", 1125, 0, 0, 0, 0, 0),
-                          Engine::Sprite("play/shovel.png", 1131, 6, 100, 104, 0, 0)
-            , 1125, 0, SnowPeashooter::Price);
-    btn->SetOnClickCallback(std::bind(&PlayScene::UIBtnClicked, this, 9));
+                          Engine::Sprite("play/shovel_button.png", 1030, 0, 0, 0, 0, 0),
+                          Engine::Sprite("play/shovel.png", 1036, 6, 100, 104, 0, 0)
+            , 1030, 0, SnowPeashooter::Price);
+    btn->SetOnClickCallback(std::bind(&PlayScene::UIBtnClicked, this, 8));
     UIGroup->AddNewControlObject(btn);
 }
 
@@ -393,9 +383,7 @@ void PlayScene::UIBtnClicked(int id) {
         preview = new Wallnut(0, 0);
     else if (id == 7 && money >= CherryBomb::Price)
         preview = new CherryBomb(0, 0);
-    else if (id == 8 && money >= Torchwood::Price)
-        preview = new Torchwood(0, 0);
-    else if (id == 9) {
+    else if (id == 8) {
         preview = new Shovel(0, 0);
         shovelClicked = true;
     }

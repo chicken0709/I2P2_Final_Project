@@ -10,7 +10,7 @@ class Zombie;
 class PlayScene;
 
 enum class PlantType {
-    SUNFLOWER, PEASHOOTER, LAWNMOWER, TORCHWOOD, OTHER
+    SUNFLOWER, PEASHOOTER, LAWNMOWER, OTHER
 };
 
 class Plant: public Engine::Sprite {

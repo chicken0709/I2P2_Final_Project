@@ -1,6 +1,5 @@
 #ifndef BULLET_HPP
 #define BULLET_HPP
-#include <string>
 
 #include "Engine/Sprite.hpp"
 
@@ -11,7 +10,7 @@ namespace Engine {
 struct Point;
 }  // namespace Engine
 enum class BulletType {
-	BASICPEA, SNOWPEA, FIREPEA, MOWER
+	BASICPEA, SNOWPEA, MOWER
 };
 class Bullet : public Engine::Sprite {
 protected:

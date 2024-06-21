@@ -28,7 +28,7 @@ Zombie::Zombie(std::string img, float x, float y, float radius, float speed, flo
 	CollisionRadius = radius;
 }
 
-void Zombie::TakeDamage(float damage, BulletType bulletType) {
+void Zombie::TakeDamage(float damage) {
 	hp -= damage;
 	if (hp <= 0) {
 		OnExplode();
@@ -40,11 +40,7 @@ void Zombie::TakeDamage(float damage, BulletType bulletType) {
 		getPlayScene()->EnemyGroup->RemoveObject(objectIterator);
         return;
 	}
-    if (bulletType == BulletType::FIREPEA) {
-        AudioHelper::PlayAudio("firepea.ogg");
-    } else {
-        AudioHelper::PlayAudio("splat.ogg");
-    }
+	AudioHelper::PlayAudio("splat.ogg");
 }
 
 void Zombie::Update(float deltaTime) {
