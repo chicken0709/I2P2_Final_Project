@@ -5,7 +5,6 @@
 #include "Engine/Group.hpp"
 #include "Engine/IScene.hpp"
 #include "Scene/PlayScene.hpp"
-#include "Engine/LOG.hpp"
 
 PlayScene* Bullet::getPlayScene() {
 	return dynamic_cast<PlayScene*>(Engine::GameEngine::GetInstance().GetActiveScene());
@@ -31,12 +30,10 @@ void Bullet::Update(float deltaTime) {
 		if (!enemy->Visible)
 			continue;
 		if (Engine::Collider::IsCircleOverlap(Position, CollisionRadius, enemy->Position, enemy->CollisionRadius)) {
-			Engine::LOG(Engine::INFO) << "overlap";
             OnExplode(enemy);
 			enemy->TakeDamage(damage);
 			if(bulletType != BulletType::MOWER)
 				getPlayScene()->BulletGroup->RemoveObject(objectIterator);
-			return;
 		}
 	}
 	// Check if out of boundary.

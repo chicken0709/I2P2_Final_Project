@@ -11,7 +11,7 @@
 #include "Scene/PlayScene.hpp"
 
 LawnMower::LawnMower(float x, float y) :
-        Plant("play/lawnmower.png", x, y,0, 10000, 0, 10000, PlantType::LAWNMOWER) {
+        Plant("play/lawnmower.png", x, y,0, 50, 0, 10000, PlantType::LAWNMOWER) {
     Anchor.y += 8.0f / GetBitmapHeight();
 }
 
@@ -19,6 +19,5 @@ void LawnMower::CreatePea() {
     Engine::LOG(Engine::INFO) << "launch mower";
     AudioHelper::PlayAudio("lawnmower.ogg");
     Engine::Point diff = Engine::Point(cos(Rotation - ALLEGRO_PI / 2), sin(Rotation));
-    // Change bullet position to the front of the gun barrel.
     getPlayScene()->BulletGroup->AddNewObject(new Mower(Position, diff, 0, this));
 }
