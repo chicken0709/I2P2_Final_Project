@@ -32,8 +32,10 @@ void Bullet::Update(float deltaTime) {
 		if (Engine::Collider::IsCircleOverlap(Position, CollisionRadius, enemy->Position, enemy->CollisionRadius)) {
             OnExplode(enemy);
 			enemy->TakeDamage(damage);
-			if(bulletType != BulletType::MOWER)
-				getPlayScene()->BulletGroup->RemoveObject(objectIterator);
+			if(bulletType != BulletType::MOWER) {
+                getPlayScene()->BulletGroup->RemoveObject(objectIterator);
+                return;
+            }
 		}
 	}
 	// Check if out of boundary.
