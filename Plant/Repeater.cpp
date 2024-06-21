@@ -11,7 +11,7 @@
 const int Repeater::Price = 200;
 
 Repeater::Repeater(float x, float y) :
-        Plant("play/repeater.png", x, y, 10, Price, 0.3, PlantType::PEASHOOTER) {
+        Plant("play/repeater.png", x, y, 10, Price, 0.3, PlantType::PEASHOOTER,"repeater") {
     Anchor.y += 8.0f / GetBitmapHeight();
 }
 

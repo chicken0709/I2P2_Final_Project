@@ -7,16 +7,20 @@
 
 #include "Engine/AudioHelper.hpp"
 #include "Engine/LOG.hpp"
+#include "UI/Animation/DirtyEffect.hpp"
+#include "UI/Animation/Animation.hpp"
 
 PlayScene* Plant::getPlayScene() {
 	return dynamic_cast<PlayScene*>(Engine::GameEngine::GetInstance().GetActiveScene());
 }
-Plant::Plant(std::string img, float x, float y,int hp, int price, float coolDown, PlantType plantType) :
-	Sprite(img, x, y), hp(hp), price(price), coolDown(coolDown), plantType(plantType) {
+Plant::Plant(std::string img, float x, float y,int hp, int price, float coolDown, PlantType plantType, std::string name) :
+	Sprite(img, 0, 0), hp(hp), price(price), coolDown(coolDown), plantType(plantType),name(name){
 }
+
 void Plant::Update(float deltaTime) {
 	Sprite::Update(deltaTime);
 	PlayScene* scene = getPlayScene();
+
 	if (!Enabled)
 		return;
     if(plantType == PlantType::SUNFLOWER || plantType == PlantType::OTHER) {
@@ -91,4 +95,7 @@ void Plant::SetPos(int x, int y) {
 
 PlantType Plant::GetPlantType() const {
     return plantType;
+}
+std::string Plant::GetName() {
+	return name;
 }
