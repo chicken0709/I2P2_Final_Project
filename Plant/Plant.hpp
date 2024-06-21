@@ -31,15 +31,12 @@ public:
     bool Enabled = true;
     bool Preview = false;
     Zombie* Target = nullptr;
-    Plant(std::string img, float x, float y, int hp, float radius, int price, float coolDown, PlantType plantType);
+    Plant(std::string img, float x, float y, int hp, int price, float coolDown, PlantType plantType);
     void Update(float deltaTime) override;
     void Draw() const override;
 	int GetPrice() const;
-
     void TakeDamage(float damage);
-
     void OnExplode();
-
     void SetPos(int x,int y);
 };
 #endif // PLANT_HPP

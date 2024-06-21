@@ -11,9 +11,8 @@
 PlayScene* Plant::getPlayScene() {
 	return dynamic_cast<PlayScene*>(Engine::GameEngine::GetInstance().GetActiveScene());
 }
-Plant::Plant(std::string img, float x, float y,int hp,float radius, int price, float coolDown, PlantType plantType) :
+Plant::Plant(std::string img, float x, float y,int hp, int price, float coolDown, PlantType plantType) :
 	Sprite(img, x, y), hp(hp), price(price), coolDown(coolDown), plantType(plantType) {
-	CollisionRadius = radius;
 }
 void Plant::Update(float deltaTime) {
 	Sprite::Update(deltaTime);
@@ -50,8 +49,7 @@ void Plant::Update(float deltaTime) {
 		// Can be improved by Spatial Hash, Quad Tree, ...
 		// However, simply loop through all enemies is enough for this program.
 		for (auto& it : scene->EnemyGroup->GetObjects()) {
-			Engine::Point diff = it->Position - Position;
-			if (diff.Magnitude() <= CollisionRadius) {
+			if (static_cast<int>(it->Position.y / 150) == static_cast<int>(Position.y / 150)) {
 				Target = dynamic_cast<Zombie*>(it);
 				Target->lockedPlants.push_back(this);
 				lockedPlantIterator = std::prev(Target->lockedPlants.end());
