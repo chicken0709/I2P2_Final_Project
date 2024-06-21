@@ -11,13 +11,13 @@ namespace Engine {
 struct Point;
 }  // namespace Engine
 enum class BulletType {
-	PEA, MOWER
+	BASICPEA, SNOWPEA, FIREPEA, MOWER
 };
 class Bullet : public Engine::Sprite {
 protected:
 	float speed;
 	float damage;
-	BulletType bulletType = BulletType::PEA;
+	BulletType bulletType;
 	Plant* parent;
 	PlayScene* getPlayScene();
 	virtual void OnExplode(Zombie* enemy);

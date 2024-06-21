@@ -21,7 +21,7 @@ void CherryBomb::CreatePea() {
     for (auto& it : getPlayScene()->EnemyGroup->GetObjects()) {
         Zombie* enemy = dynamic_cast<Zombie*>(it);
         if((enemy->Position - Position).Magnitude() < 225)
-            enemy->TakeDamage(INT16_MAX);
+            enemy->TakeDamage(INT16_MAX, BulletType::BASICPEA);
     }
     getPlayScene()->lawn[pos_x][pos_y] = nullptr;
     getPlayScene()->mapState[pos_x][pos_y] = TILE_EMPTY;

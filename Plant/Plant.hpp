@@ -10,7 +10,7 @@ class Zombie;
 class PlayScene;
 
 enum class PlantType {
-    SUNFLOWER, PEASHOOTER, LAWNMOWER, OTHER
+    SUNFLOWER, PEASHOOTER, LAWNMOWER, TORCHWOOD, OTHER
 };
 
 class Plant: public Engine::Sprite {
@@ -35,6 +35,7 @@ public:
     void Update(float deltaTime) override;
     void Draw() const override;
 	int GetPrice() const;
+    PlantType GetPlantType() const;
     void TakeDamage(float damage, bool shovel);
     void OnExplode();
     void SetPos(int x,int y);

@@ -5,6 +5,8 @@
 #include "Engine/Group.hpp"
 #include "Engine/IScene.hpp"
 #include "Scene/PlayScene.hpp"
+#include "Plant/Plant.hpp"
+#include "Bullet/FirePea.hpp"
 
 PlayScene* Bullet::getPlayScene() {
 	return dynamic_cast<PlayScene*>(Engine::GameEngine::GetInstance().GetActiveScene());
@@ -23,15 +25,26 @@ Bullet::Bullet(std::string img, float speed, float damage, Engine::Point positio
 void Bullet::Update(float deltaTime) {
 	Sprite::Update(deltaTime);
 	PlayScene* scene = getPlayScene();
-	// Can be improved by Spatial Hash, Quad Tree, ...
-	// However, simply loop through all enemies is enough for this program.
+
+    if(bulletType == BulletType::BASICPEA) {
+        int pos_x = static_cast<int>(Position.x / 150);
+        int pos_y = static_cast<int>(Position.y / 150);
+        if (pos_x <= PlayScene::MapWidth) {
+            Plant *plant = getPlayScene()->lawn[pos_y - 1][pos_x - 1];
+            if(plant != nullptr && plant->GetPlantType() == PlantType::TORCHWOOD) {
+                getPlayScene()->BulletGroup->AddNewObject(new FirePea(Position, Engine::Point(1, 0), 0, nullptr));
+                getPlayScene()->BulletGroup->RemoveObject(objectIterator);
+            }
+        }
+    }
+
 	for (auto& it : scene->EnemyGroup->GetObjects()) {
 		Zombie* enemy = dynamic_cast<Zombie*>(it);
 		if (!enemy->Visible)
 			continue;
 		if (Engine::Collider::IsCircleOverlap(Position, CollisionRadius, enemy->Position, enemy->CollisionRadius)) {
             OnExplode(enemy);
-			enemy->TakeDamage(damage);
+			enemy->TakeDamage(damage, bulletType);
 			if(bulletType != BulletType::MOWER) {
                 getPlayScene()->BulletGroup->RemoveObject(objectIterator);
                 return;
