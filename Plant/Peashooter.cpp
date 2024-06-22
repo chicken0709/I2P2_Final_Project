@@ -12,7 +12,7 @@
 const int Peashooter::Price = 100;
 
 Peashooter::Peashooter(float x, float y) :
-	Plant("play/peashooter.png", x, y, 10, Price, 1.5, PlantType::PEASHOOTER, "peashooter") {
+	Plant("play/peashooter.png", x, y, 10, Price, 1.5, PlantType::PEASHOOTER, "peashooter",25,71,71) {
 	// Move center downward, since we the turret head is slightly biased upward.
 	Anchor.y += 8.0f / GetBitmapHeight();
 }

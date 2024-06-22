@@ -5,7 +5,7 @@
 #include "Scene/PlayScene.hpp"
 
 Shovel::Shovel(float x, float y) :
-        Plant("play/shovel.png", x, y,0, 0, 0, PlantType::OTHER,"shovel") {
+    Plant("play/shovel.png", x, y,0, 0, 0, PlantType::OTHER,"shovel") {
     // Move center downward, since we the turret head is slightly biased upward.
     Anchor.y += 8.0f / GetBitmapHeight();
 }
