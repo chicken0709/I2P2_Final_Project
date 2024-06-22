@@ -11,8 +11,12 @@
 PlayScene* Plant::getPlayScene() {
 	return dynamic_cast<PlayScene*>(Engine::GameEngine::GetInstance().GetActiveScene());
 }
-Plant::Plant(std::string img, float x, float y,int hp, int price, float coolDown, PlantType plantType, std::string name) :
-	Sprite(img, 0, 0), hp(hp), price(price), coolDown(coolDown), plantType(plantType),name(name){
+Plant::Plant(std::string img, float x, float y, int hp, int price, float coolDown, PlantType plantType, std::string name, int frameCount, int frameWidth, int frameHeight) :
+	Sprite(img, x, y, 0, 0), hp(hp), price(price), coolDown(coolDown), plantType(plantType), name(name), frameCount(frameCount), frameWidth(frameWidth), frameHeight(frameHeight) {
+}
+
+Plant::Plant(std::string img, float x, float y, int hp, int price, float coolDown, PlantType plantType, std::string name) :
+	Sprite(img, x, y, 0, 0), hp(hp), price(price), coolDown(coolDown), plantType(plantType), name(name), frameCount(0), frameWidth(0), frameHeight(0) {
 }
 
 void Plant::Update(float deltaTime) {
@@ -84,6 +88,15 @@ void Plant::TakeDamage(float damage, bool shovel) {
 		getPlayScene()->mapState[pos_x][pos_y] = TILE_EMPTY;
 		getPlayScene()->PlantGroup->RemoveObject(objectIterator);
 	}
+	if(plantType == PlantType::WALLNUT) {
+		if(hp <= 66) {
+
+		}
+		else if(hp <= 33) {
+
+		}
+
+	}
 }
 
 void Plant::SetPos(int x, int y) {
@@ -93,4 +106,7 @@ void Plant::SetPos(int x, int y) {
 
 std::string Plant::GetName() {
 	return name;
+}
+PlantType Plant::GetPlantType() {
+	return plantType;
 }

@@ -10,7 +10,7 @@ class Zombie;
 class PlayScene;
 
 enum class PlantType {
-    SUNFLOWER, PEASHOOTER, LAWNMOWER, OTHER
+    SUNFLOWER, PEASHOOTER, LAWNMOWER, WALLNUT, CHERRYBOMB, OTHER
 };
 
 class Plant: public Engine::Sprite {
@@ -26,6 +26,7 @@ protected:
     std::list<Plant*>::iterator lockedPlantIterator;
     PlayScene* getPlayScene();
 
+    Plant(std::string img, float x, float y, int hp, int price, float coolDown, PlantType plantType, std::string name,int frameCount,int frameWidth,int frameHeight);
     Plant(std::string img, float x, float y, int hp, int price, float coolDown, PlantType plantType, std::string name);
 
 
@@ -43,5 +44,9 @@ public:
     void OnExplode();
     void SetPos(int x,int y);
     std::string GetName();
+    PlantType GetPlantType();
+    int frameCount;
+    int frameWidth;
+    int frameHeight;
 };
 #endif // PLANT_HPP

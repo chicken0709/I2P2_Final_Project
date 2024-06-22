@@ -10,18 +10,14 @@
 #include "Plant/Plant.hpp"
 #include "Scene/PlayScene.hpp"
 
-const int FRAME_WIDTH = 70; // Width of each frame in the sprite sheet
-const int FRAME_HEIGHT = 72; // Height of each frame in the sprite sheet
-const int FRAME_COUNT_X = 24; // Number of frames in a row
-const int FRAME_COUNT_Y = 1; // Number of frames in a column
 
 PlayScene* Animation::getPlayScene() {
 	return dynamic_cast<PlayScene*>(Engine::GameEngine::GetInstance().GetActiveScene());
 }
 
-Animation::Animation(std::string name, float x, float y, int blockX, int blockY)
-	: Sprite(1,"play/" + name + "_animation.png", x, y), timeTicks(0), posX(x), posY(y), blockX(blockX), blockY(blockY) {
-	spriteSheet = Engine::Resources::GetInstance().GetBitmap("play/" + name + "_animation.png");
+Animation::Animation(std::string name,int frameCount,int frameWidth,int frameHeight,int index,float x, float y, int blockX, int blockY)
+	: Sprite(1,frameCount,"play/" + name + "_animation_" + std::to_string(index) + ".png", x, y),frameCount(frameCount),frameWidth(frameWidth),frameHeight(frameHeight), timeTicks(0), posX(x), posY(y), blockX(blockX), blockY(blockY) {
+	spriteSheet = Engine::Resources::GetInstance().GetBitmap("play/" + name + "_animation_" + std::to_string(index) + ".png");
 	timeSpan = 4;
 }
 
@@ -32,10 +28,9 @@ void Animation::Update(float deltaTime) {
 	if (timeTicks >= timeSpan) {
 		timeTicks = 0;
 	}
-	int totalFrames = FRAME_COUNT_X * FRAME_COUNT_Y;
-	int phase = floor(timeTicks / timeSpan * totalFrames);
+	int phase = floor(timeTicks / timeSpan * frameCount);
 
-	ALLEGRO_BITMAP* subBitmap = al_create_sub_bitmap(spriteSheet.get(), phase * FRAME_WIDTH, 0, FRAME_WIDTH, FRAME_HEIGHT);
+	ALLEGRO_BITMAP* subBitmap = al_create_sub_bitmap(spriteSheet.get(), phase * frameWidth, 0, frameWidth, frameHeight);
 	bmp.reset(subBitmap, al_destroy_bitmap);
 
 	Sprite::Update(deltaTime);

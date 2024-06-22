@@ -283,8 +283,10 @@ void PlayScene::OnMouseUp(int button, int mx, int my) {
 			preview->Preview = false;
 			preview->Tint = al_map_rgba(255, 255, 255, 0);
 			PlantGroup->AddNewObject(preview);
-			//play animation
-			EffectGroup->AddNewObject(new Animation(preview->GetName(),x * BlockSize + BlockSize / 2, y * BlockSize + BlockSize / 2 - 35,x,y));
+
+			//Add Animation
+			EffectGroup->AddNewObject(new Animation(preview->GetName(),preview->frameCount,preview->frameWidth,preview->frameHeight,1,x * BlockSize + BlockSize / 2, y * BlockSize + BlockSize / 2 - 35,x,y));
+
 			// To keep responding when paused.
 			preview->Update(0);
 			// Remove Preview.
@@ -417,7 +419,7 @@ void PlayScene::ConstructUI() {
     UIGroup->AddNewObject(new Engine::Label(std::to_string(CherryBomb::Price), "komika.ttf", 16, 924, 92.5));
     // Button 9 shovel
     btn = new PlantButton("play/shovel_button.png", "play/shovel_button.png",
-                          Engine::Sprite("play/shovel_button.png", 1030, 0, 0, 0, 0, 0),
+                          Engine::Sprite(0,0,"play/shovel_button.png", 1030, 0, 0, 0, 0, 0,0,0),
                           Engine::Sprite("play/shovel.png", 1036, 6, 100, 104, 0, 0)
             , 1030, 0, SnowPeashooter::Price);
     btn->SetOnClickCallback(std::bind(&PlayScene::UIBtnClicked, this, 8));

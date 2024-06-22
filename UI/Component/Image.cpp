@@ -29,24 +29,31 @@ namespace Engine {
 		}
 	}
 
-	Image::Image(bool isAnimation,std::string img, float x, float y, float w, float h, float anchorX, float anchorY) :
+	Image::Image(bool isAnimation,int frameCount,std::string img, float x, float y, float w, float h, float anchorX, float anchorY) :
 		IObject(x, y, w, h, anchorX, anchorY) {
+		if(!isAnimation) {
+			if (Size.x == 0 && Size.y == 0) {
+				bmp = Resources::GetInstance().GetBitmap(img);
+				Size.x = GetBitmapWidth();
+				Size.y = GetBitmapHeight();
+			}
+			else if (Size.x == 0) {
+				bmp = Resources::GetInstance().GetBitmap(img);
+				Size.x = GetBitmapWidth() * Size.y / GetBitmapHeight();
+			}
+			else if (Size.y == 0) {
+				bmp = Resources::GetInstance().GetBitmap(img);
+				Size.y = GetBitmapHeight() * Size.x / GetBitmapWidth();
+			}
+			else /* Size.x != 0 && Size.y != 0 */ {
+				bmp = Resources::GetInstance().GetBitmap(img, Size.x, Size.y);
+			}
+		}
 		if (Size.x == 0 && Size.y == 0) {
 			bmp = Resources::GetInstance().GetBitmap(img);
-			Size.x = GetBitmapWidth()/24 * 1.6;
+			Size.x = GetBitmapWidth()/frameCount * 1.6;
 			Size.y = GetBitmapHeight() * 1.6;
 			Engine::LOG(Engine::INFO) << Size.x << Size.y;
-		}
-		else if (Size.x == 0) {
-			bmp = Resources::GetInstance().GetBitmap(img);
-			Size.x = GetBitmapWidth() * Size.y / GetBitmapHeight();
-		}
-		else if (Size.y == 0) {
-			bmp = Resources::GetInstance().GetBitmap(img);
-			Size.y = GetBitmapHeight() * Size.x / GetBitmapWidth();
-		}
-		else /* Size.x != 0 && Size.y != 0 */ {
-			bmp = Resources::GetInstance().GetBitmap(img, Size.x, Size.y);
 		}
 	}
 
