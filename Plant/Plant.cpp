@@ -93,9 +93,6 @@ void Plant::SetPos(int x, int y) {
 	pos_y = y;
 }
 
-PlantType Plant::GetPlantType() const {
-    return plantType;
-}
 std::string Plant::GetName() {
 	return name;
 }
