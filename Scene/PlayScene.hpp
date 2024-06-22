@@ -34,7 +34,7 @@ protected:
 	int SpeedMult;
 	bool win;
 	bool lose;
-	bool buttonAdded;
+	bool enableBack;
 	float win_bgm_delay;
 	float lose_bgm_delay;
 public:

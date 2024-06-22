@@ -76,7 +76,7 @@ void PlayScene::Initialize() {
     shovelClicked = false;
 	win = false;
 	lose = false;
-	buttonAdded = false;
+	enableBack = false;
 	win_bgm_delay = 4.5;
 	lose_bgm_delay = 10.5;
 
@@ -111,24 +111,18 @@ void PlayScene::Update(float deltaTime) {
 	// Reference: Bullet-Through-Paper
 	if (lose) {
 		lose_bgm_delay -= deltaTime;
-		if(lose_bgm_delay < 0 && buttonAdded == false) {
-			buttonAdded = true;
-			Engine::ImageButton* btn;
-			btn = new Engine::ImageButton("win/dirt.png", "win/floor.png", 800 - 200, 450 * 7 / 4 - 50, 400, 100);
-			btn->SetOnClickCallback(std::bind(&PlayScene::BackOnClick, this, 2));
-			AddNewControlObject(btn);
-			AddNewObject(new Engine::Label("Back", "pirulen.ttf", 48, 800, 450 * 7 / 4, 0, 0, 0, 255, 0.5, 0.5));
+		if(lose_bgm_delay < 0 && enableBack == false) {
+			enableBack = true;
+			EffectGroup->AddNewObject(new Engine::Label("You Lost", "komika.ttf", 32, 800, 400, 255, 0, 0, 255, 0.5, 0.5));
+			EffectGroup->AddNewObject(new Engine::Label("Press Enter to Continue", "komika.ttf", 32, 800, 500, 0, 0, 0, 255, 0.5, 0.5));
 		}
 	}
 	if (win) {
 		win_bgm_delay -= deltaTime;
-		if(win_bgm_delay < 0 && buttonAdded == false) {
-			buttonAdded = true;
-			Engine::ImageButton* btn;
-			btn = new Engine::ImageButton("win/dirt.png", "win/floor.png", 800 - 200, 450 * 7 / 4 - 50, 400, 100);
-			btn->SetOnClickCallback(std::bind(&PlayScene::BackOnClick, this, 2));
-			AddNewControlObject(btn);
-			AddNewObject(new Engine::Label("Back", "pirulen.ttf", 48, 800, 450 * 7 / 4, 0, 0, 0, 255, 0.5, 0.5));
+		if(win_bgm_delay < 0 && enableBack == false) {
+			enableBack = true;
+			EffectGroup->AddNewObject(new Engine::Label("You Win", "komika.ttf", 32, 800, 400, 0, 255, 0, 255, 0.5, 0.5));
+			EffectGroup->AddNewObject(new Engine::Label("Press Enter to Continue", "komika.ttf", 32, 800, 500, 0, 0, 0, 255, 0.5, 0.5));
 		}
 	}
 	if (lose) return;
@@ -306,6 +300,12 @@ void PlayScene::OnKeyDown(int keyCode) {
 	IScene::OnKeyDown(keyCode);
 	if (keyCode == ALLEGRO_KEY_TAB) {
 		DebugMode = !DebugMode;
+	}
+	else if (keyCode == ALLEGRO_KEY_ENTER) {
+		if (enableBack) {
+			Engine::GameEngine::GetInstance().ChangeScene("start");
+			AudioHelper::PlayAudio("gravebutton.ogg");
+		}
 	}
 	else if (keyCode >= ALLEGRO_KEY_0 && keyCode <= ALLEGRO_KEY_9) {
 		// Hotkey for Speed up.
