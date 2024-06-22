@@ -1,6 +1,3 @@
-#include <allegro5/allegro.h>
-#include <allegro5/allegro_image.h>
-#include <allegro5/allegro_primitives.h>
 #include <cmath>
 #include "Animation.hpp"
 #include "Engine/GameEngine.hpp"
@@ -18,7 +15,7 @@ PlayScene* Animation::getPlayScene() {
 Animation::Animation(std::string name,int frameCount,int frameWidth,int frameHeight,int index,float x, float y, int blockX, int blockY)
 	: Sprite(1,frameCount,"play/" + name + "_animation_" + std::to_string(index) + ".png", x, y),frameCount(frameCount),frameWidth(frameWidth),frameHeight(frameHeight), timeTicks(0), posX(x), posY(y), blockX(blockX), blockY(blockY) {
 	spriteSheet = Engine::Resources::GetInstance().GetBitmap("play/" + name + "_animation_" + std::to_string(index) + ".png");
-	timeSpan = 4;
+	timeSpan = 1.75;
 }
 
 void Animation::Update(float deltaTime) {

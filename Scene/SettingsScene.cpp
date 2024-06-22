@@ -1,6 +1,4 @@
-#include <allegro5/allegro_audio.h>
 #include <functional>
-#include <memory>
 
 #include "Engine/AudioHelper.hpp"
 #include "Engine/GameEngine.hpp"
@@ -9,6 +7,7 @@
 #include "PlayScene.hpp"
 #include "UI/Component/Slider.hpp"
 #include "SettingsScene.hpp"
+#include "StartScene.hpp"
 
 void SettingsScene::Initialize() {
     int w = Engine::GameEngine::GetInstance().GetScreenSize().x;
@@ -18,7 +17,7 @@ void SettingsScene::Initialize() {
     Engine::ImageButton *btn;
     btn = new Engine::ImageButton("stage-select/dirt.png", "stage-select/floor.png", halfW - 200, halfH * 3 / 2 - 50,
                                   400, 100);
-    btn->SetOnClickCallback(std::bind(&SettingsScene::PlayOnClick, this, 2));
+    btn->SetOnClickCallback(std::bind(&SettingsScene::BackOnClick, this, 1));
     AddNewControlObject(btn);
     AddNewObject(new Engine::Label("BACK", "pirulen.ttf", 48, halfW, halfH * 3 / 2, 0, 0, 0, 255, 0.5, 0.5));
     Slider *sliderBGM, *sliderSFX;
@@ -36,22 +35,17 @@ void SettingsScene::Initialize() {
     AddNewObject(
             new Engine::Label("SFX: ", "pirulen.ttf", 28, 40 + halfW - 60 - 95, halfH + 50, 255, 255, 255, 255, 0.5,
                               0.5));
-    // Not safe if release resource while playing, however we only free while change scene, so it's fine.
-    bgmInstance = AudioHelper::PlaySample("select.ogg", true, AudioHelper::BGMVolume);
     sliderBGM->SetValue(AudioHelper::BGMVolume);
     sliderSFX->SetValue(AudioHelper::SFXVolume);
 }
 
 void SettingsScene::Terminate() {
-    AudioHelper::StopSample(bgmInstance);
-    bgmInstance = std::shared_ptr<ALLEGRO_SAMPLE_INSTANCE>();
     IScene::Terminate();
 }
 
-void SettingsScene::PlayOnClick(int stage) {
-    PlayScene *scene = dynamic_cast<PlayScene *>(Engine::GameEngine::GetInstance().GetScene("play"));
-    scene->MapId = stage;
-    Engine::GameEngine::GetInstance().ChangeScene("start");
+void SettingsScene::BackOnClick(int stage) {
+    Engine::GameEngine::GetInstance().ChangeScene("stage-select");
+    AudioHelper::PlayAudio("gravebutton.ogg");
 }
 
 void SettingsScene::BGMSlideOnValueChanged(float value) {

@@ -31,6 +31,7 @@
 #include "Zombie/FlagZombie.hpp"
 #include "Zombie/FootballZombie.hpp"
 #include "Zombie/NewspaperZombie.hpp"
+#include "Scene/StartScene.hpp"
 
 bool PlayScene::DebugMode = false;
 const int PlayScene::MapWidth = 9, PlayScene::MapHeight = 5;
@@ -44,6 +45,8 @@ Engine::Point PlayScene::GetClientSize() {
 }
 
 void PlayScene::Initialize() {
+	AudioHelper::StopSample(bgmInstance);
+	bgmInstance = std::shared_ptr<ALLEGRO_SAMPLE_INSTANCE>();
 	mapState.clear();
 	ticks = 0;
 	lives = 100;
@@ -463,6 +466,7 @@ void PlayScene::UIBtnClicked(int id) {
 
 void PlayScene::BackOnClick(int stage) {
 	Engine::GameEngine::GetInstance().ChangeScene("start");
+	AudioHelper::PlayAudio("gravebutton.ogg");
 }
 
 
