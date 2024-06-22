@@ -25,12 +25,14 @@ void Bullet::Update(float deltaTime) {
 	PlayScene* scene = getPlayScene();
 	// Loop through zombies
 	for (auto& it : scene->EnemyGroup->GetObjects()) {
-		Zombie* enemy = dynamic_cast<Zombie*>(it);
-		if (!enemy->Visible)
+		Zombie* zombie = dynamic_cast<Zombie*>(it);
+		if (!zombie->Visible)
 			continue;
-		if (Engine::Collider::IsCircleOverlap(Position, CollisionRadius, enemy->Position, enemy->CollisionRadius)) {
-            OnExplode(enemy);
-			enemy->TakeDamage(damage);
+		int bulletPositionY = static_cast<int>(Position.y / 150);
+		int zombiePositionY = static_cast<int>(zombie->Position.y / 150);
+		if (Engine::Collider::IsCircleOverlap(Position, CollisionRadius, zombie->Position, zombie->CollisionRadius) && zombiePositionY == bulletPositionY) {
+            OnExplode(zombie);
+			zombie->TakeDamage(damage);
 			if(bulletType != BulletType::MOWER) {
                 getPlayScene()->BulletGroup->RemoveObject(objectIterator);
                 return;

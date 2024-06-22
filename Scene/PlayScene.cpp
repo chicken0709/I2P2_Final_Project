@@ -104,20 +104,20 @@ void PlayScene::Update(float deltaTime) {
 		IScene::Update(deltaTime);
 		// Check if we should create new enemy.
 		ticks += deltaTime;
-		if (enemyWaveData.empty()) {
+		if (zombieWaveData.empty()) {
 			if (EnemyGroup->GetObjects().empty()) {
 				Engine::GameEngine::GetInstance().ChangeScene("win");
 			}
 			continue;
 		}
-		auto current = enemyWaveData.front();
-		if (ticks < current.second)
+		auto current = zombieWaveData.front();
+		if (ticks < current.wait)
 			continue;
-		ticks -= current.second;
-		enemyWaveData.pop_front();
-		const Engine::Point SpawnCoordinate = Engine::Point(SpawnGridPoint.x * BlockSize, SpawnGridPoint.y * BlockSize);
+		ticks -= current.wait;
+		zombieWaveData.pop_front();
+		const Engine::Point SpawnCoordinate = Engine::Point(SpawnGridPoint.x * BlockSize, current.lane * BlockSize);
 		Zombie* enemy;
-		switch (current.first) {
+		switch (current.type) {
 			case -2:
 				// Start empty time
 				continue;
@@ -292,12 +292,12 @@ void PlayScene::ReadMap() {
 void PlayScene::ReadEnemyWave() {
     std::string filename = std::string("Resource/zombie.txt");
 	// Read enemy file.
-	float type, wait, repeat;
-	enemyWaveData.clear();
+	float type, wait, repeat, lane;
+	zombieWaveData.clear();
 	std::ifstream fin(filename);
-	while (fin >> type && fin >> wait && fin >> repeat) {
+	while (fin >> type && fin >> wait && fin >> repeat && fin >> lane) {
 		for (int i = 0; i < repeat; i++)
-			enemyWaveData.emplace_back(type, wait);
+			zombieWaveData.emplace_back(type, wait, lane);
 	}
 	fin.close();
 }

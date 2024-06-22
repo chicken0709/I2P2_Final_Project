@@ -20,7 +20,7 @@ void Sun::Update(float deltaTime) {
 
     mouseIn = Engine::Collider::IsPointInBitmap(Engine::Point((mouse.x - Position.x) * GetBitmapWidth() / Size.x + Anchor.x * GetBitmapWidth(), (mouse.y - Position.y) * GetBitmapHeight() / Size.y + Anchor.y * GetBitmapHeight()), bmp);
     if (mouseIn) {
-        getPlayScene()->EarnMoney(25);
+        getPlayScene()->EarnMoney(50);
         getPlayScene()->BulletGroup->RemoveObject(objectIterator);
         AudioHelper::PlayAudio("sun_collect.mp3");
     }

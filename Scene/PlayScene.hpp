@@ -2,8 +2,6 @@
 #define PLAYSCENE_HPP
 #include <allegro5/allegro_audio.h>
 #include <list>
-#include <memory>
-#include <utility>
 #include <vector>
 
 #include "Engine/IScene.hpp"
@@ -21,14 +19,11 @@ namespace Engine {
 }  // namespace Engine
 
 class ZombieWaveData {
-protected:
+public:
 	int type;
 	int wait;
 	int lane;
-public:
-	ZombieWaveData(int t, int w, int l): type(t), wait(w), lane(l) {
-		
-	}
+	ZombieWaveData(int t, int w, int l): type(t), wait(w), lane(l) {}
 };
 
 class PlayScene final : public Engine::IScene {
@@ -60,7 +55,7 @@ public:
 	Plant* preview;
 	std::vector<std::vector<TileType>> mapState;
 	std::vector<std::vector<int>> mapDistance;
-	std::list<std::pair<int, float>> enemyWaveData;
+	std::list<ZombieWaveData> zombieWaveData;
 
 	std::vector<std::vector<Plant*>> lawn;;
 

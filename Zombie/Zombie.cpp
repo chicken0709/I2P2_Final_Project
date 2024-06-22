@@ -89,7 +89,7 @@ void Zombie::Update(float deltaTime) {
 
 		//make sure in range
 		if (y < 0) y = 0;
-		if (y >= PlayScene::MapHeight) y = PlayScene::MapHeight - 1;
+		if (y > PlayScene::MapHeight) y = PlayScene::MapHeight;
 
 		//stop at plant
 		if (!outside) {
@@ -101,8 +101,8 @@ void Zombie::Update(float deltaTime) {
                 if (reload <= 0) {
                     reload = coolDown;
                     Plant *plant = getPlayScene()->lawn[y - 1][x];
-                    plant->TakeDamage(ZDMG, false);
-                    AudioHelper::PlayAudio("chomp.mp3");
+                	plant->TakeDamage(ZDMG, false);
+                	AudioHelper::PlayAudio("chomp.mp3");
                 }
                 return;
             }
