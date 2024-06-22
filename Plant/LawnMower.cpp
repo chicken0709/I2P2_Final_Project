@@ -11,7 +11,7 @@
 #include "Scene/PlayScene.hpp"
 
 LawnMower::LawnMower(float x, float y) :
-        Plant("play/lawnmower.png", x, y, 0, 0, 0, PlantType::LAWNMOWER,"lawnmower") {
+        Plant("play/lawnmower.png", x, y, 0, 0, 0, PlantType::LAWNMOWER,"lawnmower",0,0,0,{}) {
     Anchor.y += 8.0f / GetBitmapHeight();
 }
 

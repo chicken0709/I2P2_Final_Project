@@ -25,8 +25,10 @@
 #include "PlayScene.hpp"
 
 #include "Bullet/Mower.hpp"
+#include "Engine/LOG.hpp"
 #include "Plant/LawnMower.hpp"
-#include "UI/Animation/Animation.hpp"
+#include "UI/Animation/PlantAnimation.hpp"
+#include "UI/Animation/ZombieAnimation.hpp"
 #include "Zombie/BasicZombie.hpp"
 
 bool PlayScene::DebugMode = false;
@@ -64,7 +66,7 @@ void PlayScene::Initialize() {
 	preview = nullptr;
 	UIGroup->AddNewObject(imgTarget);
     mapState = std::vector<std::vector<TileType>>(MapHeight, std::vector<TileType>(MapWidth));
-	lawn = std::vector<std::vector<Plant*>>(MapHeight, std::vector<Plant*>(MapWidth));
+	plant_lawn = std::vector<std::vector<Plant*>>(MapHeight, std::vector<Plant*>(MapWidth));
 	// Start BGM.
 	bgmId = AudioHelper::PlayBGM("play.mp3");
     shovelClicked = false;
@@ -125,16 +127,24 @@ void PlayScene::Update(float deltaTime) {
 		Zombie* enemy;
 		switch (current.first) {
 		case 1:
-			EnemyGroup->AddNewObject(enemy = new BasicZombie(SpawnCoordinate.x, SpawnCoordinate.y));
+			EnemyGroup->AddNewObject(enemy = new BasicZombie(nextZombieIndex,SpawnCoordinate.x, SpawnCoordinate.y));
+			allZombies.emplace_back(enemy);
+			EffectGroup->AddNewObject(new ZombieAnimation( "basiczombie",nextZombieIndex++,47, SpawnCoordinate.x,SpawnCoordinate.y));
 			break;
 		case 2:
-			EnemyGroup->AddNewObject(enemy = new BasicZombie(SpawnCoordinate.x, SpawnCoordinate.y));
+			EnemyGroup->AddNewObject(enemy = new BasicZombie(nextZombieIndex,SpawnCoordinate.x, SpawnCoordinate.y));
+			allZombies.emplace_back(enemy);
+			EffectGroup->AddNewObject(new ZombieAnimation( "basiczombie",nextZombieIndex++,47, SpawnCoordinate.x,SpawnCoordinate.y));
 			break;
 		case 3:
-			EnemyGroup->AddNewObject(enemy = new BasicZombie(SpawnCoordinate.x, SpawnCoordinate.y));
+			EnemyGroup->AddNewObject(enemy = new BasicZombie(nextZombieIndex,SpawnCoordinate.x, SpawnCoordinate.y));
+			allZombies.emplace_back(enemy);
+			EffectGroup->AddNewObject(new ZombieAnimation( "basiczombie",nextZombieIndex++,47, SpawnCoordinate.x,SpawnCoordinate.y));
 			break;
 		case 4:
-			EnemyGroup->AddNewObject(enemy = new BasicZombie(SpawnCoordinate.x, SpawnCoordinate.y));
+			EnemyGroup->AddNewObject(enemy = new BasicZombie(nextZombieIndex,SpawnCoordinate.x, SpawnCoordinate.y));
+			allZombies.emplace_back(enemy);
+			EffectGroup->AddNewObject(new ZombieAnimation( "basiczombie",nextZombieIndex++,47, SpawnCoordinate.x,SpawnCoordinate.y));
 			break;
 		default:
 			continue;
@@ -200,7 +210,7 @@ void PlayScene::OnMouseUp(int button, int mx, int my) {
 	const int y = my / BlockSize;
     if(shovelClicked) {
         if (mapState[y - 1][x - 1] == TILE_OCCUPIED) {
-            Plant *plant = lawn[y - 1][x - 1];
+            Plant *plant = plant_lawn[y - 1][x - 1];
             plant->TakeDamage(INT16_MAX, true);
             mapState[y - 1][x - 1] = TILE_EMPTY;
             EarnMoney(plant->GetPrice());
@@ -232,12 +242,12 @@ void PlayScene::OnMouseUp(int button, int mx, int my) {
 			PlantGroup->AddNewObject(preview);
 
 			//Add Animation
-			EffectGroup->AddNewObject(new Animation(preview->GetName(),preview->frameCount,preview->frameWidth,preview->frameHeight,1,x * BlockSize + BlockSize / 2, y * BlockSize + BlockSize / 2 - 35,x,y));
+			EffectGroup->AddNewObject(new PlantAnimation(preview->name,preview->totalFrameCount,x * BlockSize + BlockSize / 2, y * BlockSize + BlockSize / 2 - 35,x,y));
 
 			// To keep responding when paused.
 			preview->Update(0);
 			// Remove Preview.
-			lawn[y - 1][x - 1] = preview;
+			plant_lawn[y - 1][x - 1] = preview;
 			preview->SetPos(y - 1,x - 1);
 			preview = nullptr;
 			mapState[y - 1][x - 1] = TILE_OCCUPIED;

@@ -10,7 +10,7 @@ class Zombie;
 class PlayScene;
 
 enum class PlantType {
-    SUNFLOWER, PEASHOOTER, LAWNMOWER, WALLNUT, CHERRYBOMB, OTHER
+    SUNFLOWER, PEASHOOTER, LAWNMOWER, WALLNUT, CHERRYBOMB, OTHER, NUL,
 };
 
 class Plant: public Engine::Sprite {
@@ -21,32 +21,32 @@ protected:
     int hp;
     int pos_x = 0;
     int pos_y = 0;
-    std::string name;
-    PlantType plantType;
+    PlantType plantType = PlantType::NUL;
     std::list<Plant*>::iterator lockedPlantIterator;
     PlayScene* getPlayScene();
 
-    Plant(std::string img, float x, float y, int hp, int price, float coolDown, PlantType plantType, std::string name,int frameCount,int frameWidth,int frameHeight);
-    Plant(std::string img, float x, float y, int hp, int price, float coolDown, PlantType plantType, std::string name);
-
+    Plant(std::string img, float x, float y, int hp, int price, float coolDown, PlantType plantType, std::string name,int totalFrameCount,int frameWidth,int frameHeight,std::vector<int> animationFrameCount);
 
     // Reference: Design Patterns - Factory Method.
     virtual void CreatePea() = 0;
 
 public:
+    std::string name;
     bool Enabled = true;
     bool Preview = false;
     Zombie* Target = nullptr;
     void Update(float deltaTime) override;
     void Draw() const override;
 	int GetPrice() const;
-    void TakeDamage(float damage, bool shovel);
+    virtual void TakeDamage(float damage, bool shovel);
     void OnExplode();
     void SetPos(int x,int y);
-    std::string GetName();
     PlantType GetPlantType();
-    int frameCount;
+
+    int totalFrameCount;
     int frameWidth;
     int frameHeight;
+    int animationIndex = 0;
+    std::vector<int> animationFrameCount;
 };
 #endif // PLANT_HPP

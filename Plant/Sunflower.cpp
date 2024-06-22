@@ -10,7 +10,7 @@
 const int Sunflower::Price = 50;
 
 Sunflower::Sunflower(float x, float y) :
-        Plant("play/sunflower.png", x, y, 10, Price, 20, PlantType::SUNFLOWER,"sunflower",25,73,74) {
+        Plant("play/sunflower.png", x, y, 10, Price, 20, PlantType::SUNFLOWER,"sunflower",25,73,74,{25}) {
     // Move center downward, since we the turret head is slightly biased upward.
     Anchor.y += 8.0f / GetBitmapHeight();
     reload = 10;

@@ -12,6 +12,7 @@ enum TileType {
 	TILE_EMPTY,
 	TILE_OCCUPIED,
 };
+class Zombie;
 class Plant;
 namespace Engine {
 	class Group;
@@ -51,7 +52,9 @@ public:
 	std::vector<std::vector<int>> mapDistance;
 	std::list<std::pair<int, float>> enemyWaveData;
 
-	std::vector<std::vector<Plant*>> lawn;;
+	std::vector<std::vector<Plant*>> plant_lawn;
+	std::vector<Zombie*> allZombies;
+	int nextZombieIndex = 0;
 
 	static Engine::Point GetClientSize();
 	explicit PlayScene() = default;
