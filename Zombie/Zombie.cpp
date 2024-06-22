@@ -23,13 +23,16 @@ void Zombie::OnExplode() {
     Engine::LOG(Engine::INFO) << "zombie dead";
 }
 
-Zombie::Zombie(std::string img, float x, float y, float radius, float speed, float originalSpeed, float hp, int money,float cooldown) :
-	Engine::Sprite(img, x, y), speed(speed), originalSpeed(originalSpeed), hp(hp), money(money), coolDown(cooldown){
+Zombie::Zombie(std::string img, float x, float y, float radius, float speed, float originalSpeed, float hp, float cooldown) :
+	Engine::Sprite(img, x, y), speed(speed), originalSpeed(originalSpeed), hp(hp), coolDown(cooldown){
 	CollisionRadius = radius;
 }
 
 void Zombie::TakeDamage(float damage) {
 	hp -= damage;
+	if (zombieType == ZombieType::NEWSPAPER) {
+		if(hp <= 300) speed = 40;
+	}
 	if (hp <= 0) {
 		OnExplode();
 		// Remove all turret's reference to target.
@@ -40,7 +43,20 @@ void Zombie::TakeDamage(float damage) {
 		getPlayScene()->EnemyGroup->RemoveObject(objectIterator);
         return;
 	}
-	AudioHelper::PlayAudio("splat.ogg");
+	switch(zombieType) {
+		case ZombieType::BASIC_FLAG:
+			AudioHelper::PlayAudio("splat.ogg");
+			break;
+		case ZombieType::NEWSPAPER:
+			AudioHelper::PlayAudio("splat.ogg");
+			break;
+		case ZombieType::BUCKET:
+			AudioHelper::PlayAudio("shieldhit.ogg");
+			break;
+		case ZombieType::CONE_FOOTBALL:
+			AudioHelper::PlayAudio("plastichit.ogg");
+			break;
+	}
 }
 
 void Zombie::Update(float deltaTime) {

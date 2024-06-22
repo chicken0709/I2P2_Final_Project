@@ -7,8 +7,6 @@
 
 #include "Engine/AudioHelper.hpp"
 #include "Engine/LOG.hpp"
-#include "UI/Animation/DirtyEffect.hpp"
-#include "UI/Animation/Animation.hpp"
 
 PlayScene* Plant::getPlayScene() {
 	return dynamic_cast<PlayScene*>(Engine::GameEngine::GetInstance().GetActiveScene());

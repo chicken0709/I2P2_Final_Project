@@ -116,6 +116,16 @@ add_executable(2024_I2P2_Final_Project
         Plant/CherryBomb.hpp
         UI/Animation/Animation.cpp
         UI/Animation/Animation.hpp
+        Zombie/FootballZombie.cpp
+        Zombie/FootballZombie.hpp
+        Zombie/NewspaperZombie.cpp
+        Zombie/NewspaperZombie.hpp
+        Zombie/ConeZombie.cpp
+        Zombie/ConeZombie.hpp
+        Zombie/FlagZombie.cpp
+        Zombie/FlagZombie.hpp
+        Zombie/BucketZombie.cpp
+        Zombie/BucketZombie.hpp
 )
 
 IF (WIN32)

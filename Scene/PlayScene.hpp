@@ -20,6 +20,17 @@ namespace Engine {
 	class Sprite;
 }  // namespace Engine
 
+class ZombieWaveData {
+protected:
+	int type;
+	int wait;
+	int lane;
+public:
+	ZombieWaveData(int t, int w, int l): type(t), wait(w), lane(l) {
+		
+	}
+};
+
 class PlayScene final : public Engine::IScene {
 private:
 	ALLEGRO_SAMPLE_ID bgmId;

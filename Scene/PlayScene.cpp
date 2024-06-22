@@ -7,7 +7,6 @@
 #include <iostream>
 
 #include "Engine/AudioHelper.hpp"
-#include "Zombie/Zombie.hpp"
 #include "Engine/GameEngine.hpp"
 #include "Engine/Group.hpp"
 #include "UI/Component/Label.hpp"
@@ -21,12 +20,16 @@
 #include "Plant/Wallnut.hpp"
 #include "Plant/CherryBomb.hpp"
 #include "Plant/Shovel.hpp"
-#include "PlayScene.hpp"
-
-#include "Bullet/Mower.hpp"
 #include "Plant/LawnMower.hpp"
+#include "PlayScene.hpp"
 #include "UI/Animation/Animation.hpp"
+#include "Zombie/Zombie.hpp"
 #include "Zombie/BasicZombie.hpp"
+#include "Zombie/ConeZombie.hpp"
+#include "Zombie/BucketZombie.hpp"
+#include "Zombie/FlagZombie.hpp"
+#include "Zombie/FootballZombie.hpp"
+#include "Zombie/NewspaperZombie.hpp"
 
 bool PlayScene::DebugMode = false;
 const int PlayScene::MapWidth = 9, PlayScene::MapHeight = 5;
@@ -97,20 +100,12 @@ void PlayScene::Terminate() {
 void PlayScene::Update(float deltaTime) {
 	// If we use deltaTime directly, then we might have Bullet-through-paper problem.
 	// Reference: Bullet-Through-Paper
-    bool win = false;
 	for (int i = 0; i < SpeedMult; i++) {
 		IScene::Update(deltaTime);
 		// Check if we should create new enemy.
 		ticks += deltaTime;
 		if (enemyWaveData.empty()) {
 			if (EnemyGroup->GetObjects().empty()) {
-                if(!win) {
-                    win = !win;
-                    std::ofstream out;
-                    out.open("Resource/scoreboard.txt", std::ios::app);
-                    std::string str = "player2 " + std::to_string(PlayScene::lives);
-                    out << str;
-                }
 				Engine::GameEngine::GetInstance().ChangeScene("win");
 			}
 			continue;
@@ -120,25 +115,47 @@ void PlayScene::Update(float deltaTime) {
 			continue;
 		ticks -= current.second;
 		enemyWaveData.pop_front();
-		const Engine::Point SpawnCoordinate = Engine::Point(SpawnGridPoint.x * BlockSize, SpawnGridPoint.y * BlockSize + 10);
+		const Engine::Point SpawnCoordinate = Engine::Point(SpawnGridPoint.x * BlockSize, SpawnGridPoint.y * BlockSize);
 		Zombie* enemy;
 		switch (current.first) {
-		case 1:
-			EnemyGroup->AddNewObject(enemy = new BasicZombie(SpawnCoordinate.x, SpawnCoordinate.y));
-			break;
-		case 2:
-			EnemyGroup->AddNewObject(enemy = new BasicZombie(SpawnCoordinate.x, SpawnCoordinate.y));
-			break;
-		case 3:
-			EnemyGroup->AddNewObject(enemy = new BasicZombie(SpawnCoordinate.x, SpawnCoordinate.y));
-			break;
-		case 4:
-			EnemyGroup->AddNewObject(enemy = new BasicZombie(SpawnCoordinate.x, SpawnCoordinate.y));
-			break;
-		default:
-			continue;
+			case -2:
+				// Start empty time
+				continue;
+			case -1:
+				// First zombie
+				AudioHelper::PlayAudio("siren.ogg");
+				continue;
+			case 0:
+				// Huge wave
+				AudioHelper::PlayAudio("hugewave.ogg");
+				continue;
+			case 1:
+				// Basic zombie
+				EnemyGroup->AddNewObject(enemy = new BasicZombie(SpawnCoordinate.x, SpawnCoordinate.y));
+				break;
+			case 2:
+				// Cone zombie
+				EnemyGroup->AddNewObject(enemy = new ConeZombie(SpawnCoordinate.x, SpawnCoordinate.y));
+				break;
+			case 3:
+				// Bucket zombie
+				EnemyGroup->AddNewObject(enemy = new BucketZombie(SpawnCoordinate.x, SpawnCoordinate.y));
+				break;
+			case 4:
+				// Football zombie
+				EnemyGroup->AddNewObject(enemy = new FootballZombie(SpawnCoordinate.x, SpawnCoordinate.y));
+				break;
+			case 5:
+				// Newspaper zombie
+				EnemyGroup->AddNewObject(enemy = new NewspaperZombie(SpawnCoordinate.x, SpawnCoordinate.y));
+				break;
+			case 6:
+				// Flag zombie
+				EnemyGroup->AddNewObject(enemy = new FlagZombie(SpawnCoordinate.x, SpawnCoordinate.y));
+				break;
+			default:
+				continue;
 		}
-		//enemy->UpdatePath(mapDistance);
 		// Compensate the time lost.
 		enemy->Update(ticks);
 	}
@@ -273,7 +290,7 @@ void PlayScene::ReadMap() {
 }
 
 void PlayScene::ReadEnemyWave() {
-    std::string filename = std::string("Resource/enemy") + std::to_string(MapId) + ".txt";
+    std::string filename = std::string("Resource/zombie.txt");
 	// Read enemy file.
 	float type, wait, repeat;
 	enemyWaveData.clear();

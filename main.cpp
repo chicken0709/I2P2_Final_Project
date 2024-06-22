@@ -1,6 +1,3 @@
-// [main.cpp]
-// This is the entry point of your game.
-// You can register your scenes here, and start the game.
 #include "Engine/GameEngine.hpp"
 #include "Engine/LOG.hpp"
 #include "Scene/LoseScene.hpp"
@@ -9,22 +6,20 @@
 #include "Scene/WinScene.hpp"
 #include "Scene/StartScene.hpp"
 #include "Scene/SettingsScene.hpp"
-#include "Scene/ScoreBoardScene.cpp"
 
 int main(int argc, char **argv) {
 	Engine::LOG::SetConfig(true);
 	Engine::GameEngine& game = Engine::GameEngine::GetInstance();
 
-    // TODO: [HACKATHON-1-SCENE] (3/4): Register Scenes here
+    // Register scenes
 	game.AddNewScene("start", new StartScene());
 	game.AddNewScene("stage-select", new StageSelectScene());
 	game.AddNewScene("settings", new SettingsScene());
 	game.AddNewScene("play", new PlayScene());
 	game.AddNewScene("lose", new LoseScene());
 	game.AddNewScene("win", new WinScene());
-	game.AddNewScene("scoreboard-scene", new ScoreBoardScene());
 
-    // TODO: [HACKATHON-1-SCENE] (4/4): Change the start scene
+    // Start game
 	game.Start("start", 60, 1600, 900);
 	return 0;
 }
