@@ -76,8 +76,6 @@ add_executable(2024_I2P2_Final_Project
         Plant/PlantButton.hpp
 
         // Scene
-        Scene/LoseScene.cpp
-        Scene/LoseScene.hpp
         Scene/PlayScene.cpp
         Scene/PlayScene.hpp
         Scene/StageSelectScene.cpp

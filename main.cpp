@@ -1,6 +1,5 @@
 #include "Engine/GameEngine.hpp"
 #include "Engine/LOG.hpp"
-#include "Scene/LoseScene.hpp"
 #include "Scene/PlayScene.hpp"
 #include "Scene/StageSelectScene.hpp"
 #include "Scene/StartScene.hpp"
@@ -15,7 +14,6 @@ int main(int argc, char **argv) {
 	game.AddNewScene("stage-select", new StageSelectScene());
 	game.AddNewScene("settings", new SettingsScene());
 	game.AddNewScene("play", new PlayScene());
-	game.AddNewScene("lose", new LoseScene());
 
     // Start game
 	game.Start("start", 60, 1600, 900);

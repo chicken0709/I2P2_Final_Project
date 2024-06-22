@@ -72,8 +72,10 @@ void PlayScene::Initialize() {
 	bgmId = AudioHelper::PlayBGM("play.mp3");
     shovelClicked = false;
 	win = false;
+	lose = false;
 	buttonAdded = false;
 	win_bgm_delay = 4.5;
+	lose_bgm_delay = 10.5;
 
 	//generate lawn mowers
 	for(int i = 1;i <= MapHeight;i++) {
@@ -104,21 +106,33 @@ void PlayScene::Terminate() {
 void PlayScene::Update(float deltaTime) {
 	// If we use deltaTime directly, then we might have Bullet-through-paper problem.
 	// Reference: Bullet-Through-Paper
+	if (lose) {
+		lose_bgm_delay -= deltaTime;
+		if(lose_bgm_delay < 0 && buttonAdded == false) {
+			buttonAdded = true;
+			Engine::ImageButton* btn;
+			btn = new Engine::ImageButton("win/dirt.png", "win/floor.png", 800 - 200, 450 * 7 / 4 - 50, 400, 100);
+			btn->SetOnClickCallback(std::bind(&PlayScene::BackOnClick, this, 2));
+			AddNewControlObject(btn);
+			AddNewObject(new Engine::Label("Back", "pirulen.ttf", 48, 800, 450 * 7 / 4, 0, 0, 0, 255, 0.5, 0.5));
+		}
+	}
+	if (win) {
+		win_bgm_delay -= deltaTime;
+		if(win_bgm_delay < 0 && buttonAdded == false) {
+			buttonAdded = true;
+			Engine::ImageButton* btn;
+			btn = new Engine::ImageButton("win/dirt.png", "win/floor.png", 800 - 200, 450 * 7 / 4 - 50, 400, 100);
+			btn->SetOnClickCallback(std::bind(&PlayScene::BackOnClick, this, 2));
+			AddNewControlObject(btn);
+			AddNewObject(new Engine::Label("Back", "pirulen.ttf", 48, 800, 450 * 7 / 4, 0, 0, 0, 255, 0.5, 0.5));
+		}
+	}
+	if (lose) return;
 	for (int i = 0; i < SpeedMult; i++) {
 		IScene::Update(deltaTime);
 		// Check if we should create new enemy.
 		ticks += deltaTime;
-		if (win) {
-			win_bgm_delay -= deltaTime;
-			if(win_bgm_delay < 0 && buttonAdded == false) {
-				buttonAdded = true;
-				Engine::ImageButton* btn;
-				btn = new Engine::ImageButton("win/dirt.png", "win/floor.png", 800 - 200, 450 * 7 / 4 - 50, 400, 100);
-				btn->SetOnClickCallback(std::bind(&PlayScene::BackOnClick, this, 2));
-				AddNewControlObject(btn);
-				AddNewObject(new Engine::Label("Back", "pirulen.ttf", 48, 800, 450 * 7 / 4, 0, 0, 0, 255, 0.5, 0.5));
-			}
-		}
 		if (zombieWaveData.empty()) {
 			if (EnemyGroup->GetObjects().empty()) {
 				if(win == false) {
@@ -295,8 +309,11 @@ void PlayScene::OnKeyDown(int keyCode) {
 }
 
 void PlayScene::ReachHouse() {
-	//AudioHelper::PlayAudio("losemusic.ogg");
-    //Engine::GameEngine::GetInstance().ChangeScene("lose");
+	if (lose == false) {
+		AudioHelper::StopBGM(bgmId);
+		AudioHelper::PlayAudio("losemusic.ogg");
+		lose = true;
+	}
 }
 
 int PlayScene::GetMoney() const {
@@ -408,6 +425,7 @@ void PlayScene::ConstructUI() {
 }
 
 void PlayScene::UIBtnClicked(int id) {
+	if (lose) return;
 	if (preview)
 		UIGroup->RemoveObject(preview->GetObjectIterator());
 	if (id == 0 && money >= Sunflower::Price)

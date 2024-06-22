@@ -33,8 +33,10 @@ protected:
 	int lives;
 	int SpeedMult;
 	bool win;
+	bool lose;
 	bool buttonAdded;
 	float win_bgm_delay;
+	float lose_bgm_delay;
 public:
 	Plant* mower_available[5];
     int money;
