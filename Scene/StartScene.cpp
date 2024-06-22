@@ -1,6 +1,5 @@
 #include "StartScene.hpp"
 #include <functional>
-#include <memory>
 
 #include "Engine/AudioHelper.hpp"
 #include "Engine/GameEngine.hpp"

@@ -32,6 +32,9 @@ private:
 protected:
 	int lives;
 	int SpeedMult;
+	bool win;
+	bool buttonAdded;
+	float win_bgm_delay;
 public:
 	Plant* mower_available[5];
     int money;
@@ -78,6 +81,7 @@ public:
 	void ReadEnemyWave();
 	void ConstructUI();
 	void UIBtnClicked(int id);
+	void BackOnClick(int stage);
 
 };
 #endif // PLAYSCENE_HPP

@@ -82,8 +82,6 @@ add_executable(2024_I2P2_Final_Project
         Scene/PlayScene.hpp
         Scene/StageSelectScene.cpp
         Scene/StageSelectScene.hpp
-        Scene/WinScene.cpp
-        Scene/WinScene.hpp
         Scene/StartScene.cpp
         Scene/StartScene.hpp
         Scene/SettingsScene.cpp

@@ -5,6 +5,7 @@
 #include <string>
 #include <memory>
 #include <iostream>
+#include <random>
 
 #include "Engine/AudioHelper.hpp"
 #include "Engine/GameEngine.hpp"
@@ -46,7 +47,7 @@ void PlayScene::Initialize() {
 	mapState.clear();
 	ticks = 0;
 	lives = 100;
-	money = 15000; // change to 50 when done
+	money = 15000; // change to 100 when done
 	SpeedMult = 1;
 	// Add groups from bottom to top.
 	AddNewObject(TileMapGroup = new Group());
@@ -70,6 +71,9 @@ void PlayScene::Initialize() {
 	// Start BGM.
 	bgmId = AudioHelper::PlayBGM("play.mp3");
     shovelClicked = false;
+	win = false;
+	buttonAdded = false;
+	win_bgm_delay = 4.5;
 
 	//generate lawn mowers
 	for(int i = 1;i <= MapHeight;i++) {
@@ -104,9 +108,24 @@ void PlayScene::Update(float deltaTime) {
 		IScene::Update(deltaTime);
 		// Check if we should create new enemy.
 		ticks += deltaTime;
+		if (win) {
+			win_bgm_delay -= deltaTime;
+			if(win_bgm_delay < 0 && buttonAdded == false) {
+				buttonAdded = true;
+				Engine::ImageButton* btn;
+				btn = new Engine::ImageButton("win/dirt.png", "win/floor.png", 800 - 200, 450 * 7 / 4 - 50, 400, 100);
+				btn->SetOnClickCallback(std::bind(&PlayScene::BackOnClick, this, 2));
+				AddNewControlObject(btn);
+				AddNewObject(new Engine::Label("Back", "pirulen.ttf", 48, 800, 450 * 7 / 4, 0, 0, 0, 255, 0.5, 0.5));
+			}
+		}
 		if (zombieWaveData.empty()) {
 			if (EnemyGroup->GetObjects().empty()) {
-				Engine::GameEngine::GetInstance().ChangeScene("win");
+				if(win == false) {
+					win = true;
+					AudioHelper::StopBGM(bgmId);
+					AudioHelper::PlayAudio("winmusic.ogg");
+				}
 			}
 			continue;
 		}
@@ -157,6 +176,10 @@ void PlayScene::Update(float deltaTime) {
 				continue;
 		}
 		// Compensate the time lost.
+		std::random_device dev;
+		std::mt19937 rng(dev());
+		std::uniform_int_distribution<std::mt19937::result_type> id(1, 5);
+		AudioHelper::PlayAudio("groan" + std::to_string(id(rng)) + ".ogg");
 		enemy->Update(ticks);
 	}
 	if (preview) {
@@ -272,7 +295,8 @@ void PlayScene::OnKeyDown(int keyCode) {
 }
 
 void PlayScene::ReachHouse() {
-    Engine::GameEngine::GetInstance().ChangeScene("lose");
+	//AudioHelper::PlayAudio("losemusic.ogg");
+    //Engine::GameEngine::GetInstance().ChangeScene("lose");
 }
 
 int PlayScene::GetMoney() const {
@@ -417,6 +441,9 @@ void PlayScene::UIBtnClicked(int id) {
 	OnMouseMove(Engine::GameEngine::GetInstance().GetMousePosition().x, Engine::GameEngine::GetInstance().GetMousePosition().y);
 }
 
+void PlayScene::BackOnClick(int stage) {
+	Engine::GameEngine::GetInstance().ChangeScene("start");
+}
 
 
 
