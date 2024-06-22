@@ -82,8 +82,6 @@ add_executable(2024_I2P2_Final_Project
         Scene/StageSelectScene.hpp
         Scene/StartScene.cpp
         Scene/StartScene.hpp
-        Scene/SettingsScene.cpp
-        Scene/SettingsScene.hpp
 
         main.cpp
         Plant/Repeater.cpp

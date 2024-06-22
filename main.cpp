@@ -3,7 +3,6 @@
 #include "Scene/PlayScene.hpp"
 #include "Scene/StageSelectScene.hpp"
 #include "Scene/StartScene.hpp"
-#include "Scene/SettingsScene.hpp"
 
 int main(int argc, char **argv) {
 	Engine::LOG::SetConfig(true);
@@ -12,7 +11,6 @@ int main(int argc, char **argv) {
     // Register scenes
 	game.AddNewScene("start", new StartScene());
 	game.AddNewScene("stage-select", new StageSelectScene());
-	game.AddNewScene("settings", new SettingsScene());
 	game.AddNewScene("play", new PlayScene());
 
     // Start game
