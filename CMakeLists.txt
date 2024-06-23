@@ -120,6 +120,10 @@ add_executable(2024_I2P2_Final_Project
         Zombie/FlagZombie.hpp
         Zombie/BucketZombie.cpp
         Zombie/BucketZombie.hpp
+        UI/Animation/PlantAnimation.cpp
+        UI/Animation/PlantAnimation.hpp
+        UI/Animation/ZombieAnimation.hpp
+        UI/Animation/ZombieAnimation.cpp
 )
 
 IF (WIN32)

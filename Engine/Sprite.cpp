@@ -8,7 +8,7 @@ namespace Engine {
 		float rotation, float vx, float vy, unsigned char r, unsigned char g, unsigned char b, unsigned char a) :
 		Image(img, x, y, w, h, anchorX, anchorY), Rotation(rotation), Velocity(Point(vx, vy)), Tint(al_map_rgba(r, g, b, a)) {
 	}
-	Sprite::Sprite(bool is_animation,int frameCount,std::string img, float x, float y, float w, float h, float anchorX, float anchorY,
+	Sprite::Sprite(int is_animation,int frameCount,std::string img, float x, float y, float w, float h, float anchorX, float anchorY,
 		float rotation, float vx, float vy, unsigned char r, unsigned char g, unsigned char b, unsigned char a) :
 		Image(is_animation,frameCount,img, x, y, 0, h, anchorX, anchorY), Rotation(rotation), Velocity(Point(vx, vy)), Tint(al_map_rgba(r, g, b, a)) {
 	}

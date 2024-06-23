@@ -10,7 +10,7 @@
 const int CherryBomb::Price = 150;
 
 CherryBomb::CherryBomb(float x, float y) :
-        Plant("play/cherrybomb.png", x, y, INT16_MAX, Price, 0, PlantType::OTHER,"cherrybomb",14,112,81) {
+        Plant("play/cherrybomb.png", x, y, INT16_MAX, Price, 0, PlantType::CHERRYBOMB,"cherrybomb",27,112,81,{14,13}) {
     // Move center downward, since we the turret head is slightly biased upward.
     Anchor.y += 8.0f / GetBitmapHeight();
     reload = 1.5;
@@ -23,7 +23,7 @@ void CherryBomb::CreatePea() {
         if((enemy->Position - Position).Magnitude() < 225)
             enemy->TakeDamage(INT16_MAX);
     }
-    getPlayScene()->lawn[pos_x][pos_y] = nullptr;
+    getPlayScene()->plant_lawn[pos_x][pos_y] = nullptr;
     getPlayScene()->mapState[pos_x][pos_y] = TILE_EMPTY;
     getPlayScene()->PlantGroup->RemoveObject(objectIterator);
 }

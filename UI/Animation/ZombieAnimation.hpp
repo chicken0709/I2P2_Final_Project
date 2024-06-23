@@ -1,29 +1,33 @@
-#ifndef ANIMATION_HPP
-#define ANIMATION_HPP
+#ifndef ZOMBIEANIMATION_HPP
+#define ZOMBIEANIMATION_HPP
 #include <string>
 
 #include "Engine/Sprite.hpp"
+#include "Zombie/Zombie.hpp"
 
 class PlayScene;
 
-class Animation : public Engine::Sprite {
+class ZombieAnimation : public Engine::Sprite {
 protected:
 	PlayScene* getPlayScene();
 	float timeTicks;
 	float timeSpan = 0.5;
 	float posX;
 	float posY;
-	int blockX;
-	int blockY;
+	int index;
+
 	std::shared_ptr<ALLEGRO_BITMAP> spriteSheet;
 	int frameCount;
 	int frameWidth;
 	int frameHeight;
+	int currentFrameCount;
+	Zombie* currentZombie;
 public:
 
-	Animation(std::string name,int frameCount,int frameWidth,int frameHeight, int index, float x, float y, int blockX, int blockY);
+	ZombieAnimation(std::string name,int index,int totalFrameCount,float x, float y);
 
 	void Update(float deltaTime) override;
 
+
 };
-#endif // ANIMATION_HPP
+#endif // ZOMBIEANIMATION_HPP

@@ -23,8 +23,8 @@ void Zombie::OnExplode() {
     Engine::LOG(Engine::INFO) << "zombie dead";
 }
 
-Zombie::Zombie(std::string img, float x, float y, float radius, float speed, float originalSpeed, float hp, float cooldown) :
-	Engine::Sprite(img, x, y), speed(speed), originalSpeed(originalSpeed), hp(hp), coolDown(cooldown){
+Zombie::Zombie(std::string name,int index,int totalFrameCount,int frameWidth,int frameHeight,std::vector<int> animationFrameCount,std::string img, float x, float y, float radius, float speed, float originalSpeed, float hp, int money, float cooldown) :
+	Engine::Sprite(img, x, y),name(name),index(index),totalFrameCount(totalFrameCount),frameWidth(frameWidth),frameHeight(frameHeight),animationFrameCount(animationFrameCount), speed(speed), originalSpeed(originalSpeed), hp(hp), money(money), coolDown(cooldown){
 	CollisionRadius = radius;
 }
 
@@ -40,6 +40,7 @@ void Zombie::TakeDamage(float damage) {
 			it->Target = nullptr;
 		for (auto& it: lockedBullets)
 			it->Target = nullptr;
+		animationIndex = -1;
 		getPlayScene()->EnemyGroup->RemoveObject(objectIterator);
         return;
 	}
@@ -66,7 +67,6 @@ void Zombie::Update(float deltaTime) {
 		//calc current block
 		int x = static_cast<int>(floor(Position.x / PlayScene::BlockSize) - 1);//somehow need to magically -1
 		int y = static_cast<int>(floor(Position.y / PlayScene::BlockSize));
-
 		//reach house
 		if (x < 0) {
 			if(getPlayScene()->mower_available[y - 1] != nullptr) {
@@ -100,9 +100,9 @@ void Zombie::Update(float deltaTime) {
                 //eat
                 if (reload <= 0) {
                     reload = coolDown;
-                    Plant *plant = getPlayScene()->lawn[y - 1][x];
-                	plant->TakeDamage(ZDMG, false);
-                	AudioHelper::PlayAudio("chomp.mp3");
+                    Plant *plant = getPlayScene()->plant_lawn[y - 1][x];
+                    plant->TakeDamage(ZDMG, false);
+                    AudioHelper::PlayAudio("chomp.mp3");
                 }
                 return;
             }
@@ -146,3 +146,4 @@ void Zombie::UpdateSpeed() {
     if(speed == originalSpeed) AudioHelper::PlayAudio("frozen.ogg");
     speed = originalSpeed / 2;
 }
+

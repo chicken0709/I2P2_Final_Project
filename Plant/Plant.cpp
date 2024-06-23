@@ -7,16 +7,14 @@
 
 #include "Engine/AudioHelper.hpp"
 #include "Engine/LOG.hpp"
+#include "UI/Animation/DirtyEffect.hpp"
+#include "UI/Animation/PlantAnimation.hpp"
 
 PlayScene* Plant::getPlayScene() {
 	return dynamic_cast<PlayScene*>(Engine::GameEngine::GetInstance().GetActiveScene());
 }
-Plant::Plant(std::string img, float x, float y, int hp, int price, float coolDown, PlantType plantType, std::string name, int frameCount, int frameWidth, int frameHeight) :
-	Sprite(img, x, y, 0, 0), hp(hp), price(price), coolDown(coolDown), plantType(plantType), name(name), frameCount(frameCount), frameWidth(frameWidth), frameHeight(frameHeight) {
-}
-
-Plant::Plant(std::string img, float x, float y, int hp, int price, float coolDown, PlantType plantType, std::string name) :
-	Sprite(img, x, y, 0, 0), hp(hp), price(price), coolDown(coolDown), plantType(plantType), name(name), frameCount(0), frameWidth(0), frameHeight(0) {
+Plant::Plant(std::string img, float x, float y, int hp, int price, float coolDown, PlantType plantType, std::string name, int totalFrameCount, int frameWidth, int frameHeight, std::vector<int> animationFrameCount) :
+	Sprite(img, x, y, 0, 0), hp(hp), price(price), coolDown(coolDown), plantType(plantType), name(name), totalFrameCount(totalFrameCount), frameWidth(frameWidth), frameHeight(frameHeight) ,animationFrameCount(animationFrameCount){
 }
 
 void Plant::Update(float deltaTime) {
@@ -34,6 +32,15 @@ void Plant::Update(float deltaTime) {
         }
         return;
     }
+	if(plantType == PlantType::CHERRYBOMB) {
+		reload -= deltaTime;
+		if (reload <= 0) {
+			// shoot.
+			reload = coolDown;
+			CreatePea();
+		}
+		return;
+	}
 	if(plantType == PlantType::LAWNMOWER) {
 		if (Target) {
 			CreatePea();
@@ -84,18 +91,9 @@ void Plant::TakeDamage(float damage, bool shovel) {
 	if (hp <= 0) {
         if(!shovel)
             AudioHelper::PlayAudio("gulp.ogg");
-		getPlayScene()->lawn[pos_x][pos_y] = nullptr;
+		getPlayScene()->plant_lawn[pos_x][pos_y] = nullptr;
 		getPlayScene()->mapState[pos_x][pos_y] = TILE_EMPTY;
 		getPlayScene()->PlantGroup->RemoveObject(objectIterator);
-	}
-	if(plantType == PlantType::WALLNUT) {
-		if(hp <= 66) {
-
-		}
-		else if(hp <= 33) {
-
-		}
-
 	}
 }
 
@@ -104,9 +102,7 @@ void Plant::SetPos(int x, int y) {
 	pos_y = y;
 }
 
-std::string Plant::GetName() {
-	return name;
-}
+
 PlantType Plant::GetPlantType() {
 	return plantType;
 }

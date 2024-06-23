@@ -21,9 +21,14 @@
 #include "Plant/Wallnut.hpp"
 #include "Plant/CherryBomb.hpp"
 #include "Plant/Shovel.hpp"
-#include "Plant/LawnMower.hpp"
 #include "PlayScene.hpp"
-#include "UI/Animation/Animation.hpp"
+
+#include "Bullet/Mower.hpp"
+#include "Engine/LOG.hpp"
+#include "Plant/LawnMower.hpp"
+#include "UI/Animation/PlantAnimation.hpp"
+#include "UI/Animation/ZombieAnimation.hpp"
+#include "PlayScene.hpp"
 #include "Zombie/Zombie.hpp"
 #include "Zombie/BasicZombie.hpp"
 #include "Zombie/ConeZombie.hpp"
@@ -50,7 +55,7 @@ void PlayScene::Initialize() {
 	mapState.clear();
 	ticks = 0;
 	lives = 100;
-	money = 15000; // change to 100 when done
+	money = 15000; // change to 50 when done
 	SpeedMult = 1;
 	// Add groups from bottom to top.
 	AddNewObject(TileMapGroup = new Group());
@@ -70,7 +75,7 @@ void PlayScene::Initialize() {
 	preview = nullptr;
 	UIGroup->AddNewObject(imgTarget);
     mapState = std::vector<std::vector<TileType>>(MapHeight, std::vector<TileType>(MapWidth));
-	lawn = std::vector<std::vector<Plant*>>(MapHeight, std::vector<Plant*>(MapWidth));
+	plant_lawn = std::vector<std::vector<Plant*>>(MapHeight, std::vector<Plant*>(MapWidth));
 	// Start BGM.
 	bgmId = AudioHelper::PlayBGM("play.mp3");
     shovelClicked = false;
@@ -250,7 +255,7 @@ void PlayScene::OnMouseUp(int button, int mx, int my) {
 	const int y = my / BlockSize;
     if(shovelClicked) {
         if (mapState[y - 1][x - 1] == TILE_OCCUPIED) {
-            Plant *plant = lawn[y - 1][x - 1];
+            Plant *plant = plant_lawn[y - 1][x - 1];
             plant->TakeDamage(INT16_MAX, true);
             mapState[y - 1][x - 1] = TILE_EMPTY;
             EarnMoney(plant->GetPrice());
@@ -282,12 +287,12 @@ void PlayScene::OnMouseUp(int button, int mx, int my) {
 			PlantGroup->AddNewObject(preview);
 
 			//Add Animation
-			EffectGroup->AddNewObject(new Animation(preview->GetName(),preview->frameCount,preview->frameWidth,preview->frameHeight,1,x * BlockSize + BlockSize / 2, y * BlockSize + BlockSize / 2 - 35,x,y));
+			EffectGroup->AddNewObject(new PlantAnimation(preview->name,preview->totalFrameCount,x * BlockSize + BlockSize / 2, y * BlockSize + BlockSize / 2 - 35,x,y));
 
 			// To keep responding when paused.
 			preview->Update(0);
 			// Remove Preview.
-			lawn[y - 1][x - 1] = preview;
+			plant_lawn[y - 1][x - 1] = preview;
 			preview->SetPos(y - 1,x - 1);
 			preview = nullptr;
 			mapState[y - 1][x - 1] = TILE_OCCUPIED;
