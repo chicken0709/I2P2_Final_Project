@@ -69,7 +69,7 @@ void Bullet::Update(float deltaTime) {
 					}
 				}
 			} else {
-				if(getPlayScene()->MapId == 2)
+				if(getPlayScene()->MapId == 2 && !getPlayScene()->allBullets_isDestroy.empty())
 					getPlayScene()->allBullets_isDestroy[index] = true;
             	getPlayScene()->BulletGroup->RemoveObject(objectIterator);
             	return;
@@ -86,7 +86,7 @@ void Bullet::Update(float deltaTime) {
 	}
 	// Check if out of boundary.
 	if (!Engine::Collider::IsRectOverlap(Position - Size / 2, Position + Size / 2, Engine::Point(1, 1), PlayScene::GetClientSize())) {
-		if(getPlayScene()->MapId == 2)
+		if(getPlayScene()->MapId == 2&& !getPlayScene()->allBullets_isDestroy.empty())
 			getPlayScene()->allBullets_isDestroy[index] = true;
 		getPlayScene()->BulletGroup->RemoveObject(objectIterator);
 	}
