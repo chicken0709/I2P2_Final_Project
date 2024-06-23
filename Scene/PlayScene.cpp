@@ -422,7 +422,7 @@ void PlayScene::ConstructUI() {
     UIGroup->AddNewObject(new Engine::Image("play/sun_counter.png", 100, 0, 124, 136));
 	UIGroup->AddNewObject(new Engine::Image("play/plant_select.png", 224, 0, 792, 136));
 	// Text
-	UIGroup->AddNewObject(UIMoney = new Engine::Label(std::to_string(money), "komika.ttf", 20, 132.5, 98.5));
+	UIGroup->AddNewObject(UIMoney = new Engine::Label(std::to_string(money), "komika.ttf", 20, 162.5, 115, 0, 0, 0, 255,0.5, 0.5));
 	PlantButton *btn;
 	// Button 1 Sunflower
 	btn = new PlantButton("play/plant_button_background.png", "play/plant_button_background.png",
