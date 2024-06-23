@@ -310,7 +310,10 @@ void PlayScene::OnMouseUp(int button, int mx, int my) {
 					allBullets_isDestroy.emplace_back(false);
 					EffectGroup->AddNewObject(new BulletAnimation("wallnutbowling",bullet->index,bullet->totalFrameCount,x * BlockSize + 75,y * BlockSize + 75));
 				} else if (name == "bombnut") {
-					BulletGroup->AddNewObject(new BombBowlingBall(Engine::Point(x * BlockSize + 75, y * BlockSize + 35), Engine::Point(1, 0),0, nullptr));
+					BulletGroup->AddNewObject(bullet = new BombBowlingBall(nextBulletIndex++,Engine::Point(x * BlockSize + 75, y * BlockSize + 35), Engine::Point(1, 0),0, nullptr));
+					allBullets.emplace_back(bullet);
+					allBullets_isDestroy.emplace_back(false);
+					EffectGroup->AddNewObject(new BulletAnimation("bombnutbowling",bullet->index,bullet->totalFrameCount,x * BlockSize + 75,y * BlockSize + 75));
 				}
 				AudioHelper::PlayAudio("plant.ogg");
 				AudioHelper::PlayAudio("bowling.mp3");

@@ -69,6 +69,7 @@ void Bullet::Update(float deltaTime) {
 					}
 				}
 			} else {
+				getPlayScene()->allBullets_isDestroy[index] = true;
             	getPlayScene()->BulletGroup->RemoveObject(objectIterator);
             	return;
             }
