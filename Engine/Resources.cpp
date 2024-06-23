@@ -8,8 +8,7 @@
 #include "Engine/Allegro5Exception.hpp"
 #include "LOG.hpp"
 #include "Resources.hpp"
-
-// #include "Resources.hpp"
+#include "Scene/StartScene.hpp"
 
 namespace Engine {
 	const std::string Resources::bitmapPathPrefix = "Resource/images/";
@@ -23,6 +22,8 @@ namespace Engine {
 	}
 
 	void Resources::ReleaseUnused() {
+		// Very bad code
+		bgmInstance = std::shared_ptr<ALLEGRO_SAMPLE_INSTANCE>();
 		// A better way may be to count the memory usage and release unused resources
 		// when the total resource memory exceeds a certain threshold. However, we'll
 		// just keep it simple here and only release unused resources in GameEngine when
