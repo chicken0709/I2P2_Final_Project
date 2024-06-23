@@ -59,7 +59,7 @@ void PlayScene::Initialize() {
 	mapState.clear();
 	ticks = 0;
 	lives = 100;
-	money = 15000; // change to 50 when done
+	money = 300; // change to 50 when done
 	SpeedMult = 1;
 	// Add groups from bottom to top.
 	AddNewObject(TileMapGroup = new Group());
@@ -488,7 +488,7 @@ void PlayScene::ConstructUI() {
     btn = new PlantButton("play/shovel_button.png", "play/shovel_button.png",
                           Engine::Sprite(0,0,"play/shovel_button.png", 1030, 0, 0, 0, 0, 0,0,0),
                           Engine::Sprite("play/shovel.png", 1036, 6, 100, 104, 0, 0)
-            , 1030, 0, SnowPeashooter::Price);
+            , 1030, 0, 0);
     btn->SetOnClickCallback(std::bind(&PlayScene::UIBtnClicked, this, 8));
     UIGroup->AddNewControlObject(btn);
 }
