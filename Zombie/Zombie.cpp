@@ -38,6 +38,7 @@ void Zombie::TakeDamage(float damage) {
 		if(hp <= 300) {
 			if(!isRage) {
 				isRage = true;
+				speed = 20;
 				AudioHelper::PlayAudio("newspaper_rarrgh.ogg");
 			}
 		}

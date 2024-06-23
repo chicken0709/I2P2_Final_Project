@@ -1,5 +1,5 @@
 #include "FootballZombie.hpp"
 
-FootballZombie::FootballZombie(int index,int x, int y) : Zombie("basiczombie",index,84,154,172,{30,36,18},"play/football_zombie.png", x, y, 100, 60, 60, 1400, 0.5) {
+FootballZombie::FootballZombie(int index,int x, int y) : Zombie("basiczombie",index,84,154,172,{30,36,18},"play/football_zombie.png", x, y, 100, 20, 20, 1400, 0.5) {
     zombieType = ZombieType::CONE_FOOTBALL;
 }
