@@ -10,7 +10,7 @@ namespace Engine {
 struct Point;
 }  // namespace Engine
 enum class BulletType {
-	BASICPEA, SNOWPEA, MOWER
+	BASICPEA, SNOWPEA, MOWER, BOWLING_BALL
 };
 class Bullet : public Engine::Sprite {
 protected:

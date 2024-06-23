@@ -116,6 +116,8 @@ add_executable(2024_I2P2_Final_Project
         Scene/StartScene.hpp
 
         main.cpp
+        Bullet/BowlingBall.cpp
+        Bullet/BowlingBall.hpp
 )
 
 IF (WIN32)

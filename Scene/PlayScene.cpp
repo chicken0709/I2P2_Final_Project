@@ -29,6 +29,8 @@
 #include "UI/Animation/PlantAnimation.hpp"
 #include "UI/Animation/ZombieAnimation.hpp"
 #include "PlayScene.hpp"
+
+#include "Bullet/BowlingBall.hpp"
 #include "Zombie/Zombie.hpp"
 #include "Zombie/BasicZombie.hpp"
 #include "Zombie/ConeZombie.hpp"
@@ -76,8 +78,14 @@ void PlayScene::Initialize() {
 	UIGroup->AddNewObject(imgTarget);
     mapState = std::vector<std::vector<TileType>>(MapHeight, std::vector<TileType>(MapWidth));
 	plant_lawn = std::vector<std::vector<Plant*>>(MapHeight, std::vector<Plant*>(MapWidth));
+
 	// Start BGM.
-	bgmId = AudioHelper::PlayBGM("play.mp3");
+	if (MapId == 1) {
+		bgmId = AudioHelper::PlayBGM("grasswalk.mp3");
+	} else {
+		bgmId = AudioHelper::PlayBGM("loonboon.mp3");
+	}
+
     shovelClicked = false;
 	win = false;
 	lose = false;
@@ -195,7 +203,7 @@ void PlayScene::Update(float deltaTime) {
 				EnemyGroup->AddNewObject(enemy = new BasicZombie(nextZombieIndex,SpawnCoordinate.x, SpawnCoordinate.y));
 				allZombies.emplace_back(enemy);
 				EffectGroup->AddNewObject(new ZombieAnimation( "basiczombie",nextZombieIndex++,47, SpawnCoordinate.x,SpawnCoordinate.y));
-				EnemyGroup->AddNewObject(enemy = new NewspaperZombie(SpawnCoordinate.x, SpawnCoordinate.y));
+				//EnemyGroup->AddNewObject(enemy = new NewspaperZombie(SpawnCoordinate.x, SpawnCoordinate.y));
 				break;
 			case 6:
 				// Flag zombie
@@ -287,8 +295,16 @@ void PlayScene::OnMouseUp(int button, int mx, int my) {
 		if (mapState[y - 1][x - 1] != TILE_OCCUPIED) {
 			if (!preview)
 				return;
-            // Plant sound
-            AudioHelper::PlayAudio("plant.ogg");
+			// Plant sound
+			AudioHelper::PlayAudio("plant.ogg");
+			// Bowling mode
+			if(MapId == 2) {
+				BulletGroup->AddNewObject(new BowlingBall(Engine::Point(x * BlockSize + 75, y * BlockSize + 35), Engine::Point(1, 0),0, nullptr));
+				UIGroup->RemoveObject(preview->GetObjectIterator());
+				preview = nullptr;
+				AudioHelper::PlayAudio("bowling.mp3");
+				return;
+			}
 			// Purchase.
 			EarnMoney(-preview->GetPrice());
 			// Remove Preview.
@@ -357,7 +373,7 @@ void PlayScene::ReadMap() {
 }
 
 void PlayScene::ReadEnemyWave() {
-    std::string filename = std::string("Resource/zombie.txt");
+    std::string filename = std::string("Resource/zombie" + std::to_string(MapId) + ".txt");
 	// Read enemy file.
 	float type, wait, repeat, lane;
 	zombieWaveData.clear();
@@ -370,12 +386,25 @@ void PlayScene::ReadEnemyWave() {
 }
 
 void PlayScene::ConstructUI() {
+	// Bowling mode
+	if(MapId == 2) {
+		// Button 1 Sunflower
+		PlantButton *btn;
+		btn = new PlantButton("play/plant_button_background.png", "play/plant_button_background.png",
+							  Engine::Sprite("play/plant_button_background.png", 229, 8, 0, 0, 0, 0),
+							  Engine::Sprite("play/sunflower.png", 239 + PlantButtonImageDiffX, PlantButtonImageDiffY, PlantButtonImageSize, PlantButtonImageSize, 0, 0)
+			, 229, 8, Sunflower::Price);
+		// Reference: Class Member Function Pointer and std::bind.
+		btn->SetOnClickCallback(std::bind(&PlayScene::UIBtnClicked, this, 9));
+		UIGroup->AddNewControlObject(btn);
+		return;
+	}
 	// Background
     UIGroup->AddNewObject(new Engine::Image("play/sun_counter.png", 100, 0, 124, 136));
 	UIGroup->AddNewObject(new Engine::Image("play/plant_select.png", 224, 0, 792, 136));
 	// Text
 	UIGroup->AddNewObject(UIMoney = new Engine::Label(std::to_string(money), "komika.ttf", 20, 132.5, 98.5));
-	PlantButton* btn;
+	PlantButton *btn;
 	// Button 1 Sunflower
 	btn = new PlantButton("play/plant_button_background.png", "play/plant_button_background.png",
                           Engine::Sprite("play/plant_button_background.png", 229, 8, 0, 0, 0, 0),
@@ -474,6 +503,9 @@ void PlayScene::UIBtnClicked(int id) {
         preview = new Shovel(0, 0);
         shovelClicked = true;
     }
+	else if (id == 9) {
+		preview = new Wallnut(0, 0);
+	}
 
 	if (!preview)
 		return;

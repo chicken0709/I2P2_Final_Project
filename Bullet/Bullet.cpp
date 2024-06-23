@@ -5,6 +5,9 @@
 #include "Engine/Group.hpp"
 #include "Engine/IScene.hpp"
 #include "Scene/PlayScene.hpp"
+#include <random>
+
+#include "Engine/LOG.hpp"
 
 PlayScene* Bullet::getPlayScene() {
 	return dynamic_cast<PlayScene*>(Engine::GameEngine::GetInstance().GetActiveScene());
@@ -23,20 +26,50 @@ Bullet::Bullet(std::string img, float speed, float damage, Engine::Point positio
 void Bullet::Update(float deltaTime) {
 	Sprite::Update(deltaTime);
 	PlayScene* scene = getPlayScene();
+	int bulletPositionY = static_cast<int>(Position.y / 150);
 	// Loop through zombies
 	for (auto& it : scene->EnemyGroup->GetObjects()) {
 		Zombie* zombie = dynamic_cast<Zombie*>(it);
+		int zombiePositionY = static_cast<int>(zombie->Position.y / 150);
 		if (!zombie->Visible)
 			continue;
-		int bulletPositionY = static_cast<int>(Position.y / 150);
-		int zombiePositionY = static_cast<int>(zombie->Position.y / 150);
 		if (Engine::Collider::IsCircleOverlap(Position, CollisionRadius, zombie->Position, zombie->CollisionRadius) && zombiePositionY == bulletPositionY) {
             OnExplode(zombie);
 			zombie->TakeDamage(damage);
-			if(bulletType != BulletType::MOWER) {
-                getPlayScene()->BulletGroup->RemoveObject(objectIterator);
-                return;
+			if (bulletType == BulletType::MOWER) {
+			} else if (bulletType == BulletType::BOWLING_BALL) {
+				if (bulletPositionY == 1) {
+					Velocity = Engine::Point(1, 1).Normalize() * speed;
+				} else if (bulletPositionY == 5) {
+					Velocity = Engine::Point(1, -1).Normalize() * speed;
+				} else {
+					if(Velocity.Normalize() == Engine::Point(1, 1).Normalize()) {
+						Velocity = Engine::Point(1, -1).Normalize() * speed;
+					} else if(Velocity.Normalize() == Engine::Point(1, -1).Normalize()) {
+						Velocity = Engine::Point(1, 1).Normalize() * speed;
+					} else {
+						std::random_device dev;
+						std::mt19937 rng(dev());
+						std::uniform_int_distribution<std::mt19937::result_type> id(1, 2);
+						if (id(rng) == 1) {
+							Velocity = Engine::Point(1, 1).Normalize() * speed;
+						} else {
+							Velocity = Engine::Point(1, -1).Normalize() * speed;
+						}
+					}
+				}
+			} else {
+            	getPlayScene()->BulletGroup->RemoveObject(objectIterator);
+            	return;
             }
+		}
+	}
+	// Check bowling ball y axis boundary
+	if (bulletType == BulletType::BOWLING_BALL) {
+		if(Position.y <= 160 && Velocity.Normalize() != Engine::Point(1, 0)) {
+			Velocity = Engine::Point(1, 1).Normalize() * speed;
+		} else if (Position.y >= 800 && Velocity.Normalize() != Engine::Point(1, 0)) {
+			Velocity = Engine::Point(1, -1).Normalize() * speed;
 		}
 	}
 	// Check if out of boundary.

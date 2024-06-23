@@ -19,7 +19,11 @@ PlayScene* Zombie::getPlayScene() {
 }
 
 void Zombie::OnExplode() {
-    AudioHelper::PlayAudio("limbs_pop.mp3");
+	if(getPlayScene()->MapId == 2) {
+		AudioHelper::PlayAudio("bowlingimpact.ogg");
+	} else {
+		AudioHelper::PlayAudio("limbs_pop.mp3");
+	}
     Engine::LOG(Engine::INFO) << "zombie dead";
 }
 
@@ -32,10 +36,10 @@ void Zombie::TakeDamage(float damage) {
 	hp -= damage;
 	if (zombieType == ZombieType::NEWSPAPER) {
 		if(hp <= 300) {
-			if(speed == 20) {
+			if(speed == 30) {
 				AudioHelper::PlayAudio("newspaper_rarrgh.ogg");
 			}
-			speed = 50;
+			speed = 60;
 		}
 	}
 	if (hp <= 0) {
