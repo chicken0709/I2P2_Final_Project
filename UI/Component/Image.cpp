@@ -57,14 +57,6 @@ namespace Engine {
 				Engine::LOG(Engine::INFO) << "size x " << Size.x << "size y " << Size.y;
 			}
 		}
-		else if(isAnimation == 2) {
-			if (Size.x == 0 && Size.y == 0) {
-				bmp = Resources::GetInstance().GetBitmap(img);
-				Size.x = GetBitmapWidth()/frameCount*1.6 ;
-				Size.y = GetBitmapHeight()*1.6 ;
-				Engine::LOG(Engine::INFO) << "size x " << Size.x << "size y " << Size.y;
-			}
-		}
 
 	}
 
