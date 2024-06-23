@@ -23,7 +23,16 @@ Bullet::Bullet(std::string img, float speed, float damage, Engine::Point positio
 	Rotation = rotation;
 	CollisionRadius = 4;
 }
-
+Bullet::Bullet(int index,int totalFrameCount,int frameWidth,int frameHeight,std::string img, float speed, float damage, Engine::Point position, Engine::Point forwardDirection, float rotation, Plant* parent)
+	:Sprite(img, position.x, position.y), speed(speed), damage(damage), parent(parent) {
+	Velocity = forwardDirection.Normalize() * speed;
+	Rotation = rotation;
+	CollisionRadius = 4;
+	this->index = index;
+	this->totalFrameCount = totalFrameCount;
+	this->frameWidth = frameWidth;
+	this->frameHeight = frameHeight;
+}
 void Bullet::Update(float deltaTime) {
 	Sprite::Update(deltaTime);
 	PlayScene* scene = getPlayScene();
@@ -74,6 +83,8 @@ void Bullet::Update(float deltaTime) {
 		}
 	}
 	// Check if out of boundary.
-	if (!Engine::Collider::IsRectOverlap(Position - Size / 2, Position + Size / 2, Engine::Point(1, 1), PlayScene::GetClientSize()))
+	if (!Engine::Collider::IsRectOverlap(Position - Size / 2, Position + Size / 2, Engine::Point(1, 1), PlayScene::GetClientSize())) {
+		getPlayScene()->allBullets_isDestroy[index] = true;
 		getPlayScene()->BulletGroup->RemoveObject(objectIterator);
+	}
 }

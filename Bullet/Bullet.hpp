@@ -23,6 +23,11 @@ protected:
 public:
 	Zombie* Target = nullptr;
 	explicit Bullet(std::string img, float speed, float damage, Engine::Point position, Engine::Point forwardDirection, float rotation, Plant* parent);
+	explicit Bullet(int index,int totalFrameCount,int frameWidth,int frameHeight,std::string img, float speed, float damage, Engine::Point position, Engine::Point forwardDirection, float rotation, Plant* parent);
 	void Update(float deltaTime) override;
+	int index;
+	int frameWidth;
+	int frameHeight;
+	int totalFrameCount;
 };
 #endif // BULLET_HPP

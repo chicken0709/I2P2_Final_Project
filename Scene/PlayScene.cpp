@@ -41,6 +41,7 @@
 #include "Zombie/FootballZombie.hpp"
 #include "Zombie/NewspaperZombie.hpp"
 #include "Scene/StartScene.hpp"
+#include "UI/Animation/BulletAnimation.hpp"
 
 bool PlayScene::DebugMode = false;
 const int PlayScene::MapWidth = 9, PlayScene::MapHeight = 5;
@@ -301,9 +302,13 @@ void PlayScene::OnMouseUp(int button, int mx, int my) {
 				std::string name = preview->name;
 				UIGroup->RemoveObject(preview->GetObjectIterator());
 				preview = nullptr;
+				Bullet* bullet;
 				if(x > 3) return;
 				if (name == "wallnut") {
-					BulletGroup->AddNewObject(new BowlingBall(Engine::Point(x * BlockSize + 75, y * BlockSize + 35), Engine::Point(1, 0),0, nullptr));
+					BulletGroup->AddNewObject(bullet = new BowlingBall(nextBulletIndex++,Engine::Point(x * BlockSize + 75, y * BlockSize + 35), Engine::Point(1, 0),0, nullptr));
+					allBullets.emplace_back(bullet);
+					allBullets_isDestroy.emplace_back(false);
+					EffectGroup->AddNewObject(new BulletAnimation("wallnutbowling",bullet->index,bullet->totalFrameCount,x * BlockSize + 75,y * BlockSize + 75));
 				} else if (name == "bombnut") {
 					BulletGroup->AddNewObject(new BombBowlingBall(Engine::Point(x * BlockSize + 75, y * BlockSize + 35), Engine::Point(1, 0),0, nullptr));
 				}
