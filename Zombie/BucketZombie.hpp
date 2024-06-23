@@ -4,6 +4,6 @@
 
 class BucketZombie : public Zombie {
 public:
-    BucketZombie(int x, int y);
+    BucketZombie(int index,int x, int y);
 };
 #endif // BUCKETZOMBIE_HPP

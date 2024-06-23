@@ -21,7 +21,12 @@ protected:
 	int frameWidth;
 	int frameHeight;
 	int currentFrameCount;
+	std::vector<int> animationFrameCount;
 	Zombie* currentZombie;
+
+	bool FinalAnimation = false;
+	bool RageAnimation = false;
+	bool FinishedRageAnimation = false;
 public:
 
 	ZombieAnimation(std::string name,int index,int totalFrameCount,float x, float y);

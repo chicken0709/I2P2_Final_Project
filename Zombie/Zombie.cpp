@@ -28,7 +28,7 @@ void Zombie::OnExplode() {
 }
 
 Zombie::Zombie(std::string name,int index,int totalFrameCount,int frameWidth,int frameHeight,std::vector<int> animationFrameCount,std::string img, float x, float y, float radius, float speed, float originalSpeed, float hp, float cooldown) :
-	Engine::Sprite(img, x, y),name(name),index(index),totalFrameCount(totalFrameCount),frameWidth(frameWidth),frameHeight(frameHeight),animationFrameCount(animationFrameCount), speed(speed), originalSpeed(originalSpeed), hp(hp), coolDown(cooldown){
+	Engine::Sprite("play/basic_zombie.png", x, y),name(name),index(index),totalFrameCount(totalFrameCount),frameWidth(frameWidth),frameHeight(frameHeight),animationFrameCount(animationFrameCount), speed(speed), originalSpeed(originalSpeed), hp(hp), coolDown(cooldown){
 	CollisionRadius = radius;
 }
 
@@ -36,10 +36,10 @@ void Zombie::TakeDamage(float damage) {
 	hp -= damage;
 	if (zombieType == ZombieType::NEWSPAPER) {
 		if(hp <= 300) {
-			if(speed == 30) {
+			if(!isRage) {
+				isRage = true;
 				AudioHelper::PlayAudio("newspaper_rarrgh.ogg");
 			}
-			speed = 60;
 		}
 	}
 	if (hp <= 0) {
@@ -49,7 +49,7 @@ void Zombie::TakeDamage(float damage) {
 			it->Target = nullptr;
 		for (auto& it: lockedBullets)
 			it->Target = nullptr;
-		animationIndex = -1;
+		isDead = true;
 		getPlayScene()->EnemyGroup->RemoveObject(objectIterator);
         return;
 	}
@@ -107,6 +107,10 @@ void Zombie::Update(float deltaTime) {
                 Sprite::Update(deltaTime);
                 reload -= deltaTime;
                 //eat
+				if(animationIndex == 0)
+					animationIndex = 1;
+				else if(animationIndex == 4)
+					animationIndex = 5;
                 if (reload <= 0) {
                     reload = coolDown;
                     Plant *plant = getPlayScene()->plant_lawn[y - 1][x];
@@ -154,5 +158,9 @@ void Zombie::Draw() const {
 void Zombie::UpdateSpeed() {
     if(speed == originalSpeed) AudioHelper::PlayAudio("frozen.ogg");
     speed = originalSpeed / 2;
+}
+
+void Zombie::SetSpeed(int newSpeed) {
+	speed = newSpeed;
 }
 

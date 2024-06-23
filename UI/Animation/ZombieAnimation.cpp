@@ -17,34 +17,74 @@ ZombieAnimation::ZombieAnimation(std::string name,int index,int totalFrameCount,
 	: Sprite(1,totalFrameCount,"play/" + name + "_animation_1.png", x, y),index(index), timeTicks(0), posX(x), posY(y)
 {
 	spriteSheet = Engine::Resources::GetInstance().GetBitmap("play/" + name + "_animation_1.png");
-	timeSpan = 1.5;
-
+	timeSpan = 1;
+	currentZombie = getPlayScene()->allZombies[index];
+	frameHeight = currentZombie->frameHeight;
+	frameWidth = currentZombie->frameWidth;
+	animationFrameCount = currentZombie->animationFrameCount;
 }
 
 void ZombieAnimation::Update(float deltaTime) {
-	currentZombie = getPlayScene()->allZombies[index];
-	if (currentZombie->animationIndex == -1) {
-		getPlayScene()->EffectGroup->RemoveObject(objectIterator);
-		return;
+	if(currentZombie->index == 0)
+		Engine::LOG(Engine::INFO) << "isDead" << currentZombie->isDead << " isRage" << currentZombie->isRage;
+	if(currentZombie->isDead) {
+		if(!FinalAnimation) {
+			RageAnimation = false;
+			FinishedRageAnimation = true;
+			FinalAnimation = true;
+			timeTicks = 0;
+		}
 	}
-	int animationIndex = 0;
-	int buffer = 0;
-
-
-	animationIndex = currentZombie->animationIndex;
-	currentFrameCount = currentZombie->animationFrameCount[animationIndex];
-	for(int i = 0;i < animationIndex;i++) {
-		buffer += currentZombie->animationFrameCount[i] * currentZombie->frameWidth;
+	else if(currentZombie->isRage) {
+		if(!RageAnimation && !FinishedRageAnimation) {
+			RageAnimation = true;
+			currentZombie->SetSpeed(0);
+			timeTicks = 0;
+		}
 	}
-
 	timeTicks += deltaTime;
 	if (timeTicks >= timeSpan) {
+		if(FinalAnimation) {
+			getPlayScene()->EffectGroup->RemoveObject(objectIterator);
+			return;
+		}
+		if(RageAnimation) {
+			if(currentZombie->index == 0)
+				Engine::LOG(Engine::INFO) << "end Rage";
+			currentZombie->animationIndex = 4;
+			currentZombie->SetSpeed(50);
+			RageAnimation = false;
+			FinishedRageAnimation = true;
+		}
 		timeTicks = 0;
 	}
 
-	int phase = floor(timeTicks / timeSpan * currentFrameCount);
+	int animationIndex = 0;
+	int buffer = 0;
 
-	ALLEGRO_BITMAP* subBitmap = al_create_sub_bitmap(spriteSheet.get(), buffer + phase * currentZombie->frameWidth, 0, currentZombie->frameWidth, currentZombie->frameHeight);
+	if(FinalAnimation)
+		animationIndex = 2;
+	else if(RageAnimation)
+		animationIndex = 3;
+	else
+		animationIndex = currentZombie->animationIndex;
+	if(currentZombie->index ==0)
+		Engine::LOG(Engine::INFO) << "animationIndex" << animationIndex;
+	currentFrameCount = animationFrameCount[animationIndex];
+	if(currentZombie->index ==0)
+		Engine::LOG(Engine::INFO) << "currentframeCount" << currentFrameCount;
+	int phase = floor(timeTicks / timeSpan * currentFrameCount);
+	for(int i = 0;i < animationIndex;i++) {
+		buffer = buffer + animationFrameCount[i] * frameWidth;
+	}
+	if(currentZombie->index ==0)
+		Engine::LOG(Engine::INFO) << "buffer" << buffer;
+	//if(!FinalAnimation && !RageAnimation)
+		Position = currentZombie->Position;
+
+	ALLEGRO_BITMAP* subBitmap = al_create_sub_bitmap(spriteSheet.get(), buffer +phase * frameWidth, 0, frameWidth, frameHeight);
+	if(currentZombie->index ==0)
+		Engine::LOG(Engine::INFO) << "pahse" << phase;
 	bmp.reset(subBitmap, al_destroy_bitmap);
 	Sprite::Update(deltaTime);
 }

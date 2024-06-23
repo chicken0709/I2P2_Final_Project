@@ -37,6 +37,10 @@ public:
 	void Draw() const override;
 	void UpdateSpeed();
 
+	void SetSpeed(int newSpeed);
+
+	bool isDead = false;
+	bool isRage = false;
 	int index;
 
 	int totalFrameCount;
