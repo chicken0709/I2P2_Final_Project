@@ -8,6 +8,7 @@
 #include <random>
 
 #include "Engine/LOG.hpp"
+#include "Engine/AudioHelper.hpp"
 
 PlayScene* Bullet::getPlayScene() {
 	return dynamic_cast<PlayScene*>(Engine::GameEngine::GetInstance().GetActiveScene());
@@ -35,7 +36,7 @@ void Bullet::Update(float deltaTime) {
 			continue;
 		if (Engine::Collider::IsCircleOverlap(Position, CollisionRadius, zombie->Position, zombie->CollisionRadius) && zombiePositionY == bulletPositionY) {
             OnExplode(zombie);
-			zombie->TakeDamage(damage);
+			if (bulletType != BulletType::BOMB_BOWLING_BALL) zombie->TakeDamage(damage);
 			if (bulletType == BulletType::MOWER) {
 			} else if (bulletType == BulletType::BOWLING_BALL) {
 				if (bulletPositionY == 1) {

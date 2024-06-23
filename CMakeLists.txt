@@ -118,6 +118,10 @@ add_executable(2024_I2P2_Final_Project
         main.cpp
         Bullet/BowlingBall.cpp
         Bullet/BowlingBall.hpp
+        Plant/Bombnut.cpp
+        Plant/Bombnut.hpp
+        Bullet/BombBowlingBall.cpp
+        Bullet/BombBowlingBall.hpp
 )
 
 IF (WIN32)

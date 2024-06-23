@@ -21,6 +21,7 @@
 #include "Plant/Wallnut.hpp"
 #include "Plant/CherryBomb.hpp"
 #include "Plant/Shovel.hpp"
+#include "Plant/Bombnut.hpp"
 #include "PlayScene.hpp"
 
 #include "Bullet/Mower.hpp"
@@ -30,6 +31,7 @@
 #include "UI/Animation/ZombieAnimation.hpp"
 #include "PlayScene.hpp"
 
+#include "Bullet/BombBowlingBall.hpp"
 #include "Bullet/BowlingBall.hpp"
 #include "Zombie/Zombie.hpp"
 #include "Zombie/BasicZombie.hpp"
@@ -69,6 +71,9 @@ void PlayScene::Initialize() {
 	AddNewObject(BulletGroup = new Group());
 	AddNewObject(EffectGroup = new Group());
     TileMapGroup->AddNewObject(new Engine::Image("play/yard2.jpg", 0, 0, 1600, 900));
+	if (MapId == 2) {
+		TileMapGroup->AddNewObject(new Engine::Image("play/bowling_line.png", 575, 95, 75, 770));
+	}
 	ReadMap();
 	ReadEnemyWave();
 	ConstructUI();
@@ -295,16 +300,23 @@ void PlayScene::OnMouseUp(int button, int mx, int my) {
 		if (mapState[y - 1][x - 1] != TILE_OCCUPIED) {
 			if (!preview)
 				return;
-			// Plant sound
-			AudioHelper::PlayAudio("plant.ogg");
 			// Bowling mode
 			if(MapId == 2) {
-				BulletGroup->AddNewObject(new BowlingBall(Engine::Point(x * BlockSize + 75, y * BlockSize + 35), Engine::Point(1, 0),0, nullptr));
+				std::string name = preview->name;
 				UIGroup->RemoveObject(preview->GetObjectIterator());
 				preview = nullptr;
+				if(x > 3) return;
+				if (name == "wallnut") {
+					BulletGroup->AddNewObject(new BowlingBall(Engine::Point(x * BlockSize + 75, y * BlockSize + 35), Engine::Point(1, 0),0, nullptr));
+				} else if (name == "bombnut") {
+					BulletGroup->AddNewObject(new BombBowlingBall(Engine::Point(x * BlockSize + 75, y * BlockSize + 35), Engine::Point(1, 0),0, nullptr));
+				}
+				AudioHelper::PlayAudio("plant.ogg");
 				AudioHelper::PlayAudio("bowling.mp3");
 				return;
 			}
+			// Plant sound
+			AudioHelper::PlayAudio("plant.ogg");
 			// Purchase.
 			EarnMoney(-preview->GetPrice());
 			// Remove Preview.
@@ -388,14 +400,20 @@ void PlayScene::ReadEnemyWave() {
 void PlayScene::ConstructUI() {
 	// Bowling mode
 	if(MapId == 2) {
-		// Button 1 Sunflower
+		// Button 10 normal wallnut
 		PlantButton *btn;
 		btn = new PlantButton("play/plant_button_background.png", "play/plant_button_background.png",
 							  Engine::Sprite("play/plant_button_background.png", 229, 8, 0, 0, 0, 0),
 							  Engine::Sprite("play/sunflower.png", 239 + PlantButtonImageDiffX, PlantButtonImageDiffY, PlantButtonImageSize, PlantButtonImageSize, 0, 0)
 			, 229, 8, Sunflower::Price);
-		// Reference: Class Member Function Pointer and std::bind.
 		btn->SetOnClickCallback(std::bind(&PlayScene::UIBtnClicked, this, 9));
+		UIGroup->AddNewControlObject(btn);
+		// Button 11 bomb wallnut
+		btn = new PlantButton("play/plant_button_background.png", "play/plant_button_background.png",
+							  Engine::Sprite("play/plant_button_background.png", 329, 8, 0, 0, 0, 0),
+							  Engine::Sprite("play/sunflower.png", 239 + PlantButtonImageDiffX, PlantButtonImageDiffY, PlantButtonImageSize, PlantButtonImageSize, 0, 0)
+			, 329, 8, Sunflower::Price);
+		btn->SetOnClickCallback(std::bind(&PlayScene::UIBtnClicked, this, 10));
 		UIGroup->AddNewControlObject(btn);
 		return;
 	}
@@ -503,9 +521,10 @@ void PlayScene::UIBtnClicked(int id) {
         preview = new Shovel(0, 0);
         shovelClicked = true;
     }
-	else if (id == 9) {
+	else if (id == 9)
 		preview = new Wallnut(0, 0);
-	}
+	else if (id == 10)
+		preview = new Bombnut(0, 0);
 
 	if (!preview)
 		return;

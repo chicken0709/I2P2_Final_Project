@@ -19,7 +19,7 @@ PlayScene* Zombie::getPlayScene() {
 }
 
 void Zombie::OnExplode() {
-	if(getPlayScene()->MapId == 2) {
+	if (getPlayScene()->MapId == 2) {
 		AudioHelper::PlayAudio("bowlingimpact.ogg");
 	} else {
 		AudioHelper::PlayAudio("limbs_pop.mp3");
