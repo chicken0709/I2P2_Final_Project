@@ -39,6 +39,8 @@ public:
 
 	void SetSpeed(int newSpeed);
 
+	ZombieType GetZombieType();
+
 	bool isDead = false;
 	bool isRage = false;
 	int index;
