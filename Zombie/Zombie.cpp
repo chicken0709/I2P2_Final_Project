@@ -23,15 +23,20 @@ void Zombie::OnExplode() {
     Engine::LOG(Engine::INFO) << "zombie dead";
 }
 
-Zombie::Zombie(std::string name,int index,int totalFrameCount,int frameWidth,int frameHeight,std::vector<int> animationFrameCount,std::string img, float x, float y, float radius, float speed, float originalSpeed, float hp, int money, float cooldown) :
-	Engine::Sprite(img, x, y),name(name),index(index),totalFrameCount(totalFrameCount),frameWidth(frameWidth),frameHeight(frameHeight),animationFrameCount(animationFrameCount), speed(speed), originalSpeed(originalSpeed), hp(hp), money(money), coolDown(cooldown){
+Zombie::Zombie(std::string name,int index,int totalFrameCount,int frameWidth,int frameHeight,std::vector<int> animationFrameCount,std::string img, float x, float y, float radius, float speed, float originalSpeed, float hp, float cooldown) :
+	Engine::Sprite(img, x, y),name(name),index(index),totalFrameCount(totalFrameCount),frameWidth(frameWidth),frameHeight(frameHeight),animationFrameCount(animationFrameCount), speed(speed), originalSpeed(originalSpeed), hp(hp), coolDown(cooldown){
 	CollisionRadius = radius;
 }
 
 void Zombie::TakeDamage(float damage) {
 	hp -= damage;
 	if (zombieType == ZombieType::NEWSPAPER) {
-		if(hp <= 300) speed = 40;
+		if(hp <= 300) {
+			if(speed == 20) {
+				AudioHelper::PlayAudio("newspaper_rarrgh.ogg");
+			}
+			speed = 50;
+		}
 	}
 	if (hp <= 0) {
 		OnExplode();

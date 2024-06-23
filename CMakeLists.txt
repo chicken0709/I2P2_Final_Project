@@ -44,52 +44,50 @@ add_executable(2024_I2P2_Final_Project
         Bullet/Bullet.hpp
         Bullet/BasicPea.cpp
         Bullet/BasicPea.hpp
+        Bullet/SnowPea.cpp
+        Bullet/SnowPea.hpp
+        Bullet/Mower.hpp
+        Bullet/Mower.cpp
 
         // UI
-        UI/Animation/DirtyEffect.cpp
-        UI/Animation/DirtyEffect.hpp
-        UI/Animation/ExplosionEffect.cpp
-        UI/Animation/ExplosionEffect.hpp
         UI/Component/Image.cpp
         UI/Component/Image.hpp
         UI/Component/ImageButton.cpp
         UI/Component/ImageButton.hpp
         UI/Component/Label.cpp
         UI/Component/Label.hpp
-        UI/Component/TextInput.cpp
-        UI/Component/TextInput.hpp
         UI/Component/Slider.cpp
         UI/Component/Slider.hpp
+        UI/Animation/PlantAnimation.cpp
+        UI/Animation/PlantAnimation.hpp
+        UI/Animation/ZombieAnimation.hpp
+        UI/Animation/ZombieAnimation.cpp
 
         // Zombie
         Zombie/Zombie.cpp
         Zombie/Zombie.hpp
         Zombie/BasicZombie.cpp
         Zombie/BasicZombie.hpp
+        Zombie/FootballZombie.cpp
+        Zombie/FootballZombie.hpp
+        Zombie/NewspaperZombie.cpp
+        Zombie/NewspaperZombie.hpp
+        Zombie/ConeZombie.cpp
+        Zombie/ConeZombie.hpp
+        Zombie/FlagZombie.cpp
+        Zombie/FlagZombie.hpp
+        Zombie/BucketZombie.cpp
+        Zombie/BucketZombie.hpp
 
         // Plant
-        Plant/Peashooter.cpp
-        Plant/Peashooter.hpp
         Plant/Plant.cpp
         Plant/Plant.hpp
-        Plant/PlantButton.cpp
-        Plant/PlantButton.hpp
-
-        // Scene
-        Scene/PlayScene.cpp
-        Scene/PlayScene.hpp
-        Scene/StageSelectScene.cpp
-        Scene/StageSelectScene.hpp
-        Scene/StartScene.cpp
-        Scene/StartScene.hpp
-
-        main.cpp
+        Plant/Peashooter.cpp
+        Plant/Peashooter.hpp
         Plant/Repeater.cpp
         Plant/Repeater.hpp
         Plant/SnowPeashooter.cpp
         Plant/SnowPeashooter.hpp
-        Bullet/SnowPea.cpp
-        Bullet/SnowPea.hpp
         Plant/GatlinPeashooter.cpp
         Plant/GatlinPeashooter.hpp
         Plant/Sunflower.cpp
@@ -104,26 +102,20 @@ add_executable(2024_I2P2_Final_Project
         Plant/Shovel.hpp
         Plant/LawnMower.hpp
         Plant/LawnMower.cpp
-        Bullet/Mower.hpp
-        Bullet/Mower.cpp
         Plant/CherryBomb.cpp
         Plant/CherryBomb.hpp
-        UI/Animation/Animation.cpp
-        UI/Animation/Animation.hpp
-        Zombie/FootballZombie.cpp
-        Zombie/FootballZombie.hpp
-        Zombie/NewspaperZombie.cpp
-        Zombie/NewspaperZombie.hpp
-        Zombie/ConeZombie.cpp
-        Zombie/ConeZombie.hpp
-        Zombie/FlagZombie.cpp
-        Zombie/FlagZombie.hpp
-        Zombie/BucketZombie.cpp
-        Zombie/BucketZombie.hpp
-        UI/Animation/PlantAnimation.cpp
-        UI/Animation/PlantAnimation.hpp
-        UI/Animation/ZombieAnimation.hpp
-        UI/Animation/ZombieAnimation.cpp
+        Plant/PlantButton.cpp
+        Plant/PlantButton.hpp
+
+        // Scene
+        Scene/PlayScene.cpp
+        Scene/PlayScene.hpp
+        Scene/MenuScene.cpp
+        Scene/MenuScene.hpp
+        Scene/StartScene.cpp
+        Scene/StartScene.hpp
+
+        main.cpp
 )
 
 IF (WIN32)

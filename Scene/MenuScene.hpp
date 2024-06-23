@@ -1,10 +1,10 @@
-#ifndef STAGESELECTSCENE_HPP
-#define STAGESELECTSCENE_HPP
+#ifndef MENUSCENE_HPP
+#define MENUSCENE_HPP
 #include "Engine/IScene.hpp"
 
-class StageSelectScene final : public Engine::IScene {
+class MenuScene final : public Engine::IScene {
 public:
-	explicit StageSelectScene() = default;
+	explicit MenuScene() = default;
 	void Initialize() override;
 	void Terminate() override;
 	void PlayOnClick(int stage);
@@ -12,4 +12,4 @@ public:
 	void SFXSlideOnValueChanged(float value);
 };
 
-#endif // STAGESELECTSCENE_HPP
+#endif // MENUSCENE_HPP

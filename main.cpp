@@ -1,7 +1,7 @@
 #include "Engine/GameEngine.hpp"
 #include "Engine/LOG.hpp"
 #include "Scene/PlayScene.hpp"
-#include "Scene/StageSelectScene.hpp"
+#include "Scene/MenuScene.hpp"
 #include "Scene/StartScene.hpp"
 
 int main(int argc, char **argv) {
@@ -10,7 +10,7 @@ int main(int argc, char **argv) {
 
     // Register scenes
 	game.AddNewScene("start", new StartScene());
-	game.AddNewScene("stage-select", new StageSelectScene());
+	game.AddNewScene("menu", new MenuScene());
 	game.AddNewScene("play", new PlayScene());
 
     // Start game
