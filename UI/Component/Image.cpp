@@ -54,7 +54,6 @@ namespace Engine {
 				bmp = Resources::GetInstance().GetBitmap(img);
 				Size.x = GetBitmapWidth()/frameCount * 1.6;
 				Size.y = GetBitmapHeight() * 1.6;
-				Engine::LOG(Engine::INFO) << "size x " << Size.x << "size y " << Size.y;
 			}
 		}
 

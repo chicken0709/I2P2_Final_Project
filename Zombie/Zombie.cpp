@@ -24,7 +24,6 @@ void Zombie::OnExplode() {
 	} else {
 		AudioHelper::PlayAudio("limbs_pop.mp3");
 	}
-    Engine::LOG(Engine::INFO) << "zombie dead";
 }
 
 Zombie::Zombie(std::string name,int index,int totalFrameCount,int frameWidth,int frameHeight,std::vector<int> animationFrameCount,std::string img, float x, float y, float radius, float speed, float originalSpeed, float hp, float cooldown) :
