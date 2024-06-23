@@ -17,6 +17,7 @@ protected:
 	int index;
 
 	std::shared_ptr<ALLEGRO_BITMAP> spriteSheet;
+	std::shared_ptr<ALLEGRO_BITMAP> rageSpriteSheet;
 	int frameCount;
 	int frameWidth;
 	int frameHeight;
@@ -27,6 +28,7 @@ protected:
 	bool FinalAnimation = false;
 	bool RageAnimation = false;
 	bool FinishedRageAnimation = false;
+	bool changeSize = false;
 public:
 
 	ZombieAnimation(std::string name,int index,int totalFrameCount,float x, float y);

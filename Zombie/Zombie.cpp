@@ -120,6 +120,10 @@ void Zombie::Update(float deltaTime) {
                 return;
             }
 		}
+		if(isRage)
+			animationIndex = 4;
+		else
+			animationIndex = 0;
 
 
 		//calc move target
@@ -164,3 +168,6 @@ void Zombie::SetSpeed(int newSpeed) {
 	speed = newSpeed;
 }
 
+ZombieType Zombie::GetZombieType() {
+	return this->zombieType;
+}
