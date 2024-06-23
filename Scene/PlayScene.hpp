@@ -12,6 +12,7 @@ enum TileType {
 };
 class Zombie;
 class Plant;
+class Bullet;
 namespace Engine {
 	class Group;
 	class Image;
@@ -66,6 +67,10 @@ public:
 	std::vector<std::vector<Plant*>> plant_lawn;
 	std::vector<Zombie*> allZombies;
 	int nextZombieIndex = 0;
+
+	std::vector<Bullet*> allBullets;
+	int nextBulletIndex = 0;
+	std::vector<bool>allBullets_isDestroy;
 
 	static Engine::Point GetClientSize();
 	explicit PlayScene() = default;

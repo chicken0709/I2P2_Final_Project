@@ -122,6 +122,9 @@ add_executable(2024_I2P2_Final_Project
         Plant/Bombnut.hpp
         Bullet/BombBowlingBall.cpp
         Bullet/BombBowlingBall.hpp
+        UI/Animation/BulletAnimation.cpp
+        UI/Animation/BulletAnimation.hpp
+        UI/Animation/BulletAnimation.hpp
 )
 
 IF (WIN32)
