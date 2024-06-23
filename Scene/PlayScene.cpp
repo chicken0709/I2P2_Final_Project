@@ -408,14 +408,14 @@ void PlayScene::ConstructUI() {
 		PlantButton *btn;
 		btn = new PlantButton("play/plant_button_background.png", "play/plant_button_background.png",
 							  Engine::Sprite("play/plant_button_background.png", 229, 8, 0, 0, 0, 0),
-							  Engine::Sprite("play/sunflower.png", 239 + PlantButtonImageDiffX, PlantButtonImageDiffY, PlantButtonImageSize, PlantButtonImageSize, 0, 0)
+							  Engine::Sprite("play/wallnut.png", 239 + PlantButtonImageDiffX, PlantButtonImageDiffY, PlantButtonImageSize, PlantButtonImageSize, 0, 0)
 			, 229, 8, Sunflower::Price);
 		btn->SetOnClickCallback(std::bind(&PlayScene::UIBtnClicked, this, 9));
 		UIGroup->AddNewControlObject(btn);
 		// Button 11 bomb wallnut
 		btn = new PlantButton("play/plant_button_background.png", "play/plant_button_background.png",
 							  Engine::Sprite("play/plant_button_background.png", 329, 8, 0, 0, 0, 0),
-							  Engine::Sprite("play/sunflower.png", 239 + PlantButtonImageDiffX, PlantButtonImageDiffY, PlantButtonImageSize, PlantButtonImageSize, 0, 0)
+							  Engine::Sprite("play/bombnut.png", 339 + PlantButtonImageDiffX, PlantButtonImageDiffY, PlantButtonImageSize, PlantButtonImageSize, 0, 0)
 			, 329, 8, Sunflower::Price);
 		btn->SetOnClickCallback(std::bind(&PlayScene::UIBtnClicked, this, 10));
 		UIGroup->AddNewControlObject(btn);
