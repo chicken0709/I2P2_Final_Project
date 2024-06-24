@@ -404,19 +404,20 @@ void PlayScene::ReadEnemyWave() {
 void PlayScene::ConstructUI() {
 	// Bowling mode
 	if(MapId == 2) {
+		UIGroup->AddNewObject(new Engine::Image("play/bowlingball_select.png", 800, 0, 180, 136, 0.5, 0));
 		// Button 10 normal wallnut
 		PlantButton *btn;
 		btn = new PlantButton("play/plant_button_background.png", "play/plant_button_background.png",
-							  Engine::Sprite("play/plant_button_background.png", 229, 8, 0, 0, 0, 0),
-							  Engine::Sprite("play/wallnut.png", 239 + PlantButtonImageDiffX, PlantButtonImageDiffY, PlantButtonImageSize, PlantButtonImageSize, 0, 0)
-			, 229, 8, Sunflower::Price);
+							  Engine::Sprite("play/plant_button_background.png", 710, 8, 0, 0, 0, 0),
+							  Engine::Sprite("play/wallnut.png", 720 + PlantButtonImageDiffX, PlantButtonImageDiffY, PlantButtonImageSize, PlantButtonImageSize, 0, 0)
+			, 710, 8, Sunflower::Price);
 		btn->SetOnClickCallback(std::bind(&PlayScene::UIBtnClicked, this, 9));
 		UIGroup->AddNewControlObject(btn);
 		// Button 11 bomb wallnut
 		btn = new PlantButton("play/plant_button_background.png", "play/plant_button_background.png",
-							  Engine::Sprite("play/plant_button_background.png", 329, 8, 0, 0, 0, 0),
-							  Engine::Sprite("play/bombnut.png", 339 + PlantButtonImageDiffX, PlantButtonImageDiffY, PlantButtonImageSize, PlantButtonImageSize, 0, 0)
-			, 329, 8, Sunflower::Price);
+							  Engine::Sprite("play/plant_button_background.png", 790, 8, 0, 0, 0, 0),
+							  Engine::Sprite("play/bombnut.png", 800 + PlantButtonImageDiffX, PlantButtonImageDiffY, PlantButtonImageSize, PlantButtonImageSize, 0, 0)
+			, 790, 8, Sunflower::Price);
 		btn->SetOnClickCallback(std::bind(&PlayScene::UIBtnClicked, this, 10));
 		UIGroup->AddNewControlObject(btn);
 		return;

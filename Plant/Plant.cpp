@@ -86,6 +86,10 @@ int Plant::GetPrice() const {
 void Plant::TakeDamage(float damage, bool shovel) {
 	Engine::LOG(Engine::INFO) << "taking damage";
 	hp -= damage;
+	if(plantType == PlantType::LAWNMOWER) {
+		getPlayScene()->PlantGroup->RemoveObject(objectIterator);
+		return;
+	}
 	if (hp <= 0) {
         if(!shovel)
             AudioHelper::PlayAudio("gulp.ogg");
