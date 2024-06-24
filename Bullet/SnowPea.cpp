@@ -13,6 +13,7 @@ SnowPea::SnowPea(Engine::Point position, Engine::Point forwardDirection, float r
 }
 
 void SnowPea::OnExplode(Zombie* enemy) {
+    enemy->isSlow = true;
     enemy -> UpdateSpeed();
 }
 

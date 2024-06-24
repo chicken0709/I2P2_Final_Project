@@ -44,7 +44,7 @@ public:
 	bool isDead = false;
 	bool isRage = false;
 	int index;
-
+	bool isSlow = false;
 	int totalFrameCount;
 	int frameWidth;
 	int frameHeight;

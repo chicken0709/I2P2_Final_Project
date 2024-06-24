@@ -42,6 +42,13 @@ void ZombieAnimation::Update(float deltaTime) {
 			timeTicks = 0;
 		}
 	}
+
+	if(currentZombie->isSlow) {
+		Tint = al_map_rgb(125,125,255);
+	}
+
+
+
 	timeTicks += deltaTime;
 	if (timeTicks >= timeSpan) {
 		if(FinalAnimation) {
