@@ -282,9 +282,9 @@ void PlayScene::OnMouseUp(int button, int mx, int my) {
     if(shovelClicked) {
         if (mapState[y - 1][x - 1] == TILE_OCCUPIED) {
             Plant *plant = plant_lawn[y - 1][x - 1];
+        	EarnMoney(plant->GetPrice());
             plant->TakeDamage(INT16_MAX, true);
             mapState[y - 1][x - 1] = TILE_EMPTY;
-            EarnMoney(plant->GetPrice());
             AudioHelper::PlayAudio("shovel.ogg");
         }
         UIGroup->RemoveObject(preview->GetObjectIterator());
