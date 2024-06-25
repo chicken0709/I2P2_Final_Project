@@ -55,7 +55,7 @@ void PlayScene::Initialize() {
 	mapState.clear();
 	ticks = 0;
 	lives = 100;
-	money = 15000; // change to 50 when done
+	money = 300; // change to 50 when done
 	SpeedMult = 1;
 	// Add groups from bottom to top.
 	AddNewObject(TileMapGroup = new Group());
@@ -177,42 +177,36 @@ void PlayScene::Update(float deltaTime) {
 				// Basic zombie
 				EnemyGroup->AddNewObject(zombie = new BasicZombie(nextZombieIndex++,SpawnCoordinate.x, SpawnCoordinate.y));
 				allZombies.emplace_back(zombie);
-				allZombies_isDestroy.emplace_back(false);
 				EffectGroup->AddNewObject(new ZombieAnimation( "basiczombie",zombie->index,zombie->totalFrameCount, SpawnCoordinate.x,SpawnCoordinate.y));
 				break;
 			case 2:
 				// Cone zombie
 				EnemyGroup->AddNewObject(zombie = new ConeZombie(nextZombieIndex++,SpawnCoordinate.x, SpawnCoordinate.y));
 				allZombies.emplace_back(zombie);
-				allZombies_isDestroy.emplace_back(false);
 				EffectGroup->AddNewObject(new ZombieAnimation( "conezombie",zombie->index,zombie->totalFrameCount,SpawnCoordinate.x,SpawnCoordinate.y));
 				break;
 			case 3:
 				// Bucket zombie
 				EnemyGroup->AddNewObject(zombie = new BucketZombie(nextZombieIndex++,SpawnCoordinate.x, SpawnCoordinate.y));
 				allZombies.emplace_back(zombie);
-				allZombies_isDestroy.emplace_back(false);
 				EffectGroup->AddNewObject(new ZombieAnimation( "bucketzombie",zombie->index,zombie->totalFrameCount, SpawnCoordinate.x,SpawnCoordinate.y));
 				break;
 			case 4:
 				// Football zombie
 				EnemyGroup->AddNewObject(zombie = new FootballZombie(nextZombieIndex++,SpawnCoordinate.x, SpawnCoordinate.y));
 				allZombies.emplace_back(zombie);
-				allZombies_isDestroy.emplace_back(false);
 				EffectGroup->AddNewObject(new ZombieAnimation( "footballzombie",zombie->index,zombie->totalFrameCount, SpawnCoordinate.x,SpawnCoordinate.y));
 				break;
 			case 5:
 				// Newspaper zombie
 				EnemyGroup->AddNewObject(zombie = new NewspaperZombie(nextZombieIndex++,SpawnCoordinate.x, SpawnCoordinate.y));
 				allZombies.emplace_back(zombie);
-				allZombies_isDestroy.emplace_back(false);
 				EffectGroup->AddNewObject(new ZombieAnimation( "newspaperzombie",zombie->index,zombie->totalFrameCount, SpawnCoordinate.x,SpawnCoordinate.y));
 				break;
 			case 6:
 				// Flag zombie
 				EnemyGroup->AddNewObject(zombie = new FlagZombie(nextZombieIndex++,SpawnCoordinate.x, SpawnCoordinate.y));
 				allZombies.emplace_back(zombie);
-				allZombies_isDestroy.emplace_back(false);
 				EffectGroup->AddNewObject(new ZombieAnimation( "flagzombie",zombie->index,zombie->totalFrameCount,SpawnCoordinate.x,SpawnCoordinate.y));
 				break;
 			default:

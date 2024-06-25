@@ -3,7 +3,6 @@
 #include <string>
 
 #include "Engine/AudioHelper.hpp"
-#include "Bullet/Bullet.hpp"
 #include "Zombie.hpp"
 #include "Engine/GameEngine.hpp"
 #include "Engine/Group.hpp"
@@ -32,7 +31,6 @@ Zombie::Zombie(std::string name,int index,int totalFrameCount,int frameWidth,int
 }
 
 void Zombie::TakeDamage(float damage) {
-	if (hp <= 0) return;
 	hp -= damage;
 	if (zombieType == ZombieType::NEWSPAPER) {
 		if(hp <= 300) {
@@ -44,15 +42,11 @@ void Zombie::TakeDamage(float damage) {
 		}
 	}
 	if (hp <= 0) {
-		OnExplode();
-		// Remove all turret's reference to target.
-		for (auto& it: lockedPlants)
-			it->Target = nullptr;
-		for (auto& it: lockedBullets)
-			it->Target = nullptr;
-		isDead = true;
-		getPlayScene()->allZombies_isDestroy[index] = true;
-		getPlayScene()->EnemyGroup->RemoveObject(objectIterator);
+		if (isDead == false) {
+			isDead = true;
+			OnExplode();
+			// Remove all plant's reference to target.
+		}
         return;
 	}
 	switch(zombieType) {
@@ -72,6 +66,15 @@ void Zombie::TakeDamage(float damage) {
 }
 
 void Zombie::Update(float deltaTime) {
+	if (hp <= 0) {
+		if (remove) {
+			for (auto& it: lockedPlants) {
+				it->Target = nullptr;
+			}
+			getPlayScene()->EnemyGroup->RemoveObject(objectIterator);
+		}
+		return;
+	}
 	float remainSpeed = speed * deltaTime;
 	while (remainSpeed > 0) {
 		//calc current block

@@ -68,7 +68,6 @@ public:
 
 	std::vector<Zombie*> allZombies;
 	int nextZombieIndex = 0;
-	std::vector<bool>allZombies_isDestroy;
 
 	std::vector<Bullet*> allBullets;
 	int nextBulletIndex = 0;

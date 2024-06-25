@@ -47,14 +47,15 @@ void Plant::Update(float deltaTime) {
 		}
 		return;
 	}
-	if (Target) {
+	// CRASH !!!
+	/*if (Target) {
 		Engine::Point diff = Target->Position - Position;
 		if (diff.Magnitude() > CollisionRadius) {
 			Target->lockedPlants.erase(lockedPlantIterator);
 			Target = nullptr;
 			lockedPlantIterator = std::list<Plant*>::iterator();
 		}
-	}
+	}*/
 	if (!Target) {
 		// Lock first seen target.
 		for (auto& it : scene->EnemyGroup->GetObjects()) {

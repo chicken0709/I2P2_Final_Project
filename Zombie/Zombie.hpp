@@ -30,7 +30,6 @@ protected:
 	virtual void OnExplode();
 public:
 	std::list<Plant*> lockedPlants;
-	std::list<Bullet*> lockedBullets;
 	std::string name;
 	Zombie(std::string name,int index,int totalFrameCount,int frameWidth,int frameHeight,std::vector<int> animationFrameCount,std::string img, float x, float y, float radius, float speed, float originalSpeed, float hp, float cooldown);
 	void TakeDamage(float damage);
@@ -42,6 +41,7 @@ public:
 
 	ZombieType GetZombieType();
 
+	bool remove = false;
 	bool isDead = false;
 	bool isRage = false;
 	int index;
