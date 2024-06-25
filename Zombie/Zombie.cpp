@@ -51,6 +51,8 @@ void Zombie::TakeDamage(float damage) {
 		for (auto& it: lockedBullets)
 			it->Target = nullptr;
 		isDead = true;
+		getPlayScene()->allZombies_isDestroy[index] = true;
+		getPlayScene()->EnemyGroup->RemoveObject(objectIterator);
         return;
 	}
 	switch(zombieType) {
@@ -70,13 +72,6 @@ void Zombie::TakeDamage(float damage) {
 }
 
 void Zombie::Update(float deltaTime) {
-	if(hp <= 0) {
-		zombieDeadBuffer -= deltaTime;
-		if(zombieDeadBuffer <= 0) {
-			getPlayScene()->EnemyGroup->RemoveObject(objectIterator);
-		}
-		return;
-	}
 	float remainSpeed = speed * deltaTime;
 	while (remainSpeed > 0) {
 		//calc current block

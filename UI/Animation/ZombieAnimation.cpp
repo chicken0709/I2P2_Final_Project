@@ -27,6 +27,10 @@ ZombieAnimation::ZombieAnimation(std::string name,int index,int totalFrameCount,
 }
 
 void ZombieAnimation::Update(float deltaTime) {
+	if (getPlayScene()->allZombies_isDestroy[index] == true) {
+		getPlayScene()->EffectGroup->RemoveObject(objectIterator);
+		return;
+	}
 	if(currentZombie->isDead) {
 		if(!FinalAnimation) {
 			RageAnimation = false;
