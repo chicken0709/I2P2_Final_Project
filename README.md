@@ -30,9 +30,3 @@ basic, cone, bucket, newspaper, flag, football player
 
 ## Shovel
 shovel可讓玩家剷除種好的植物並獲得太陽
-
-<style>
-table th{
-    width: 100%;
-}
-</style>
