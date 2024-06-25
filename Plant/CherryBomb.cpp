@@ -19,9 +19,9 @@ CherryBomb::CherryBomb(float x, float y) :
 void CherryBomb::CreatePea() {
     AudioHelper::PlayAudio("cherrybomb.ogg");
     for (auto& it : getPlayScene()->EnemyGroup->GetObjects()) {
-        Zombie* enemy = dynamic_cast<Zombie*>(it);
-        if((enemy->Position - Position).Magnitude() < 225)
-            enemy->TakeDamage(INT16_MAX);
+        Zombie* zombie = dynamic_cast<Zombie*>(it);
+        if ((zombie->Position - Position).Magnitude() < 225)
+            zombie->TakeDamage(INT16_MAX);
     }
     getPlayScene()->plant_lawn[pos_x][pos_y] = nullptr;
     getPlayScene()->mapState[pos_x][pos_y] = TILE_EMPTY;

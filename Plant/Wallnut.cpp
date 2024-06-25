@@ -1,5 +1,4 @@
 #include "Engine/AudioHelper.hpp"
-#include "Bullet/BasicPea.hpp"
 #include "Engine/Group.hpp"
 #include "Wallnut.hpp"
 #include "Scene/PlayScene.hpp"
@@ -7,7 +6,7 @@
 const int Wallnut::Price = 50;
 
 Wallnut::Wallnut(float x, float y) :
-        Plant("play/wallnut.png", x, y, 200, Price, 0, PlantType::WALLNUT,"wallnut",51,65,73,{17,17,17}) {
+        Plant("play/wallnut.png", x, y, 200000, Price, 0, PlantType::WALLNUT,"wallnut",51,65,73,{17,17,17}) {
     // Move center downward, since we the turret head is slightly biased upward.
     Anchor.y += 8.0f / GetBitmapHeight();
 }
