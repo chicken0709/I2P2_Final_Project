@@ -27,11 +27,12 @@ void Zombie::OnExplode() {
 }
 
 Zombie::Zombie(std::string name,int index,int totalFrameCount,int frameWidth,int frameHeight,std::vector<int> animationFrameCount,std::string img, float x, float y, float radius, float speed, float originalSpeed, float hp, float cooldown) :
-	Engine::Sprite(img, x, y),name(name),index(index),totalFrameCount(totalFrameCount),frameWidth(frameWidth),frameHeight(frameHeight),animationFrameCount(animationFrameCount), speed(speed), originalSpeed(originalSpeed), hp(hp), coolDown(cooldown){
+	Engine::Sprite("play/basic_zombie.png", x, y),name(name),index(index),totalFrameCount(totalFrameCount),frameWidth(frameWidth),frameHeight(frameHeight),animationFrameCount(animationFrameCount), speed(speed), originalSpeed(originalSpeed), hp(hp), coolDown(cooldown){
 	CollisionRadius = radius;
 }
 
 void Zombie::TakeDamage(float damage) {
+	if (hp <= 0) return;
 	hp -= damage;
 	if (zombieType == ZombieType::NEWSPAPER) {
 		if(hp <= 300) {
@@ -50,7 +51,6 @@ void Zombie::TakeDamage(float damage) {
 		for (auto& it: lockedBullets)
 			it->Target = nullptr;
 		isDead = true;
-		getPlayScene()->EnemyGroup->RemoveObject(objectIterator);
         return;
 	}
 	switch(zombieType) {
@@ -70,7 +70,13 @@ void Zombie::TakeDamage(float damage) {
 }
 
 void Zombie::Update(float deltaTime) {
-
+	if(hp <= 0) {
+		zombieDeadBuffer -= deltaTime;
+		if(zombieDeadBuffer <= 0) {
+			getPlayScene()->EnemyGroup->RemoveObject(objectIterator);
+		}
+		return;
+	}
 	float remainSpeed = speed * deltaTime;
 	while (remainSpeed > 0) {
 		//calc current block
@@ -160,11 +166,13 @@ void Zombie::Draw() const {
 }
 
 void Zombie::UpdateSpeed() {
+	if (hp <= 0) return;
     if(speed == originalSpeed) AudioHelper::PlayAudio("frozen.ogg");
     speed = originalSpeed / 2;
 }
 
 void Zombie::SetSpeed(int newSpeed) {
+	if (hp <= 0) return;
 	speed = newSpeed;
 }
 

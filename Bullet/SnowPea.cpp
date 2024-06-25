@@ -12,8 +12,8 @@ SnowPea::SnowPea(Engine::Point position, Engine::Point forwardDirection, float r
     bulletType = BulletType::SNOWPEA;
 }
 
-void SnowPea::OnExplode(Zombie* enemy) {
-    enemy->isSlow = true;
-    enemy -> UpdateSpeed();
+void SnowPea::OnExplode(Zombie* zombie) {
+    zombie->isSlow = true;
+    zombie->UpdateSpeed();
 }
 

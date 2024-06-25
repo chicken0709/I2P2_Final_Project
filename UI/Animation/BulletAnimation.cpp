@@ -1,6 +1,3 @@
-#include <allegro5/allegro.h>
-#include <allegro5/allegro_image.h>
-#include <allegro5/allegro_primitives.h>
 #include <cmath>
 #include "BulletAnimation.hpp"
 #include "Engine/GameEngine.hpp"
@@ -33,17 +30,9 @@ void BulletAnimation::Update(float deltaTime) {
 		getPlayScene()->EffectGroup->RemoveObject(objectIterator);
 		return;
 	}
-	//int animationIndex = 0;
 	int buffer = 0;
-
-	//animationIndex = currentPlant->animationIndex;
-	//currentFrameCount = currentPlant->animationFrameCount[animationIndex];
 	int currentFrameCount = totalFrameCount;
-	/*
-	for(int i = 0;i < animationIndex;i++) {
-		buffer += currentPlant->animationFrameCount[i] * currentPlant->frameWidth;
-	}
-	*/
+
 	timeTicks += deltaTime;
 	if (timeTicks >= timeSpan) {
 		timeTicks = 0;

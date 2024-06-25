@@ -24,6 +24,7 @@ protected:
 	float hp;
 	float reload = 0;
 	float coolDown;
+	float zombieDeadBuffer = 0.1;
 	ZombieType zombieType;
 	PlayScene* getPlayScene();
 	virtual void OnExplode();

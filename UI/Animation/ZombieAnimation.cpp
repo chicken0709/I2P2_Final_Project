@@ -47,8 +47,6 @@ void ZombieAnimation::Update(float deltaTime) {
 		Tint = al_map_rgb(125,125,255);
 	}
 
-
-
 	timeTicks += deltaTime;
 	if (timeTicks >= timeSpan) {
 		if(FinalAnimation) {
@@ -108,7 +106,7 @@ void ZombieAnimation::Update(float deltaTime) {
 		if(animationIndex == 4)
 			buffer = 13 * frameWidth;
 		else if(animationIndex == 5)
-			buffer = 50*frameWidth;
+			buffer = 50 * frameWidth;
 		subBitmap = al_create_sub_bitmap(rageSpriteSheet.get(), buffer +phase * frameWidth, 0, frameWidth, frameHeight);
 	}
 

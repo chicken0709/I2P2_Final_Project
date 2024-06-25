@@ -7,6 +7,8 @@
 #include <iostream>
 #include <random>
 
+#include "PlayScene.hpp"
+#include "Scene/StartScene.hpp"
 #include "Engine/AudioHelper.hpp"
 #include "Engine/GameEngine.hpp"
 #include "Engine/Group.hpp"
@@ -22,15 +24,7 @@
 #include "Plant/CherryBomb.hpp"
 #include "Plant/Shovel.hpp"
 #include "Plant/Bombnut.hpp"
-#include "PlayScene.hpp"
-
-#include "Bullet/Mower.hpp"
-#include "Engine/LOG.hpp"
 #include "Plant/LawnMower.hpp"
-#include "UI/Animation/PlantAnimation.hpp"
-#include "UI/Animation/ZombieAnimation.hpp"
-#include "PlayScene.hpp"
-
 #include "Bullet/BombBowlingBall.hpp"
 #include "Bullet/BowlingBall.hpp"
 #include "Zombie/Zombie.hpp"
@@ -40,7 +34,8 @@
 #include "Zombie/FlagZombie.hpp"
 #include "Zombie/FootballZombie.hpp"
 #include "Zombie/NewspaperZombie.hpp"
-#include "Scene/StartScene.hpp"
+#include "UI/Animation/PlantAnimation.hpp"
+#include "UI/Animation/ZombieAnimation.hpp"
 #include "UI/Animation/BulletAnimation.hpp"
 
 bool PlayScene::DebugMode = false;
@@ -165,7 +160,7 @@ void PlayScene::Update(float deltaTime) {
 		ticks -= current.wait;
 		zombieWaveData.pop_front();
 		const Engine::Point SpawnCoordinate = Engine::Point(SpawnGridPoint.x * BlockSize, current.lane * BlockSize);
-		Zombie* enemy;
+		Zombie* zombie;
 		switch (current.type) {
 			case -2:
 				// Start empty time
@@ -180,39 +175,45 @@ void PlayScene::Update(float deltaTime) {
 				continue;
 			case 1:
 				// Basic zombie
-				EnemyGroup->AddNewObject(enemy = new BasicZombie(nextZombieIndex,SpawnCoordinate.x, SpawnCoordinate.y));
-				allZombies.emplace_back(enemy);
-				//EffectGroup->AddNewObject(new ZombieAnimation( "basiczombie",nextZombieIndex++,enemy->totalFrameCount, SpawnCoordinate.x,SpawnCoordinate.y));
+				EnemyGroup->AddNewObject(zombie = new BasicZombie(nextZombieIndex++,SpawnCoordinate.x, SpawnCoordinate.y));
+				allZombies.emplace_back(zombie);
+				allZombies_isDestroy.emplace_back(false);
+				EffectGroup->AddNewObject(new ZombieAnimation( "basiczombie",zombie->index,zombie->totalFrameCount, SpawnCoordinate.x,SpawnCoordinate.y));
 				break;
 			case 2:
 				// Cone zombie
-				EnemyGroup->AddNewObject(enemy = new ConeZombie(nextZombieIndex,SpawnCoordinate.x, SpawnCoordinate.y));
-				allZombies.emplace_back(enemy);
-				//EffectGroup->AddNewObject(new ZombieAnimation( "conezombie",nextZombieIndex++,enemy->totalFrameCount,SpawnCoordinate.x,SpawnCoordinate.y));
+				EnemyGroup->AddNewObject(zombie = new ConeZombie(nextZombieIndex++,SpawnCoordinate.x, SpawnCoordinate.y));
+				allZombies.emplace_back(zombie);
+				allZombies_isDestroy.emplace_back(false);
+				EffectGroup->AddNewObject(new ZombieAnimation( "conezombie",zombie->index,zombie->totalFrameCount,SpawnCoordinate.x,SpawnCoordinate.y));
 				break;
 			case 3:
 				// Bucket zombie
-				EnemyGroup->AddNewObject(enemy = new BucketZombie(nextZombieIndex,SpawnCoordinate.x, SpawnCoordinate.y));
-				allZombies.emplace_back(enemy);
-				//EffectGroup->AddNewObject(new ZombieAnimation( "bucketzombie",nextZombieIndex++,enemy->totalFrameCount, SpawnCoordinate.x,SpawnCoordinate.y));
+				EnemyGroup->AddNewObject(zombie = new BucketZombie(nextZombieIndex++,SpawnCoordinate.x, SpawnCoordinate.y));
+				allZombies.emplace_back(zombie);
+				allZombies_isDestroy.emplace_back(false);
+				EffectGroup->AddNewObject(new ZombieAnimation( "bucketzombie",zombie->index,zombie->totalFrameCount, SpawnCoordinate.x,SpawnCoordinate.y));
 				break;
 			case 4:
 				// Football zombie
-				EnemyGroup->AddNewObject(enemy = new FootballZombie(nextZombieIndex,SpawnCoordinate.x, SpawnCoordinate.y));
-				allZombies.emplace_back(enemy);
-				//EffectGroup->AddNewObject(new ZombieAnimation( "footballzombie",nextZombieIndex++,enemy->totalFrameCount, SpawnCoordinate.x,SpawnCoordinate.y));
+				EnemyGroup->AddNewObject(zombie = new FootballZombie(nextZombieIndex++,SpawnCoordinate.x, SpawnCoordinate.y));
+				allZombies.emplace_back(zombie);
+				allZombies_isDestroy.emplace_back(false);
+				EffectGroup->AddNewObject(new ZombieAnimation( "footballzombie",zombie->index,zombie->totalFrameCount, SpawnCoordinate.x,SpawnCoordinate.y));
 				break;
 			case 5:
 				// Newspaper zombie
-				EnemyGroup->AddNewObject(enemy = new NewspaperZombie(nextZombieIndex,SpawnCoordinate.x, SpawnCoordinate.y));
-				allZombies.emplace_back(enemy);
-				//EffectGroup->AddNewObject(new ZombieAnimation( "newspaperzombie",nextZombieIndex++,enemy->totalFrameCount, SpawnCoordinate.x,SpawnCoordinate.y));
+				EnemyGroup->AddNewObject(zombie = new NewspaperZombie(nextZombieIndex++,SpawnCoordinate.x, SpawnCoordinate.y));
+				allZombies.emplace_back(zombie);
+				allZombies_isDestroy.emplace_back(false);
+				EffectGroup->AddNewObject(new ZombieAnimation( "newspaperzombie",zombie->index,zombie->totalFrameCount, SpawnCoordinate.x,SpawnCoordinate.y));
 				break;
 			case 6:
 				// Flag zombie
-				EnemyGroup->AddNewObject(enemy = new FlagZombie(nextZombieIndex,SpawnCoordinate.x, SpawnCoordinate.y));
-				allZombies.emplace_back(enemy);
-				//EffectGroup->AddNewObject(new ZombieAnimation( "flagzombie",nextZombieIndex++,enemy->totalFrameCount,SpawnCoordinate.x,SpawnCoordinate.y));
+				EnemyGroup->AddNewObject(zombie = new FlagZombie(nextZombieIndex++,SpawnCoordinate.x, SpawnCoordinate.y));
+				allZombies.emplace_back(zombie);
+				allZombies_isDestroy.emplace_back(false);
+				EffectGroup->AddNewObject(new ZombieAnimation( "flagzombie",zombie->index,zombie->totalFrameCount,SpawnCoordinate.x,SpawnCoordinate.y));
 				break;
 			default:
 				continue;
@@ -222,7 +223,7 @@ void PlayScene::Update(float deltaTime) {
 		std::mt19937 rng(dev());
 		std::uniform_int_distribution<std::mt19937::result_type> id(1, 5);
 		AudioHelper::PlayAudio("groan" + std::to_string(id(rng)) + ".ogg");
-		enemy->Update(ticks);
+		zombie->Update(ticks);
 	}
 	if (preview) {
 		preview->Position = Engine::GameEngine::GetInstance().GetMousePosition();

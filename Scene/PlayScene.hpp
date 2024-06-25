@@ -65,8 +65,10 @@ public:
 	std::list<ZombieWaveData> zombieWaveData;
 
 	std::vector<std::vector<Plant*>> plant_lawn;
+
 	std::vector<Zombie*> allZombies;
 	int nextZombieIndex = 0;
+	std::vector<bool>allZombies_isDestroy;
 
 	std::vector<Bullet*> allBullets;
 	int nextBulletIndex = 0;
