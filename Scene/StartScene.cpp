@@ -1,8 +1,9 @@
-#include "StartScene.hpp"
 #include <functional>
 
 #include "Engine/AudioHelper.hpp"
 #include "Engine/GameEngine.hpp"
+
+#include "StartScene.hpp"
 #include "UI/Component/ImageButton.hpp"
 #include "UI/Component/Label.hpp"
 
@@ -19,9 +20,11 @@ void StartScene::Initialize() {
 
     bgmInstance = AudioHelper::PlaySample("theme.mp3", true, AudioHelper::BGMVolume);
 }
+
 void StartScene::Terminate() {
     IScene::Terminate();
 }
+
 void StartScene::PlayOnClick(int stage) {
     Engine::GameEngine::GetInstance().ChangeScene("menu");
     AudioHelper::PlayAudio("gravebutton.ogg");

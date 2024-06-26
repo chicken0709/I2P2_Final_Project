@@ -7,12 +7,15 @@
 #include <iostream>
 #include <random>
 
-#include "PlayScene.hpp"
-#include "Scene/StartScene.hpp"
 #include "Engine/AudioHelper.hpp"
 #include "Engine/GameEngine.hpp"
 #include "Engine/Group.hpp"
+
+#include "PlayScene.hpp"
+#include "Scene/StartScene.hpp"
 #include "UI/Component/Label.hpp"
+
+// Plant
 #include "Plant/PlantButton.hpp"
 #include "Plant/Sunflower.hpp"
 #include "Plant/TwinSunflower.hpp"
@@ -22,11 +25,15 @@
 #include "Plant/GatlinPeashooter.hpp"
 #include "Plant/Wallnut.hpp"
 #include "Plant/CherryBomb.hpp"
-#include "Plant/Shovel.hpp"
 #include "Plant/Bombnut.hpp"
+#include "Plant/Shovel.hpp"
 #include "Plant/LawnMower.hpp"
+
+// Bowling ball
 #include "Bullet/BombBowlingBall.hpp"
 #include "Bullet/BowlingBall.hpp"
+
+// Zombie
 #include "Zombie/Zombie.hpp"
 #include "Zombie/BasicZombie.hpp"
 #include "Zombie/ConeZombie.hpp"
@@ -34,8 +41,9 @@
 #include "Zombie/FlagZombie.hpp"
 #include "Zombie/FootballZombie.hpp"
 #include "Zombie/NewspaperZombie.hpp"
+
+// Animation
 #include "UI/Animation/PlantAnimation.hpp"
-#include "UI/Animation/ZombieAnimation.hpp"
 #include "UI/Animation/BulletAnimation.hpp"
 
 bool PlayScene::DebugMode = false;
@@ -45,6 +53,7 @@ const int PlantButtonImageSize = 70;
 const int PlantButtonImageDiffX = 5;
 const int PlantButtonImageDiffY = 27;
 const Engine::Point PlayScene::SpawnGridPoint = Engine::Point(MapWidth + 2, 2);
+
 Engine::Point PlayScene::GetClientSize() {
 	return Engine::Point((MapWidth + 1) * BlockSize, MapHeight * BlockSize);
 }
@@ -55,7 +64,7 @@ void PlayScene::Initialize() {
 	mapState.clear();
 	ticks = 0;
 	lives = 100;
-	money = 300; // change to 50 when done
+	money = 30000; // change to 50 when done
 	SpeedMult = 1;
 	// Add groups from bottom to top.
 	AddNewObject(TileMapGroup = new Group());
@@ -177,37 +186,37 @@ void PlayScene::Update(float deltaTime) {
 				// Basic zombie
 				EnemyGroup->AddNewObject(zombie = new BasicZombie(nextZombieIndex++,SpawnCoordinate.x, SpawnCoordinate.y));
 				allZombies.emplace_back(zombie);
-				EffectGroup->AddNewObject(new ZombieAnimation( "basiczombie",zombie->index,zombie->totalFrameCount, SpawnCoordinate.x,SpawnCoordinate.y));
+				allZombies_isDestroy.emplace_back(false);
 				break;
 			case 2:
 				// Cone zombie
 				EnemyGroup->AddNewObject(zombie = new ConeZombie(nextZombieIndex++,SpawnCoordinate.x, SpawnCoordinate.y));
 				allZombies.emplace_back(zombie);
-				EffectGroup->AddNewObject(new ZombieAnimation( "conezombie",zombie->index,zombie->totalFrameCount,SpawnCoordinate.x,SpawnCoordinate.y));
+				allZombies_isDestroy.emplace_back(false);
 				break;
 			case 3:
 				// Bucket zombie
 				EnemyGroup->AddNewObject(zombie = new BucketZombie(nextZombieIndex++,SpawnCoordinate.x, SpawnCoordinate.y));
 				allZombies.emplace_back(zombie);
-				EffectGroup->AddNewObject(new ZombieAnimation( "bucketzombie",zombie->index,zombie->totalFrameCount, SpawnCoordinate.x,SpawnCoordinate.y));
+				allZombies_isDestroy.emplace_back(false);
 				break;
 			case 4:
 				// Football zombie
 				EnemyGroup->AddNewObject(zombie = new FootballZombie(nextZombieIndex++,SpawnCoordinate.x, SpawnCoordinate.y));
 				allZombies.emplace_back(zombie);
-				EffectGroup->AddNewObject(new ZombieAnimation( "footballzombie",zombie->index,zombie->totalFrameCount, SpawnCoordinate.x,SpawnCoordinate.y));
+				allZombies_isDestroy.emplace_back(false);
 				break;
 			case 5:
 				// Newspaper zombie
 				EnemyGroup->AddNewObject(zombie = new NewspaperZombie(nextZombieIndex++,SpawnCoordinate.x, SpawnCoordinate.y));
 				allZombies.emplace_back(zombie);
-				EffectGroup->AddNewObject(new ZombieAnimation( "newspaperzombie",zombie->index,zombie->totalFrameCount, SpawnCoordinate.x,SpawnCoordinate.y));
+				allZombies_isDestroy.emplace_back(false);
 				break;
 			case 6:
 				// Flag zombie
 				EnemyGroup->AddNewObject(zombie = new FlagZombie(nextZombieIndex++,SpawnCoordinate.x, SpawnCoordinate.y));
 				allZombies.emplace_back(zombie);
-				EffectGroup->AddNewObject(new ZombieAnimation( "flagzombie",zombie->index,zombie->totalFrameCount,SpawnCoordinate.x,SpawnCoordinate.y));
+				allZombies_isDestroy.emplace_back(false);
 				break;
 			default:
 				continue;

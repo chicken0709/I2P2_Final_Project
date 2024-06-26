@@ -4,6 +4,6 @@
 
 class NewspaperZombie : public Zombie {
 public:
-    NewspaperZombie(int index,int x, int y);
+    NewspaperZombie(int index, int x, int y);
 };
 #endif // NEWSPAPERZOMBIE_HPP

@@ -2,7 +2,6 @@
 #define IMAGE_HPP
 #include <allegro5/bitmap.h>
 #include <memory>
-#include <string>
 
 #include "Engine/IObject.hpp"
 

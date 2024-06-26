@@ -1,6 +1,5 @@
 #ifndef BULLET_HPP
 #define BULLET_HPP
-
 #include "Engine/Sprite.hpp"
 
 class Zombie;
@@ -9,9 +8,11 @@ class Plant;
 namespace Engine {
 struct Point;
 }  // namespace Engine
+
 enum class BulletType {
 	BASICPEA, SNOWPEA, MOWER, BOWLING_BALL, BOMB_BOWLING_BALL
 };
+
 class Bullet : public Engine::Sprite {
 protected:
 	float speed;

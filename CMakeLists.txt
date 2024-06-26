@@ -48,6 +48,10 @@ add_executable(2024_I2P2_Final_Project
         Bullet/SnowPea.hpp
         Bullet/Mower.hpp
         Bullet/Mower.cpp
+        Bullet/BowlingBall.cpp
+        Bullet/BowlingBall.hpp
+        Bullet/BombBowlingBall.cpp
+        Bullet/BombBowlingBall.hpp
 
         // UI
         UI/Component/Image.cpp
@@ -60,8 +64,8 @@ add_executable(2024_I2P2_Final_Project
         UI/Component/Slider.hpp
         UI/Animation/PlantAnimation.cpp
         UI/Animation/PlantAnimation.hpp
-        UI/Animation/ZombieAnimation.hpp
-        UI/Animation/ZombieAnimation.cpp
+        UI/Animation/BulletAnimation.cpp
+        UI/Animation/BulletAnimation.hpp
 
         // Zombie
         Zombie/Zombie.cpp
@@ -98,12 +102,14 @@ add_executable(2024_I2P2_Final_Project
         Plant/TwinSunflower.hpp
         Plant/Wallnut.cpp
         Plant/Wallnut.hpp
+        Plant/CherryBomb.cpp
+        Plant/CherryBomb.hpp
+        Plant/Bombnut.cpp
+        Plant/Bombnut.hpp
         Plant/Shovel.cpp
         Plant/Shovel.hpp
         Plant/LawnMower.hpp
         Plant/LawnMower.cpp
-        Plant/CherryBomb.cpp
-        Plant/CherryBomb.hpp
         Plant/PlantButton.cpp
         Plant/PlantButton.hpp
 
@@ -116,15 +122,6 @@ add_executable(2024_I2P2_Final_Project
         Scene/StartScene.hpp
 
         main.cpp
-        Bullet/BowlingBall.cpp
-        Bullet/BowlingBall.hpp
-        Plant/Bombnut.cpp
-        Plant/Bombnut.hpp
-        Bullet/BombBowlingBall.cpp
-        Bullet/BombBowlingBall.hpp
-        UI/Animation/BulletAnimation.cpp
-        UI/Animation/BulletAnimation.hpp
-        UI/Animation/BulletAnimation.hpp
 )
 
 IF (WIN32)

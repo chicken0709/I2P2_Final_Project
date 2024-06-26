@@ -10,7 +10,7 @@ namespace Engine {
 
 class BowlingBall : public Bullet {
 public:
-    explicit BowlingBall(int index,Engine::Point position, Engine::Point forwardDirection, float rotation, Plant* parent);
+    explicit BowlingBall(int index, Engine::Point position, Engine::Point forwardDirection, float rotation, Plant* parent);
     void OnExplode(Zombie* enemy) override;
 };
 #endif // BOWLINGBALL_HPP

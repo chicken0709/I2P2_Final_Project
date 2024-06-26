@@ -6,6 +6,7 @@
 
 #include "Engine/IScene.hpp"
 #include "Engine/Point.hpp"
+
 enum TileType {
 	TILE_EMPTY,
 	TILE_OCCUPIED,
@@ -63,12 +64,13 @@ public:
 	std::vector<std::vector<TileType>> mapState;
 	std::vector<std::vector<int>> mapDistance;
 	std::list<ZombieWaveData> zombieWaveData;
-
+	// Record plants
 	std::vector<std::vector<Plant*>> plant_lawn;
-
+	// Record zombies
 	std::vector<Zombie*> allZombies;
 	int nextZombieIndex = 0;
-
+	std::vector<bool>allZombies_isDestroy;
+	// Record bowlingballs
 	std::vector<Bullet*> allBullets;
 	int nextBulletIndex = 0;
 	std::vector<bool>allBullets_isDestroy;
@@ -84,15 +86,12 @@ public:
 	void OnMouseUp(int button, int mx, int my) override;
 	void OnKeyDown(int keyCode) override;
 	void ReachHouse();
-
-
-	int GetMoney() const;
 	void EarnMoney(int money);
 	void ReadMap();
 	void ReadEnemyWave();
 	void ConstructUI();
 	void UIBtnClicked(int id);
 	void BackOnClick(int stage);
-
+	int GetMoney() const;
 };
 #endif // PLAYSCENE_HPP

@@ -1,13 +1,14 @@
-#include "Bullet.hpp"
+#include <random>
+
 #include "Engine/Collider.hpp"
-#include "Zombie/Zombie.hpp"
+#include "Engine/LOG.hpp"
 #include "Engine/GameEngine.hpp"
 #include "Engine/Group.hpp"
 #include "Engine/IScene.hpp"
-#include "Scene/PlayScene.hpp"
-#include <random>
 
-#include "Engine/LOG.hpp"
+#include "Bullet.hpp"
+#include "Scene/PlayScene.hpp"
+#include "Zombie/Zombie.hpp"
 
 PlayScene* Bullet::getPlayScene() {
 	return dynamic_cast<PlayScene*>(Engine::GameEngine::GetInstance().GetActiveScene());
@@ -16,14 +17,37 @@ PlayScene* Bullet::getPlayScene() {
 void Bullet::OnExplode(Zombie* enemy) {
 }
 
-Bullet::Bullet(std::string img, float speed, float damage, Engine::Point position, Engine::Point forwardDirection, float rotation, Plant* parent) :
-	Sprite(img, position.x, position.y), speed(speed), damage(damage), parent(parent) {
+Bullet::Bullet(
+	std::string img,
+	float speed,
+	float damage,
+	Engine::Point position,
+	Engine::Point forwardDirection,
+	float rotation,
+	Plant* parent
+) :
+	Sprite(img, position.x, position.y), speed(speed), damage(damage), parent(parent)
+{
 	Velocity = forwardDirection.Normalize() * speed;
 	Rotation = rotation;
 	CollisionRadius = 4;
 }
-Bullet::Bullet(int index,int totalFrameCount,int frameWidth,int frameHeight,std::string img, float speed, float damage, Engine::Point position, Engine::Point forwardDirection, float rotation, Plant* parent)
-	:Sprite(img, position.x, position.y), speed(speed), damage(damage), parent(parent) {
+
+Bullet::Bullet(
+	int index,
+	int totalFrameCount,
+	int frameWidth,
+	int frameHeight,
+	std::string img,
+	float speed,
+	float damage,
+	Engine::Point position,
+	Engine::Point forwardDirection,
+	float rotation,
+	Plant* parent
+) :
+	Sprite(img, position.x, position.y), speed(speed), damage(damage), parent(parent)
+{
 	Velocity = forwardDirection.Normalize() * speed;
 	Rotation = rotation;
 	CollisionRadius = 4;
@@ -32,6 +56,7 @@ Bullet::Bullet(int index,int totalFrameCount,int frameWidth,int frameHeight,std:
 	this->frameWidth = frameWidth;
 	this->frameHeight = frameHeight;
 }
+
 void Bullet::Update(float deltaTime) {
 	Sprite::Update(deltaTime);
 	PlayScene* scene = getPlayScene();

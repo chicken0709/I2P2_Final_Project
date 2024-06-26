@@ -2,6 +2,7 @@
 #include <string>
 
 #include "Engine/Point.hpp"
+
 #include "Slider.hpp"
 
 Slider::Slider(float x, float y, float w, float h) :
@@ -13,15 +14,18 @@ Slider::Slider(float x, float y, float w, float h) :
 	Position.y += h / 2;
 	Anchor = Engine::Point(0.5, 0.5);
 }
+
 void Slider::Draw() const {
 	Bar.Draw();
 	End1.Draw();
 	End2.Draw();
 	ImageButton::Draw();
 }
+
 void Slider::SetOnValueChangedCallback(std::function<void(float value)> onValueChangedCallback) {
 	OnValueChangedCallback = onValueChangedCallback;
 }
+
 void Slider::SetValue(float value) {
 	if (this->value != value) {
         Position.x = (1 - value) * Bar.Position.x + value * (Bar.Position.x + Bar.Size.x);
@@ -29,13 +33,16 @@ void Slider::SetValue(float value) {
 			OnValueChangedCallback(value);
 	}
 }
+
 void Slider::OnMouseDown(int button, int mx, int my) {
 	if ((button & 1) && mouseIn)
 		Down = true;
 }
+
 void Slider::OnMouseUp(int button, int mx, int my) {
 	Down = false;
 }
+
 void Slider::OnMouseMove(int mx, int my) {
 	ImageButton::OnMouseMove(mx, my);
 	if (Down) {

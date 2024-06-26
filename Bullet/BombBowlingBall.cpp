@@ -1,12 +1,25 @@
+#include "Engine/AudioHelper.hpp"
+
 #include "BombBowlingBall.hpp"
 #include "Zombie/Zombie.hpp"
 #include "Scene/PlayScene.hpp"
-#include "Engine/AudioHelper.hpp"
 
 class Plant;
 
-BombBowlingBall::BombBowlingBall(int index,Engine::Point position, Engine::Point forwardDirection, float rotation, Plant* parent) :
-    Bullet(index, 8,71,71,"play/basic_zombie.png",300, INT16_MAX,position, forwardDirection, rotation, parent) {
+BombBowlingBall::BombBowlingBall(int index, Engine::Point position, Engine::Point forwardDirection, float rotation, Plant* parent) :
+Bullet(
+    index,
+    8,
+    71,
+    71,
+    "play/basic_zombie.png",
+    300,
+    INT16_MAX,
+    position,
+    forwardDirection,
+    rotation,
+    parent
+) {
     bulletType = BulletType::BOMB_BOWLING_BALL;
     CollisionRadius = 50;
 }

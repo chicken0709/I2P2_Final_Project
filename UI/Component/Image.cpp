@@ -1,12 +1,11 @@
 #include <allegro5/allegro.h>
-#include <memory>
 
 #include "Engine/IObject.hpp"
-#include "Image.hpp"
-
 #include "Engine/LOG.hpp"
 #include "Engine/Point.hpp"
 #include "Engine/Resources.hpp"
+
+#include "Image.hpp"
 
 namespace Engine {
 	Image::Image(std::string img, float x, float y, float w, float h, float anchorX, float anchorY) :
@@ -63,7 +62,6 @@ namespace Engine {
 		al_draw_scaled_bitmap(bmp.get(), 0, 0, GetBitmapWidth(), GetBitmapHeight(),
 			Position.x - Anchor.x * GetBitmapWidth(), Position.y - Anchor.y * GetBitmapHeight(),
 			Size.x, Size.y, 0);
-		//Engine::LOG(Engine::INFO) << Position.x - Anchor.x * GetBitmapWidth();
 	}
 	int Image::GetBitmapWidth() const {
 		return al_get_bitmap_width(bmp.get());

@@ -2,10 +2,9 @@
 #define IMAGEBUTTON_HPP
 #include <allegro5/bitmap.h>
 #include <functional>
-#include <memory>
-#include <string>
 
 #include "Engine/IControl.hpp"
+
 #include "Image.hpp"
 
 namespace Engine {

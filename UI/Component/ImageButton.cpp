@@ -1,8 +1,9 @@
 #include "Engine/Collider.hpp"
 #include "Engine/GameEngine.hpp"
-#include "Image.hpp"
-#include "ImageButton.hpp"
 #include "Engine/Resources.hpp"
+
+#include "ImageButton.hpp"
+#include "Image.hpp"
 
 namespace Engine {
 	ImageButton::ImageButton(std::string img, std::string imgIn, float x, float y, float w, float h, float anchorX, float anchorY) :

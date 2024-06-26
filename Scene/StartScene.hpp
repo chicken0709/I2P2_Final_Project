@@ -1,7 +1,7 @@
-#ifndef INC_2024_I2P2_TOWERDEFENSE_WITH_ANSWER_STARTSCENE_H
-#define INC_2024_I2P2_TOWERDEFENSE_WITH_ANSWER_STARTSCENE_H
-
+#ifndef STARTSCENE_HPP
+#define STARTSCENE_HPP
 #include <allegro5/allegro_audio.h>
+
 #include "Engine/IScene.hpp"
 
 extern std::shared_ptr<ALLEGRO_SAMPLE_INSTANCE> bgmInstance;
@@ -13,4 +13,4 @@ public:
     void Terminate() override;
     void PlayOnClick(int stage);
 };
-#endif //INC_2024_I2P2_TOWERDEFENSE_WITH_ANSWER_STARTSCENE_H
+#endif // STARTSCENE_HPP
