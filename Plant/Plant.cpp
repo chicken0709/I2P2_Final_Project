@@ -45,7 +45,7 @@ Plant::Plant(
 	float coolDown,
 	PlantType plantType
 ) :
-	Sprite(1,totalFrameCount,"play/"+ name + ".png", x, y),
+	Sprite("play/"+ name + ".png", x, y),
 	name(name),
 	totalFrameCount(totalFrameCount),
 	frameWidth(frameWidth),
@@ -128,6 +128,7 @@ void Plant::Update(float deltaTime) {
 
 	ALLEGRO_BITMAP* subBitmap = al_create_sub_bitmap(spriteSheet.get(), buffer + phase * frameWidth, 0, frameWidth, frameHeight);
 	bmp.reset(subBitmap, al_destroy_bitmap);
+	ScaleImage(1.6,1.6);
 	Sprite::Update(deltaTime);
 }
 

@@ -40,7 +40,7 @@ Zombie::Zombie(
 	float originalSpeed,
 	float hp
 ) :
-	Sprite(1,totalFrameCount,"play/" + name + "_animation_1.png", x, y),
+	Sprite("play/" + name + "_animation_1.png", x, y),
 	name(name),
 	totalFrameCount(totalFrameCount),
 	frameWidth(frameWidth),
@@ -245,6 +245,7 @@ void Zombie::Update(float deltaTime) {
 		subBitmap = al_create_sub_bitmap(rageSpriteSheet.get(), buffer +phase * frameWidth, 0, frameWidth, frameHeight);
 	}
 	bmp.reset(subBitmap, al_destroy_bitmap);
+	ScaleImage(1.6,1.6);
 	Sprite::Update(deltaTime);
 }
 

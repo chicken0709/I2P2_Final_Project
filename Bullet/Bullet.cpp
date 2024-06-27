@@ -40,7 +40,7 @@ Bullet::Bullet(
 	float damage,
 	Engine::Point position
 ) :
-	Sprite(1,totalFrameCount,"play/" + name + "_animation_1.png", position.x, position.y),
+	Sprite("play/" + name + "_animation_1.png", position.x, position.y),
 	totalFrameCount(totalFrameCount),
 	frameWidth(frameWidth),
 	frameHeight(frameHeight),
@@ -117,6 +117,7 @@ void Bullet::Update(float deltaTime) {
 		int phase = floor(timeTicks / timeSpan * currentFrameCount);
 		ALLEGRO_BITMAP* subBitmap = al_create_sub_bitmap(spriteSheet.get(), buffer + phase * frameWidth, 0, frameWidth, frameHeight);
 		bmp.reset(subBitmap, al_destroy_bitmap);
+		ScaleImage(1.6,1.6);
 	}
 
 	Sprite::Update(deltaTime);
