@@ -1,4 +1,5 @@
 #include "Engine/AudioHelper.hpp"
+#include "Engine/Resources.hpp"
 
 #include "BombBowlingBall.hpp"
 #include "Zombie/Zombie.hpp"
@@ -6,20 +7,19 @@
 
 class Plant;
 
-BombBowlingBall::BombBowlingBall(int index, Engine::Point position, Engine::Point forwardDirection, float rotation, Plant* parent) :
+BombBowlingBall::BombBowlingBall(std::string name, Engine::Point position, Engine::Point forwardDirection, float rotation) :
 Bullet(
-    index,
+    name,
     8,
     71,
     71,
-    "play/basic_zombie.png",
     300,
     INT16_MAX,
     position,
     forwardDirection,
-    rotation,
-    parent
+    rotation
 ) {
+    spriteSheet = Engine::Resources::GetInstance().GetBitmap("play/" + name + "_animation_1.png");
     bulletType = BulletType::BOMB_BOWLING_BALL;
     CollisionRadius = 50;
 }

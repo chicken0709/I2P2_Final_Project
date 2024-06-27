@@ -4,6 +4,6 @@
 
 class BasicZombie : public Zombie {
 public:
-	BasicZombie(int index, int x, int y);
+	BasicZombie(int x, int y);
 };
 #endif // BASICZOMBIE_HPP

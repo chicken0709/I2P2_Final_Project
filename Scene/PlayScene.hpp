@@ -64,16 +64,9 @@ public:
 	std::vector<std::vector<TileType>> mapState;
 	std::vector<std::vector<int>> mapDistance;
 	std::list<ZombieWaveData> zombieWaveData;
+
 	// Record plants
 	std::vector<std::vector<Plant*>> plant_lawn;
-	// Record zombies
-	std::vector<Zombie*> allZombies;
-	int nextZombieIndex = 0;
-	std::vector<bool>allZombies_isDestroy;
-	// Record bowlingballs
-	std::vector<Bullet*> allBullets;
-	int nextBulletIndex = 0;
-	std::vector<bool>allBullets_isDestroy;
 
 	static Engine::Point GetClientSize();
 	explicit PlayScene() = default;

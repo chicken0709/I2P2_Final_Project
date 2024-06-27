@@ -23,10 +23,9 @@ Bullet::Bullet(
 	float damage,
 	Engine::Point position,
 	Engine::Point forwardDirection,
-	float rotation,
-	Plant* parent
+	float rotation
 ) :
-	Sprite(img, position.x, position.y), speed(speed), damage(damage), parent(parent)
+	Sprite(img, position.x, position.y), speed(speed), damage(damage)
 {
 	Velocity = forwardDirection.Normalize() * speed;
 	Rotation = rotation;
@@ -34,31 +33,28 @@ Bullet::Bullet(
 }
 
 Bullet::Bullet(
-	int index,
+	std::string name,
 	int totalFrameCount,
 	int frameWidth,
 	int frameHeight,
-	std::string img,
 	float speed,
 	float damage,
 	Engine::Point position,
 	Engine::Point forwardDirection,
-	float rotation,
-	Plant* parent
+	float rotation
 ) :
-	Sprite(img, position.x, position.y), speed(speed), damage(damage), parent(parent)
+	Sprite(1,totalFrameCount,"play/" + name + "_animation_1.png", position.x, position.y),
+	totalFrameCount(totalFrameCount),
+	frameWidth(frameWidth),
+	frameHeight(frameHeight),
+	speed(speed),
+	damage(damage)
 {
 	Velocity = forwardDirection.Normalize() * speed;
 	Rotation = rotation;
-	CollisionRadius = 4;
-	this->index = index;
-	this->totalFrameCount = totalFrameCount;
-	this->frameWidth = frameWidth;
-	this->frameHeight = frameHeight;
 }
 
 void Bullet::Update(float deltaTime) {
-	Sprite::Update(deltaTime);
 	PlayScene* scene = getPlayScene();
 	int bulletPositionY = static_cast<int>(Position.y / 150);
 	// Loop through zombies
@@ -93,8 +89,6 @@ void Bullet::Update(float deltaTime) {
 					}
 				}
 			} else {
-				if(getPlayScene()->MapId == 2 && !getPlayScene()->allBullets_isDestroy.empty())
-					getPlayScene()->allBullets_isDestroy[index] = true;
             	getPlayScene()->BulletGroup->RemoveObject(objectIterator);
             	return;
             }
@@ -108,10 +102,26 @@ void Bullet::Update(float deltaTime) {
 			Velocity = Engine::Point(1, -1).Normalize() * speed;
 		}
 	}
-	// Check if out of boundary.
+	// Check out of boundary
 	if (!Engine::Collider::IsRectOverlap(Position - Size / 2, Position + Size / 2, Engine::Point(1, 1), PlayScene::GetClientSize())) {
-		if(getPlayScene()->MapId == 2&& !getPlayScene()->allBullets_isDestroy.empty())
-			getPlayScene()->allBullets_isDestroy[index] = true;
 		getPlayScene()->BulletGroup->RemoveObject(objectIterator);
+		return;
 	}
+
+	// Animation
+	if (bulletType == BulletType::BOWLING_BALL || bulletType == BulletType::BOMB_BOWLING_BALL) {
+		int buffer = 0;
+		int currentFrameCount = totalFrameCount;
+
+		timeTicks += deltaTime;
+		if (timeTicks >= timeSpan) {
+			timeTicks = 0;
+		}
+
+		int phase = floor(timeTicks / timeSpan * currentFrameCount);
+		ALLEGRO_BITMAP* subBitmap = al_create_sub_bitmap(spriteSheet.get(), buffer + phase * frameWidth, 0, frameWidth, frameHeight);
+		bmp.reset(subBitmap, al_destroy_bitmap);
+	}
+
+	Sprite::Update(deltaTime);
 }

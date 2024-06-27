@@ -4,6 +4,6 @@
 
 class ConeZombie : public Zombie {
 public:
-    ConeZombie(int index, int x, int y);
+    ConeZombie(int x, int y);
 };
 #endif // CONEZOMBIE_HPP

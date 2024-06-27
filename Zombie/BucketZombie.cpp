@@ -1,9 +1,8 @@
 #include "BucketZombie.hpp"
 
-BucketZombie::BucketZombie(int index,int x, int y) :
+BucketZombie::BucketZombie(int x, int y) :
 Zombie(
     "bucketzombie",
-    index,
     126,
     166,
     144,

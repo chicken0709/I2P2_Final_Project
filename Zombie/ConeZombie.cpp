@@ -1,9 +1,8 @@
 #include "ConeZombie.hpp"
 
-ConeZombie::ConeZombie(int index,int x, int y) :
+ConeZombie::ConeZombie(int x, int y) :
 Zombie(
     "conezombie",
-    index,
     126,
     166,
     144,

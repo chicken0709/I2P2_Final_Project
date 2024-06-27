@@ -44,7 +44,6 @@
 
 // Animation
 #include "UI/Animation/PlantAnimation.hpp"
-#include "UI/Animation/BulletAnimation.hpp"
 
 bool PlayScene::DebugMode = false;
 const int PlayScene::MapWidth = 9, PlayScene::MapHeight = 5;
@@ -184,39 +183,27 @@ void PlayScene::Update(float deltaTime) {
 				continue;
 			case 1:
 				// Basic zombie
-				EnemyGroup->AddNewObject(zombie = new BasicZombie(nextZombieIndex++,SpawnCoordinate.x, SpawnCoordinate.y));
-				allZombies.emplace_back(zombie);
-				allZombies_isDestroy.emplace_back(false);
+				EnemyGroup->AddNewObject(zombie = new BasicZombie(SpawnCoordinate.x, SpawnCoordinate.y));
 				break;
 			case 2:
 				// Cone zombie
-				EnemyGroup->AddNewObject(zombie = new ConeZombie(nextZombieIndex++,SpawnCoordinate.x, SpawnCoordinate.y));
-				allZombies.emplace_back(zombie);
-				allZombies_isDestroy.emplace_back(false);
+				EnemyGroup->AddNewObject(zombie = new ConeZombie(SpawnCoordinate.x, SpawnCoordinate.y));
 				break;
 			case 3:
 				// Bucket zombie
-				EnemyGroup->AddNewObject(zombie = new BucketZombie(nextZombieIndex++,SpawnCoordinate.x, SpawnCoordinate.y));
-				allZombies.emplace_back(zombie);
-				allZombies_isDestroy.emplace_back(false);
+				EnemyGroup->AddNewObject(zombie = new BucketZombie(SpawnCoordinate.x, SpawnCoordinate.y));
 				break;
 			case 4:
 				// Football zombie
-				EnemyGroup->AddNewObject(zombie = new FootballZombie(nextZombieIndex++,SpawnCoordinate.x, SpawnCoordinate.y));
-				allZombies.emplace_back(zombie);
-				allZombies_isDestroy.emplace_back(false);
+				EnemyGroup->AddNewObject(zombie = new FootballZombie(SpawnCoordinate.x, SpawnCoordinate.y));
 				break;
 			case 5:
 				// Newspaper zombie
-				EnemyGroup->AddNewObject(zombie = new NewspaperZombie(nextZombieIndex++,SpawnCoordinate.x, SpawnCoordinate.y));
-				allZombies.emplace_back(zombie);
-				allZombies_isDestroy.emplace_back(false);
+				EnemyGroup->AddNewObject(zombie = new NewspaperZombie(SpawnCoordinate.x, SpawnCoordinate.y));
 				break;
 			case 6:
 				// Flag zombie
-				EnemyGroup->AddNewObject(zombie = new FlagZombie(nextZombieIndex++,SpawnCoordinate.x, SpawnCoordinate.y));
-				allZombies.emplace_back(zombie);
-				allZombies_isDestroy.emplace_back(false);
+				EnemyGroup->AddNewObject(zombie = new FlagZombie(SpawnCoordinate.x, SpawnCoordinate.y));
 				break;
 			default:
 				continue;
@@ -306,18 +293,11 @@ void PlayScene::OnMouseUp(int button, int mx, int my) {
 				std::string name = preview->name;
 				UIGroup->RemoveObject(preview->GetObjectIterator());
 				preview = nullptr;
-				Bullet* bullet;
 				if(x > 3) return;
 				if (name == "wallnut") {
-					BulletGroup->AddNewObject(bullet = new BowlingBall(nextBulletIndex++,Engine::Point(x * BlockSize + 75, y * BlockSize + 35), Engine::Point(1, 0),0, nullptr));
-					allBullets.emplace_back(bullet);
-					allBullets_isDestroy.emplace_back(false);
-					EffectGroup->AddNewObject(new BulletAnimation("wallnutbowling",bullet->index,bullet->totalFrameCount,x * BlockSize + 75,y * BlockSize + 75));
+					BulletGroup->AddNewObject(new BowlingBall("wallnutbowling", Engine::Point(x * BlockSize + 75, y * BlockSize + 35), Engine::Point(1, 0),0));
 				} else if (name == "bombnut") {
-					BulletGroup->AddNewObject(bullet = new BombBowlingBall(nextBulletIndex++,Engine::Point(x * BlockSize + 75, y * BlockSize + 35), Engine::Point(1, 0),0, nullptr));
-					allBullets.emplace_back(bullet);
-					allBullets_isDestroy.emplace_back(false);
-					EffectGroup->AddNewObject(new BulletAnimation("bombnutbowling",bullet->index,bullet->totalFrameCount,x * BlockSize + 75,y * BlockSize + 75));
+					BulletGroup->AddNewObject(new BombBowlingBall("bombnutbowling", Engine::Point(x * BlockSize + 75, y * BlockSize + 35), Engine::Point(1, 0),0));
 				}
 				AudioHelper::PlayAudio("plant.ogg");
 				AudioHelper::PlayAudio("bowling.mp3");

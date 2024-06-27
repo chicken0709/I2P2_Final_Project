@@ -1,9 +1,8 @@
 #include "BasicZombie.hpp"
 
-BasicZombie::BasicZombie(int index,int x, int y) :
+BasicZombie::BasicZombie(int x, int y) :
 Zombie(
     "basiczombie",
-    index,
     126,
     166,
     144,

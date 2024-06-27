@@ -4,6 +4,6 @@
 
 class FootballZombie : public Zombie {
 public:
-    FootballZombie(int index, int x, int y);
+    FootballZombie(int x, int y);
 };
 #endif // FOOTBALLZOMBIE_HPP

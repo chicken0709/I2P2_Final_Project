@@ -1,9 +1,8 @@
 #include "FlagZombie.hpp"
 
-FlagZombie::FlagZombie(int index,int x, int y) :
+FlagZombie::FlagZombie(int x, int y) :
 Zombie(
     "flagzombie",
-    index,
     126,
     166,
     144,

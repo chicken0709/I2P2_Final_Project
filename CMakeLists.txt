@@ -64,8 +64,6 @@ add_executable(2024_I2P2_Final_Project
         UI/Component/Slider.hpp
         UI/Animation/PlantAnimation.cpp
         UI/Animation/PlantAnimation.hpp
-        UI/Animation/BulletAnimation.cpp
-        UI/Animation/BulletAnimation.hpp
 
         // Zombie
         Zombie/Zombie.cpp

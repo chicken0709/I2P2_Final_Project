@@ -10,7 +10,7 @@ PlayScene* Sun::getPlayScene() {
     return dynamic_cast<PlayScene*>(Engine::GameEngine::GetInstance().GetActiveScene());
 }
 
-Sun::Sun(std::string img, Engine::Point position, Plant* parent) :
+Sun::Sun(std::string img, Engine::Point position) :
         Sprite(img, position.x, position.y) {
 }
 

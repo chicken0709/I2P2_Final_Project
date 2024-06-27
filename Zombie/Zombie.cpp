@@ -29,7 +29,6 @@ void Zombie::OnExplode() {
 
 Zombie::Zombie(
 	std::string name,
-	int index,
 	int totalFrameCount,
 	int frameWidth,
 	int frameHeight,
@@ -43,7 +42,6 @@ Zombie::Zombie(
 ) :
 	Sprite(1,totalFrameCount,"play/" + name + "_animation_1.png", x, y),
 	name(name),
-	index(index),
 	totalFrameCount(totalFrameCount),
 	frameWidth(frameWidth),
 	frameHeight(frameHeight),
@@ -193,7 +191,6 @@ void Zombie::Update(float deltaTime) {
 			for (auto& it: lockedPlants) {
 				it->Target = nullptr;
 			}
-			getPlayScene()->allZombies_isDestroy[index] = true;
 			getPlayScene()->EnemyGroup->RemoveObject(objectIterator);
 			return;
 		}

@@ -1,10 +1,9 @@
 #include "NewspaperZombie.hpp"
 #include "Engine/Resources.hpp"
 
-NewspaperZombie::NewspaperZombie(int index,int x, int y) :
+NewspaperZombie::NewspaperZombie(int x, int y) :
 Zombie(
     "newspaperzombie",
-    index,
     107,
     216,
     164,

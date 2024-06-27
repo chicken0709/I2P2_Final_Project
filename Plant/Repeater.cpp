@@ -30,6 +30,6 @@ void Repeater::CreatePea() {
     Engine::Point diff = Engine::Point(cos(Rotation - ALLEGRO_PI / 2), sin(Rotation));
     Engine::Point normalized = Engine::Point(50, -35);
     // Change bullet position to the front of the gun barrel.
-    getPlayScene()->BulletGroup->AddNewObject(new BasicPea(Position + normalized, diff, 0, this));
+    getPlayScene()->BulletGroup->AddNewObject(new BasicPea(Position + normalized, diff, 0));
     AudioHelper::PlayAudio("throw.mp3");
 }

@@ -5,15 +5,14 @@
 
 class Plant;
 
-BasicPea::BasicPea(Engine::Point position, Engine::Point forwardDirection, float rotation, Plant* parent) :
+BasicPea::BasicPea(Engine::Point position, Engine::Point forwardDirection, float rotation) :
 Bullet(
     "play/basic_pea.png",
     250,
     20,
     position,
     forwardDirection,
-    rotation - ALLEGRO_PI / 2,
-    parent
+    rotation - ALLEGRO_PI / 2
 ) {
     bulletType = BulletType::BASICPEA;
 }

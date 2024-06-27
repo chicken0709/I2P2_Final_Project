@@ -3,15 +3,14 @@
 
 class Plant;
 
-Mower::Mower(Engine::Point position, Engine::Point forwardDirection, float rotation, Plant* parent) :
+Mower::Mower(Engine::Point position, Engine::Point forwardDirection, float rotation) :
 Bullet(
 	"play/lawnmower.png",
 	300,
 	INT16_MAX,
 	position,
 	forwardDirection,
-	rotation,
-	parent
+	rotation
 ) {
 	bulletType = BulletType::MOWER;
     CollisionRadius = 50;

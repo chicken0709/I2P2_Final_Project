@@ -4,6 +4,6 @@
 
 class FlagZombie : public Zombie {
 public:
-    FlagZombie(int index, int x, int y);
+    FlagZombie(int x, int y);
 };
 #endif // FLAGZOMBIE_HPP

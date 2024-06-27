@@ -15,7 +15,7 @@ protected:
     PlayScene* getPlayScene();
     bool mouseIn = false;
 public:
-    explicit Sun(std::string img, Engine::Point position, Plant* parent);
+    explicit Sun(std::string img, Engine::Point position);
     void Update(float deltaTime) override;
 };
 #endif // SUN_HPP

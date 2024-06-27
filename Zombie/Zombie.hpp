@@ -50,7 +50,7 @@ protected:
 public:
 	std::list<Plant*> lockedPlants;
 	std::string name;
-	Zombie(std::string name, int index, int totalFrameCount, int frameWidth, int frameHeight, std::vector<int> animationFrameCount, float x, float y, float radius, float speed, float originalSpeed, float hp);
+	Zombie(std::string name, int totalFrameCount, int frameWidth, int frameHeight, std::vector<int> animationFrameCount, float x, float y, float radius, float speed, float originalSpeed, float hp);
 	void TakeDamage(float damage);
 	void Update(float deltaTime) override;
 	void Draw() const override;

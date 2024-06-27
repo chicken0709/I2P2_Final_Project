@@ -19,5 +19,5 @@ void LawnMower::CreatePea() {
     Engine::LOG(Engine::INFO) << "launch mower";
     AudioHelper::PlayAudio("lawnmower.ogg");
     Engine::Point diff = Engine::Point(cos(Rotation - ALLEGRO_PI / 2), sin(Rotation));
-    getPlayScene()->BulletGroup->AddNewObject(new Mower(Position, diff, 0, this));
+    getPlayScene()->BulletGroup->AddNewObject(new Mower(Position, diff, 0));
 }

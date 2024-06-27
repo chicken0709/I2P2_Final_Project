@@ -18,17 +18,19 @@ protected:
 	float speed;
 	float damage;
 	BulletType bulletType;
-	Plant* parent;
 	PlayScene* getPlayScene();
 	virtual void OnExplode(Zombie* enemy);
 public:
 	Zombie* Target = nullptr;
-	explicit Bullet(std::string img, float speed, float damage, Engine::Point position, Engine::Point forwardDirection, float rotation, Plant* parent);
-	explicit Bullet(int index,int totalFrameCount,int frameWidth,int frameHeight,std::string img, float speed, float damage, Engine::Point position, Engine::Point forwardDirection, float rotation, Plant* parent);
+	explicit Bullet(std::string img, float speed, float damage, Engine::Point position, Engine::Point forwardDirection, float rotation);
+	explicit Bullet(std::string name, int totalFrameCount, int frameWidth, int frameHeight, float speed, float damage, Engine::Point position, Engine::Point forwardDirection, float rotation);
 	void Update(float deltaTime) override;
 	int index = 0;
+	float timeTicks;
+	float timeSpan = 1.5;
 	int frameWidth;
 	int frameHeight;
 	int totalFrameCount;
+	std::shared_ptr<ALLEGRO_BITMAP> spriteSheet;
 };
 #endif // BULLET_HPP

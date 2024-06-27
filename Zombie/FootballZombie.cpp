@@ -1,9 +1,8 @@
 #include "FootballZombie.hpp"
 
-FootballZombie::FootballZombie(int index,int x, int y) :
+FootballZombie::FootballZombie(int x, int y) :
 Zombie(
     "footballzombie",
-    index,
     84,
     154,
     172,
