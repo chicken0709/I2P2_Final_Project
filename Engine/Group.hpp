@@ -1,7 +1,6 @@
 #ifndef GROUP_HPP
 #define GROUP_HPP
 #include <list>
-#include <utility>
 
 #include "IControl.hpp"
 #include "IObject.hpp"
@@ -12,16 +11,16 @@ namespace Engine {
 	/// </summary>
 	class Group: public IObject, public IControl {
 	protected:
-		// Stores all object pointers in the scene.
-		// The first boolean indicates whether the scene should delete it.
+		// Stores all object pointers in the scene
+		// The first boolean indicates whether the scene should delete it
 		std::list<std::pair<bool, IObject*>> objects;
-		// Stores all control pointers in the scene.
-		// The first boolean indicates whether the scene should delete it.
+		// Stores all control pointers in the scene
+		// The first boolean indicates whether the scene should delete it
 		std::list<std::pair<bool, IControl*>> controls;
 		// Note: Using linked-list and inline-new might cause some serious cache misses,
 		//       however this implementation brings us more convenience than the impact
 		//       on performance. Trying to deal with cache misses requires complicated code,
-		//       so we'll just ignore it for simplicity.
+		//       so we'll just ignore it for simplicity
 		/// <summary>
 		/// Add Object to scene.
 		/// </summary>

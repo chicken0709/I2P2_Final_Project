@@ -9,20 +9,20 @@
 
 namespace Engine {
 	/// <summary>
-	/// A clickable button, changes image when mouse move.
+	/// A clickable button, changes image when mouse move.
 	/// </summary>
 	class ImageButton: public Image, public IControl {
 	protected:
-		// Determines whether mouse is in the button.
+		// Determines whether mouse is in the button
 		bool mouseIn = false;
-		// The smart pointer that points to bitmap for mouse-out display.
+		// The smart pointer that points to bitmap for mouse-out display
 		std::shared_ptr<ALLEGRO_BITMAP> imgOut;
-		// The smart pointer that points to bitmap for mouse-in display.
+		// The smart pointer that points to bitmap for mouse-in display
 		std::shared_ptr<ALLEGRO_BITMAP> imgIn;
-		// The callback function to call when button clicked.
+		// The callback function to call when button clicked
 		std::function<void()> OnClickCallback;
 	public:
-		// Whether the button can be pressed.
+		// Whether the button can be pressed
 		bool Enabled = true;
 		/// <summary>
 		/// Construct a image object.

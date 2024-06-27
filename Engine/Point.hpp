@@ -6,7 +6,7 @@ namespace Engine {
 	/// Can be used as 2D coordinate point or 2D vector.
 	/// </summary>
 	struct Point {
-		// The coordinates of the point.
+		// The coordinates of the point
 		float x, y;
 		/// <summary>
 		/// Construct a Point with coordinate (0, 0).

@@ -13,12 +13,12 @@ namespace Engine {
 	/// </summary>
 	class Label : public IObject {
 	protected:
-		// Smart pointer to font.
+		// Smart pointer to font
 		std::shared_ptr<ALLEGRO_FONT> font;
 	public:
-		// Text to draw.
+		// Text to draw
 		std::string Text;
-		// Text's color.
+		// Text's color
 		ALLEGRO_COLOR Color;
 		/// <summary>
 		/// Construct a label object.
@@ -51,5 +51,4 @@ namespace Engine {
 		int GetTextHeight() const;
 	};
 }
-
 #endif // LABEL_HPP

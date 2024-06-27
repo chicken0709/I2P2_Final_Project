@@ -4,7 +4,7 @@
 #include <iostream>
 
 namespace Engine {
-	// Log types that will be formatted in front of the line.
+	// Log types that will be formatted in front of the line
 	enum LogType {
 		VERBOSE,
 		DEBUGGING,
@@ -18,11 +18,11 @@ namespace Engine {
 	/// </summary>
 	class LOG final {
 	private:
-		// Determine if global log is enabled.
+		// Determine if global log is enabled
 		static bool Enabled;
-		// Determine whether should log verbose messages or not.
+		// Determine whether should log verbose messages or not
 		static bool LogVerbose;
-		// The file path of the log file.
+		// The file path of the log file
 		static const char* FilePath;
 		/// <summary>
 		/// Get the label from log type.
@@ -31,9 +31,9 @@ namespace Engine {
 		/// <returns>Returns the string label of the type.</returns>
 		static const char* getLabel(LogType type);
 
-		// File stream to write to.
+		// File stream to write to
 		std::ofstream ofs;
-		// Determines if log is enabled.
+		// Determines if log is enabled
 		bool enabled;
 
 		/// <summary>
@@ -42,7 +42,7 @@ namespace Engine {
 		/// <returns>Determines whether the messages should be logged.</returns>
 		bool canLog() const;
 	public:
-		// Determines the prefix label.
+		// Determines the prefix label
 		LogType type;
 
 		/// <summary>
@@ -74,4 +74,4 @@ namespace Engine {
 		static void SetConfig(bool enabled = false, bool logVerbose = false, const char* filePath = "log.txt");
 	};
 }
-#endif // LOGGER_HPP
+#endif // LOG_HPP

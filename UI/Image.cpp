@@ -27,8 +27,6 @@ namespace Engine {
 			bmp = Resources::GetInstance().GetBitmap(img, Size.x, Size.y);
 		}
 	}
-
-
 	void Image::Draw() const {
 		al_draw_scaled_bitmap(bmp.get(), 0, 0, GetBitmapWidth(), GetBitmapHeight(),
 			Position.x - Anchor.x * GetBitmapWidth(), Position.y - Anchor.y * GetBitmapHeight(),
@@ -40,10 +38,8 @@ namespace Engine {
 	int Image::GetBitmapHeight() const {
 		return al_get_bitmap_height(bmp.get());
 	}
-
 	void Image::ScaleImage(float x, float y) {
 		Size.x = GetBitmapWidth() * x;
 		Size.y = GetBitmapHeight() * y;
 	}
-
 }

@@ -94,7 +94,6 @@ void Plant::Update(float deltaTime) {
 			}
 		}
 		if (Target) {
-			// Shoot reload
 			reload -= deltaTime;
 			if (reload <= 0) {
 				// Shoot
@@ -125,6 +124,7 @@ void Plant::Update(float deltaTime) {
 	ALLEGRO_BITMAP* subBitmap = al_create_sub_bitmap(spriteSheet.get(), buffer + phase * frameWidth, 0, frameWidth, frameHeight);
 	bmp.reset(subBitmap, al_destroy_bitmap);
 	ScaleImage(1.6,1.6);
+
 	Sprite::Update(deltaTime);
 }
 
@@ -155,8 +155,4 @@ void Plant::TakeDamage(float damage, bool shovel) {
 void Plant::SetPos(int x, int y) {
 	pos_x = x;
 	pos_y = y;
-}
-
-PlantType Plant::GetPlantType() {
-	return plantType;
 }

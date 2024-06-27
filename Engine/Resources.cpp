@@ -3,7 +3,6 @@
 #include <allegro5/allegro_font.h>
 #include <list>
 #include <string>
-#include <utility>
 
 #include "Engine/Allegro5Exception.hpp"
 #include "LOG.hpp"
@@ -27,7 +26,7 @@ namespace Engine {
 		// A better way may be to count the memory usage and release unused resources
 		// when the total resource memory exceeds a certain threshold. However, we'll
 		// just keep it simple here and only release unused resources in GameEngine when
-		// changing between scenes.
+		// changing between scenes
 		for (auto it = bitmaps.begin(); it != bitmaps.end();) {
 			if (it->second.use_count() == 1) {
 				LOG(INFO) << "Destroyed Resource<image>: " << it->first;
@@ -46,7 +45,7 @@ namespace Engine {
 				it = sample_instance_pairs.erase(it);
 			} else ++it;
 		}
-		// Stops playing samples whose instance isn't referenced.
+		// Stops playing samples whose instance isn't referenced
 		for (auto it = samples.begin(); it != samples.end();) {
 			if (it->second.use_count() == 1) {
 				LOG(INFO) << "Destroyed Resource<audio>: " << it->first;
@@ -123,7 +122,7 @@ namespace Engine {
 		return ptr;
 	}
 	Resources& Resources::GetInstance() {
-		// The classic way to lazy initialize a Singleton.
+		// The classic way to lazy initialize a Singleton
 		static Resources instance;
 		return instance;
 	}

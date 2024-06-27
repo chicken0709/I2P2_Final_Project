@@ -1,5 +1,4 @@
 #include <stdexcept>
-#include <utility>
 
 #include "Group.hpp"
 #include "IControl.hpp"

@@ -45,6 +45,5 @@ public:
 	int GetPrice() const;
     virtual void TakeDamage(float damage, bool shovel);
     void SetPos(int x,int y);
-    PlantType GetPlantType();
 };
 #endif // PLANT_HPP

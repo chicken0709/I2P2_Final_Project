@@ -48,9 +48,9 @@ public:
 	static const int MapWidth, MapHeight;
 	static const int BlockSize;
 	static const Engine::Point SpawnGridPoint;
-	int MapId;
+	int Mode; // 1: Adventure 2: Bowling
 	float ticks;
-	// Map tiles.
+
 	Group* TileMapGroup;
 	Group* GroundEffectGroup;
 	Group* BulletGroup;
@@ -62,10 +62,7 @@ public:
 	Engine::Image* imgTarget;
 	Plant* preview;
 	std::vector<std::vector<TileType>> mapState;
-	std::vector<std::vector<int>> mapDistance;
 	std::list<ZombieWaveData> zombieWaveData;
-
-	// Record plants
 	std::vector<std::vector<Plant*>> plant_lawn;
 
 	static Engine::Point GetClientSize();

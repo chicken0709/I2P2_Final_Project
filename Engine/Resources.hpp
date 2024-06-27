@@ -15,28 +15,28 @@ namespace Engine {
 	/// </summary>
 	class Resources final {
 	private:
-		// The path prefix for loading bitmaps.
+		// The path prefix for loading bitmaps
 		static const std::string bitmapPathPrefix;
-		// The path prefix for loading fonts.
+		// The path prefix for loading fonts
 		static const std::string fontPathPrefix;
-		// The path prefix for loading samples.
+		// The path prefix for loading samples
 		static const std::string samplePathPrefix;
-		// All bitmaps are stored in hash table for easy access and management.
-		// Note: std::shared_ptr is a kind of smart pointer.
-		//       To put it simple, it's a pointer that will delete itself when no one has reference to it.
-		//       It's very convenient, and can greatly reduce the possibility of memory leaks if used correctly.
+		// All bitmaps are stored in hash table for easy access and management
+		// Note: std::shared_ptr is a kind of smart pointer
+		//       To put it simple, it's a pointer that will delete itself when no one has reference to it
+		//       It's very convenient, and can greatly reduce the possibility of memory leaks if used correctly
 		//       If you have heard of Garbage Collection, the concept is almost the same. However, smart pointers are faster,
-		//       and only relies on reference counting and class destructor, which I think is really "smart".
+		//       and only relies on reference counting and class destructor, which I think is really "smart"
 		// Note (Advanced): The reason we didn't use std::weak_ptr here is to avoid the possibility of some resource
 		//                  being loaded and destroyed consecutively, which could occur if a object prototype being
-		//                  added, removed, added, removed, ... in the same scene (e.g. bullets).
-		// Reference: Smart Pointers - std::unique_ptr, std::shared_ptr, std::weak_ptr.
+		//                  added, removed, added, removed, ... in the same scene (e.g. bullets)
+		// Reference: Smart Pointers - std::unique_ptr, std::shared_ptr, std::weak_ptr
 		std::unordered_map<std::string, std::shared_ptr<ALLEGRO_BITMAP>> bitmaps;
-		// All fonts are stored in hash table for easy access and management.
+		// All fonts are stored in hash table for easy access and management
 		std::unordered_map<std::string, std::shared_ptr<ALLEGRO_FONT>> fonts;
-		// All samples are stored in hash table for easy access and management.
+		// All samples are stored in hash table for easy access and management
 		std::unordered_map<std::string, std::shared_ptr<ALLEGRO_SAMPLE>> samples;
-		// All (sample instance, sample) pairs are stored in hash table for easy access and management.
+		// All (sample instance, sample) pairs are stored in hash table for easy access and management
 		std::unordered_map<std::string, std::pair<std::shared_ptr<ALLEGRO_SAMPLE_INSTANCE>, std::shared_ptr<ALLEGRO_SAMPLE>>> sample_instance_pairs;
 		/// <summary>
 		/// Private constructor since this class is a Singleton.

@@ -1,7 +1,6 @@
 #ifndef IOBJECT_HPP
 #define IOBJECT_HPP
 #include <list>
-#include <utility>
 
 #include "Engine/Point.hpp"
 
@@ -12,9 +11,9 @@ namespace Engine {
 	class IObject {
 		friend class Group;
 	protected:
-		// The iterator of objects linked-list when added to scene.
-		// Can make removing objects faster.
-		// Reference: Iterator, which is also a Design Pattern when implementing.
+		// The iterator of objects linked-list when added to scene
+		// Can make removing objects faster
+		// Reference: Iterator, which is also a Design Pattern when implementing
 		std::list<std::pair<bool, IObject*>>::iterator objectIterator{};
 		/// <summary>
 		/// The interface cannot be instantiated directly, must be inherited.
@@ -32,13 +31,13 @@ namespace Engine {
 		/// <param name="anchorY">The centerY of the object. (0, 1) means bottom-left, while (1, 1) means bottom-right.</param>
 		explicit IObject(float x, float y, float w = 0, float h = 0, float anchorX = 0, float anchorY = 0);
 	public:
-		// Determines whether this object should be drawn and updated.
+		// Determines whether this object should be drawn and updated
 		bool Visible = true;
-		// The object's position, center depends on Anchor.
+		// The object's position, center depends on Anchor
 		Point Position;
-		// The object's size.
+		// The object's size
 		Point Size;
-		// The center of the object. (0, 0) means top-left, (1, 1) means bottom-right.
+		// The center of the object. (0, 0) means top-left, (1, 1) means bottom-right
 		Point Anchor;
 		/// <summary>
 		/// The default virtual destructor to support polymorphism destruction.

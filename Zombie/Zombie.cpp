@@ -20,7 +20,7 @@ PlayScene* Zombie::getPlayScene() {
 }
 
 void Zombie::OnExplode() {
-	if (getPlayScene()->MapId == 2) {
+	if (getPlayScene()->Mode == 2) {
 		AudioHelper::PlayAudio("bowlingimpact.ogg");
 	} else {
 		AudioHelper::PlayAudio("limbs_pop.mp3");
@@ -246,6 +246,7 @@ void Zombie::Update(float deltaTime) {
 	}
 	bmp.reset(subBitmap, al_destroy_bitmap);
 	ScaleImage(1.6,1.6);
+
 	Sprite::Update(deltaTime);
 }
 
