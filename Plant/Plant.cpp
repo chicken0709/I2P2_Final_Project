@@ -45,7 +45,7 @@ Plant::Plant(
 	float coolDown,
 	PlantType plantType
 ) :
-	Sprite(1,totalFrameCount,"play/" + name + "_animation_1.png", x, y),
+	Sprite(1, totalFrameCount, "play/" + name + "_animation_1.png", x, y),
 	name(name),
 	totalFrameCount(totalFrameCount),
 	frameWidth(frameWidth),
@@ -107,13 +107,13 @@ void Plant::Update(float deltaTime) {
 			}
 		}
 	}
-
-	// Animation
+	// No animation
 	if (plantType == PlantType::LAWNMOWER || plantType == PlantType::OTHER) {
 		Sprite::Update(deltaTime);
 		return;
 	}
 
+	// Animation
 	int buffer = 0;
 	currentFrameCount = animationFrameCount[animationIndex];
 	for (int i = 0; i < animationIndex; i++) {
