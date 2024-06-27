@@ -1,6 +1,5 @@
 #ifndef SUN_HPP
 #define SUN_HPP
-#include <string>
 
 #include "Engine/Sprite.hpp"
 

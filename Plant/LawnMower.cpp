@@ -1,22 +1,30 @@
-#include <allegro5/base.h>
-#include <cmath>
 #include <string>
 
 #include "Engine/AudioHelper.hpp"
-#include "Bullet/Mower.hpp"
 #include "Engine/Group.hpp"
-#include "LawnMower.hpp"
 
-#include "Engine/LOG.hpp"
+#include "LawnMower.hpp"
+#include "Bullet/Mower.hpp"
 #include "Scene/PlayScene.hpp"
 
 LawnMower::LawnMower(float x, float y) :
-        Plant("play/lawnmower.png", x, y, 0, 0, 0, PlantType::LAWNMOWER,"lawnmower",0,0,0,{}) {
+Plant(
+    "play/lawnmower.png",
+    x, y,
+    0,
+    0,
+    0,
+    PlantType::LAWNMOWER,
+    "lawnmower",
+    0,
+    0,
+    0,
+    {}
+) {
     Anchor.y += 8.0f / GetBitmapHeight();
 }
 
 void LawnMower::CreatePea() {
-    Engine::LOG(Engine::INFO) << "launch mower";
     AudioHelper::PlayAudio("lawnmower.ogg");
     getPlayScene()->BulletGroup->AddNewObject(new Mower(Position));
 }

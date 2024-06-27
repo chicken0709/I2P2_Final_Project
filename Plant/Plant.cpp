@@ -1,16 +1,17 @@
-#include "Zombie/Zombie.hpp"
 #include "Engine/GameEngine.hpp"
 #include "Engine/Group.hpp"
 #include "Engine/IScene.hpp"
-#include "Scene/PlayScene.hpp"
-#include "Plant.hpp"
-
 #include "Engine/AudioHelper.hpp"
 #include "Engine/LOG.hpp"
+
+#include "Plant.hpp"
+#include "Zombie/Zombie.hpp"
+#include "Scene/PlayScene.hpp"
 
 PlayScene* Plant::getPlayScene() {
 	return dynamic_cast<PlayScene*>(Engine::GameEngine::GetInstance().GetActiveScene());
 }
+
 Plant::Plant(std::string img, float x, float y, int hp, int price, float coolDown, PlantType plantType, std::string name, int totalFrameCount, int frameWidth, int frameHeight, std::vector<int> animationFrameCount) :
 	Sprite(img, x, y, 0, 0), hp(hp), price(price), coolDown(coolDown), plantType(plantType), name(name), totalFrameCount(totalFrameCount), frameWidth(frameWidth), frameHeight(frameHeight) ,animationFrameCount(animationFrameCount){
 }

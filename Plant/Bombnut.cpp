@@ -1,7 +1,7 @@
 #include "Bombnut.hpp"
 #include "Scene/PlayScene.hpp"
 
-const int Bombnut::Price = 50;
+const int Bombnut::Price = 0;
 
 Bombnut::Bombnut(float x, float y) :
 Plant(
@@ -18,10 +18,4 @@ Plant(
     {17,17,17}
 ) {
     Anchor.y += 8.0f / GetBitmapHeight();
-}
-
-void Bombnut::CreatePea() {
-}
-
-void Bombnut::TakeDamage(float damage, bool shovel) {
 }

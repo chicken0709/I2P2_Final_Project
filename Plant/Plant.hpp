@@ -1,6 +1,5 @@
 #ifndef PLANT_HPP
 #define PLANT_HPP
-#include <allegro5/base.h>
 #include <list>
 #include <string>
 
@@ -24,10 +23,7 @@ protected:
     PlantType plantType = PlantType::NUL;
     std::list<Plant*>::iterator lockedPlantIterator;
     PlayScene* getPlayScene();
-
-    Plant(std::string img, float x, float y, int hp, int price, float coolDown, PlantType plantType, std::string name,int totalFrameCount,int frameWidth,int frameHeight,std::vector<int> animationFrameCount);
-
-    // Reference: Design Patterns - Factory Method.
+    Plant(std::string img, float x, float y, int hp, int price, float coolDown, PlantType plantType, std::string name, int totalFrameCount, int frameWidth, int frameHeight, std::vector<int> animationFrameCount);
     virtual void CreatePea() = 0;
 
 public:
@@ -39,7 +35,6 @@ public:
     void Draw() const override;
 	int GetPrice() const;
     virtual void TakeDamage(float damage, bool shovel);
-    void OnExplode();
     void SetPos(int x,int y);
     PlantType GetPlantType();
 

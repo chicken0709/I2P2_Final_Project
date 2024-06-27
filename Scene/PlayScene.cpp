@@ -129,7 +129,7 @@ void PlayScene::Terminate() {
 }
 
 void PlayScene::Update(float deltaTime) {
-	// If we use deltaTime directly, then we might have Bullet-through-paper problem.
+	// If we use deltaTime directly, then we might have Bullet-through-paper problem
 	// Reference: Bullet-Through-Paper
 	if (lose) {
 		lose_bgm_delay -= deltaTime;

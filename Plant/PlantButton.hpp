@@ -2,8 +2,9 @@
 #define PLANTBUTTON_HPP
 #include <string>
 
-#include "UI/Component/ImageButton.hpp"
 #include "Engine/Sprite.hpp"
+
+#include "UI/Component/ImageButton.hpp"
 
 class PlayScene;
 

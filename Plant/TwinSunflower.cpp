@@ -1,17 +1,27 @@
 #include <string>
 
-#include "Engine/AudioHelper.hpp"
-#include "Bullet/BasicPea.hpp"
 #include "Engine/Group.hpp"
+
 #include "TwinSunflower.hpp"
-#include "Scene/PlayScene.hpp"
 #include "Sun.hpp"
+#include "Scene/PlayScene.hpp"
 
 const int TwinSunflower::Price = 200;
 
 TwinSunflower::TwinSunflower(float x, float y) :
-        Plant("play/twin_sunflower.png", x, y, 10, Price, 20, PlantType::SUNFLOWER,"twinsunflower",25,83,84,{25}) {
-    // Move center downward, since we the turret head is slightly biased upward.
+Plant(
+    "play/twin_sunflower.png",
+    x, y,
+    10,
+    Price,
+    20,
+    PlantType::SUNFLOWER,
+    "twinsunflower",
+    25,
+    83,
+    84,
+    {25}
+) {
     Anchor.y += 8.0f / GetBitmapHeight();
     reload = 10;
 }
