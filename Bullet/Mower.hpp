@@ -10,7 +10,7 @@ struct Point;
 
 class Mower : public Bullet {
 public:
-	explicit Mower(Engine::Point position, Engine::Point forwardDirection, float rotation);
+	explicit Mower(Engine::Point position);
 	void OnExplode(Zombie* enemy) override;
 };
 #endif // MOWER_HPP

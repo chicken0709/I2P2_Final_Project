@@ -17,7 +17,7 @@ Sunflower::Sunflower(float x, float y) :
 }
 
 void Sunflower::CreatePea() {
-    Engine::Point normalized = Engine::Point(50, 20);
+    Engine::Point diff = Engine::Point(50, 20);
     // Change bullet position to the front of the gun barrel.
-    getPlayScene()->BulletGroup->AddNewObject(new Sun("play/sun.png", Position + normalized));
+    getPlayScene()->BulletGroup->AddNewObject(new Sun("play/sun.png", Position + diff));
 }

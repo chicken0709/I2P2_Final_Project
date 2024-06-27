@@ -28,9 +28,7 @@ void GatlinPeashooter::CreatePea() {
         coolDown = 0.3;
         shotCycle++;
     }
-    Engine::Point diff = Engine::Point(cos(Rotation - ALLEGRO_PI / 2), sin(Rotation));
-    Engine::Point normalized = Engine::Point(65, -35);
-    // Change bullet position to the front of the gun barrel.
-    getPlayScene()->BulletGroup->AddNewObject(new BasicPea(Position + normalized, diff, 0));
+    Engine::Point diff = Engine::Point(65, -35);
+    getPlayScene()->BulletGroup->AddNewObject(new BasicPea(Position + diff));
     AudioHelper::PlayAudio("throw.mp3");
 }

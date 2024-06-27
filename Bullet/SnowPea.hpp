@@ -10,7 +10,7 @@ namespace Engine {
 
 class SnowPea : public Bullet {
 public:
-    explicit SnowPea(Engine::Point position, Engine::Point forwardDirection, float rotation);
+    explicit SnowPea(Engine::Point position);
     void OnExplode(Zombie* enemy) override;
 };
 #endif // SNOWPEA_HPP

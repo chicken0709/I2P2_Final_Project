@@ -22,11 +22,12 @@ protected:
 	virtual void OnExplode(Zombie* enemy);
 public:
 	Zombie* Target = nullptr;
-	explicit Bullet(std::string img, float speed, float damage, Engine::Point position, Engine::Point forwardDirection, float rotation);
-	explicit Bullet(std::string name, int totalFrameCount, int frameWidth, int frameHeight, float speed, float damage, Engine::Point position, Engine::Point forwardDirection, float rotation);
+	Engine::Point forwardDirection = Engine::Point(1, 0);
+	explicit Bullet(std::string img, float speed, float damage, Engine::Point position);
+	explicit Bullet(std::string name, int totalFrameCount, int frameWidth, int frameHeight, float speed, float damage, Engine::Point position);
 	void Update(float deltaTime) override;
 	int index = 0;
-	float timeTicks;
+	float timeTicks = 0;
 	float timeSpan = 1.5;
 	int frameWidth;
 	int frameHeight;

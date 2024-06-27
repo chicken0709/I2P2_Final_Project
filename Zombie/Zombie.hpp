@@ -36,7 +36,7 @@ protected:
 	int totalFrameCount;
 	int animationIndex = 0;
 	std::vector<int> animationFrameCount;
-	float timeTicks;
+	float timeTicks = 0;
 	float timeSpan = 3.5;
 	float posX;
 	float posY;

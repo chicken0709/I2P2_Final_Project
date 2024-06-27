@@ -6,14 +6,12 @@
 
 class Plant;
 
-SnowPea::SnowPea(Engine::Point position, Engine::Point forwardDirection, float rotation) :
+SnowPea::SnowPea(Engine::Point position) :
 Bullet(
     "play/snow_pea.png",
     250,
     20,
-    position,
-    forwardDirection,
-    rotation - ALLEGRO_PI / 2
+    position
 ) {
     bulletType = BulletType::SNOWPEA;
 }

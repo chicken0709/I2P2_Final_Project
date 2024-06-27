@@ -295,9 +295,9 @@ void PlayScene::OnMouseUp(int button, int mx, int my) {
 				preview = nullptr;
 				if(x > 3) return;
 				if (name == "wallnut") {
-					BulletGroup->AddNewObject(new BowlingBall("wallnutbowling", Engine::Point(x * BlockSize + 75, y * BlockSize + 35), Engine::Point(1, 0),0));
+					BulletGroup->AddNewObject(new BowlingBall("wallnutbowling", Engine::Point(x * BlockSize + 75, y * BlockSize + 35)));
 				} else if (name == "bombnut") {
-					BulletGroup->AddNewObject(new BombBowlingBall("bombnutbowling", Engine::Point(x * BlockSize + 75, y * BlockSize + 35), Engine::Point(1, 0),0));
+					BulletGroup->AddNewObject(new BombBowlingBall("bombnutbowling", Engine::Point(x * BlockSize + 75, y * BlockSize + 35)));
 				}
 				AudioHelper::PlayAudio("plant.ogg");
 				AudioHelper::PlayAudio("bowling.mp3");

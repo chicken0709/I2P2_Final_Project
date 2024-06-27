@@ -21,14 +21,11 @@ Bullet::Bullet(
 	std::string img,
 	float speed,
 	float damage,
-	Engine::Point position,
-	Engine::Point forwardDirection,
-	float rotation
+	Engine::Point position
 ) :
 	Sprite(img, position.x, position.y), speed(speed), damage(damage)
 {
 	Velocity = forwardDirection.Normalize() * speed;
-	Rotation = rotation;
 	CollisionRadius = 4;
 }
 
@@ -39,9 +36,7 @@ Bullet::Bullet(
 	int frameHeight,
 	float speed,
 	float damage,
-	Engine::Point position,
-	Engine::Point forwardDirection,
-	float rotation
+	Engine::Point position
 ) :
 	Sprite(1,totalFrameCount,"play/" + name + "_animation_1.png", position.x, position.y),
 	totalFrameCount(totalFrameCount),
@@ -51,7 +46,6 @@ Bullet::Bullet(
 	damage(damage)
 {
 	Velocity = forwardDirection.Normalize() * speed;
-	Rotation = rotation;
 }
 
 void Bullet::Update(float deltaTime) {

@@ -17,9 +17,8 @@ SnowPeashooter::SnowPeashooter(float x, float y) :
 }
 
 void SnowPeashooter::CreatePea() {
-    Engine::Point diff = Engine::Point(cos(Rotation - ALLEGRO_PI / 2), sin(Rotation));
-    Engine::Point normalized = Engine::Point(50, -35);
+    Engine::Point diff = Engine::Point(50, -35);
     // Change bullet position to the front of the gun barrel.
-    getPlayScene()->BulletGroup->AddNewObject(new SnowPea(Position + normalized, diff, 0));
+    getPlayScene()->BulletGroup->AddNewObject(new SnowPea(Position + diff));
     AudioHelper::PlayAudio("snow_pea_sparkles.ogg");
 }

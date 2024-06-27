@@ -7,7 +7,7 @@
 
 class Plant;
 
-BombBowlingBall::BombBowlingBall(std::string name, Engine::Point position, Engine::Point forwardDirection, float rotation) :
+BombBowlingBall::BombBowlingBall(std::string name, Engine::Point position) :
 Bullet(
     name,
     8,
@@ -15,9 +15,7 @@ Bullet(
     71,
     300,
     INT16_MAX,
-    position,
-    forwardDirection,
-    rotation
+    position
 ) {
     spriteSheet = Engine::Resources::GetInstance().GetBitmap("play/" + name + "_animation_1.png");
     bulletType = BulletType::BOMB_BOWLING_BALL;

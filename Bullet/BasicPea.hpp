@@ -10,7 +10,7 @@ struct Point;
 
 class BasicPea : public Bullet {
 public:
-	explicit BasicPea(Engine::Point position, Engine::Point forwardDirection, float rotation);
+	explicit BasicPea(Engine::Point position);
 	void OnExplode(Zombie* enemy) override;
 };
 #endif // BASICPEA_HPP
