@@ -20,9 +20,9 @@ Plant(
     y,
     INT16_MAX,
     Price,
-    0,
-    PlantType::CHERRYBOMB
+    0
 ) {
+    plantType = PlantType::CHERRYBOMB;
     Anchor.y += 8.0f / GetBitmapHeight();
     reload = 1.5;
 }

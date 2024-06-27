@@ -15,9 +15,9 @@ Plant(
     y,
     0,
     0,
-    0,
-    PlantType::LAWNMOWER
+    0
 ) {
+    plantType = PlantType::LAWNMOWER;
     Anchor.y += 8.0f / GetBitmapHeight();
 }
 

@@ -17,9 +17,9 @@ Plant(
     y,
     200,
     Price,
-    0,
-    PlantType::WALLNUT
+    0
 ) {
+    plantType = PlantType::WALLNUT;
     Anchor.y += 8.0f / GetBitmapHeight();
 }
 

@@ -8,9 +8,9 @@ Plant(
     x, y,
     0,
     0,
-    0,
-    PlantType::OTHER
+    0
 ) {
+    plantType = PlantType::OTHER;
     Anchor.y += 8.0f / GetBitmapHeight();
 }
 

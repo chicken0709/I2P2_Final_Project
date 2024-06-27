@@ -19,9 +19,9 @@ Plant(
     y,
     10,
     Price,
-    20,
-    PlantType::SUNFLOWER
+    20
 ) {
+    plantType = PlantType::SUNFLOWER;
     Anchor.y += 8.0f / GetBitmapHeight();
     reload = 10;
 }

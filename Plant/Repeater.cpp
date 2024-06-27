@@ -20,9 +20,9 @@ Plant(
     y,
     10,
     Price,
-    0.3,
-    PlantType::PEASHOOTER
+    0.3
 ) {
+    plantType = PlantType::PEASHOOTER;
     Anchor.y += 8.0f / GetBitmapHeight();
 }
 

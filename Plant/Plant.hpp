@@ -20,10 +20,10 @@ protected:
     int hp;
     int pos_x = 0;
     int pos_y = 0;
-    PlantType plantType = PlantType::OTHER;
+    PlantType plantType;
     PlayScene* getPlayScene();
-    Plant(std::string name, std::string img, float x, float y, int hp, int price, float coolDown, PlantType plantType);
-    Plant(std::string name, int totalFrameCount, int frameWidth, int frameHeight, std::vector<int> animationFrameCount, float x, float y, int hp, int price, float coolDown, PlantType plantType);
+    Plant(std::string name, std::string img, float x, float y, int hp, int price, float coolDown);
+    Plant(std::string name, int totalFrameCount, int frameWidth, int frameHeight, std::vector<int> animationFrameCount, float x, float y, int hp, int price, float coolDown);
     virtual void CreatePea() = 0;
     // Animation
     std::shared_ptr<ALLEGRO_BITMAP> spriteSheet;

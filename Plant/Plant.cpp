@@ -20,15 +20,13 @@ Plant::Plant(
 	float y,
 	int hp,
 	int price,
-	float coolDown,
-	PlantType plantType
+	float coolDown
 ) :
 	Sprite(img, x, y),
 	name(name),
 	hp(hp),
 	price(price),
-	coolDown(coolDown),
-	plantType(plantType)
+	coolDown(coolDown)
 {
 }
 
@@ -42,8 +40,7 @@ Plant::Plant(
 	float y,
 	int hp,
 	int price,
-	float coolDown,
-	PlantType plantType
+	float coolDown
 ) :
 	Sprite(1,totalFrameCount,"play/"+ name + ".png", x, y),
 	name(name),
@@ -53,8 +50,7 @@ Plant::Plant(
 	animationFrameCount(animationFrameCount),
 	hp(hp),
 	price(price),
-	coolDown(coolDown),
-	plantType(plantType)
+	coolDown(coolDown)
 {
 	spriteSheet = Engine::Resources::GetInstance().GetBitmap("play/" + name + "_animation_1.png");
 }
