@@ -312,7 +312,7 @@ void PlayScene::OnMouseUp(int button, int mx, int my) {
 			preview->Position.y = y * BlockSize + BlockSize / 2 - 35;
 			preview->Enabled = true;
 			preview->Preview = false;
-			preview->Tint = al_map_rgba(255, 255, 255, 0);
+			preview->Tint = al_map_rgba(255, 255, 255, 255);
 			PlantGroup->AddNewObject(preview);
 
 			// To keep responding when paused

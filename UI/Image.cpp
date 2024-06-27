@@ -51,8 +51,8 @@ namespace Engine {
 		else if(isAnimation == 1) {
 			if (Size.x == 0 && Size.y == 0) {
 				bmp = Resources::GetInstance().GetBitmap(img);
-				Size.x = GetBitmapWidth()/frameCount * 1.6;
-				Size.y = GetBitmapHeight() * 1.6;
+				Size.x = GetBitmapWidth()/frameCount*20;
+				Size.y = GetBitmapHeight();
 			}
 		}
 
