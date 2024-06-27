@@ -84,7 +84,6 @@ public:
 	void ReadEnemyWave();
 	void ConstructUI();
 	void UIBtnClicked(int id);
-	void BackOnClick(int stage);
 	int GetMoney() const;
 };
 #endif // PLAYSCENE_HPP
