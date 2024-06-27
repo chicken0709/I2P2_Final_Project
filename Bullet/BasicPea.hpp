@@ -5,7 +5,7 @@
 class Zombie;
 class Plant;
 namespace Engine {
-struct Point;
+	struct Point;
 }  // namespace Engine
 
 class BasicPea : public Bullet {

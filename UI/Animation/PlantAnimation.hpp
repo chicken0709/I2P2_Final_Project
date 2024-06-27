@@ -1,8 +1,7 @@
 #ifndef PLANTANIMATION_HPP
 #define PLANTANIMATION_HPP
-#include <string>
-
 #include "Engine/Sprite.hpp"
+
 #include "Plant/Plant.hpp"
 
 class PlayScene;

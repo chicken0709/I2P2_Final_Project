@@ -13,7 +13,7 @@
 
 #include "PlayScene.hpp"
 #include "Scene/StartScene.hpp"
-#include "UI/Component/Label.hpp"
+#include "UI/Label.hpp"
 
 // Plant
 #include "Plant/PlantButton.hpp"
@@ -63,12 +63,12 @@ void PlayScene::Initialize() {
 	mapState.clear();
 	ticks = 0;
 	lives = 100;
-	money = 30000; // change to 50 when done
+	money = 30000;
 	SpeedMult = 1;
-	// Add groups from bottom to top.
+	// Add groups from bottom to top
 	AddNewObject(TileMapGroup = new Group());
 	AddNewObject(GroundEffectGroup = new Group());
-    // Should support buttons.
+    // Should support buttons
     AddNewControlObject(UIGroup = new Group());
 	AddNewObject(PlantGroup = new Group());
 	AddNewObject(EnemyGroup = new Group());
@@ -88,7 +88,7 @@ void PlayScene::Initialize() {
     mapState = std::vector<std::vector<TileType>>(MapHeight, std::vector<TileType>(MapWidth));
 	plant_lawn = std::vector<std::vector<Plant*>>(MapHeight, std::vector<Plant*>(MapWidth));
 
-	// Start BGM.
+	// Start BGM
 	if (MapId == 1) {
 		bgmId = AudioHelper::PlayBGM("grasswalk.mp3");
 	} else {
@@ -107,16 +107,16 @@ void PlayScene::Initialize() {
 		int x = 0;
 		int y = i;
 		preview = new LawnMower(0, 0);
-		// Construct real turret.
+		// Construct real turret
 		preview->Position.x = x * BlockSize + BlockSize / 2 + 25;
 		preview->Position.y = y * BlockSize + BlockSize / 2;
 		preview->Enabled = true;
 		preview->Preview = false;
 		preview->Tint = al_map_rgba(255, 255, 255, 255);
 		PlantGroup->AddNewObject(preview);
-		// To keep responding when paused.
+		// To keep responding when paused
 		preview->Update(0);
-		// Remove Preview.
+		// Remove Preview
 		mower_available[i - 1] = preview;
 		preview = nullptr;
 
@@ -150,7 +150,7 @@ void PlayScene::Update(float deltaTime) {
 	if (lose) return;
 	for (int i = 0; i < SpeedMult; i++) {
 		IScene::Update(deltaTime);
-		// Check if we should create new enemy.
+		// Check if we should create new zombie
 		ticks += deltaTime;
 		if (zombieWaveData.empty()) {
 			if (EnemyGroup->GetObjects().empty()) {
@@ -208,7 +208,7 @@ void PlayScene::Update(float deltaTime) {
 			default:
 				continue;
 		}
-		// Compensate the time lost.
+		// Compensate the time lost
 		std::random_device dev;
 		std::mt19937 rng(dev());
 		std::uniform_int_distribution<std::mt19937::result_type> id(1, 5);
@@ -217,7 +217,7 @@ void PlayScene::Update(float deltaTime) {
 	}
 	if (preview) {
 		preview->Position = Engine::GameEngine::GetInstance().GetMousePosition();
-		// To keep responding when paused.
+		// To keep responding when paused
 		preview->Update(deltaTime);
 	}
 }
@@ -225,7 +225,7 @@ void PlayScene::Update(float deltaTime) {
 void PlayScene::Draw() const {
 	IScene::Draw();
 	if (DebugMode) {
-		// Draw reverse BFS distance on all reachable blocks.
+		// Draw map state
 		for (int i = 0; i < MapHeight; i++) {
 			for (int j = 0; j < MapWidth; j++) {
                 std::string str;
@@ -244,7 +244,7 @@ void PlayScene::Draw() const {
 
 void PlayScene::OnMouseDown(int button, int mx, int my) {
 	if ((button & 1) && !imgTarget->Visible && preview) {
-		// Cancel turret construct.
+		// Cancel plant construct
 		UIGroup->RemoveObject(preview->GetObjectIterator());
 		preview = nullptr;
 	}
@@ -307,7 +307,7 @@ void PlayScene::OnMouseUp(int button, int mx, int my) {
 			AudioHelper::PlayAudio("plant.ogg");
 			// Purchase.
 			EarnMoney(-preview->GetPrice());
-			// Remove Preview.
+			// Remove Preview
 			preview->GetObjectIterator()->first = false;
 			UIGroup->RemoveObject(preview->GetObjectIterator());
 			// Construct real plant
@@ -321,9 +321,9 @@ void PlayScene::OnMouseUp(int button, int mx, int my) {
 			//Add Animation
 			EffectGroup->AddNewObject(new PlantAnimation(preview->name,preview->totalFrameCount,x * BlockSize + BlockSize / 2, y * BlockSize + BlockSize / 2 - 35,x,y));
 
-			// To keep responding when paused.
+			// To keep responding when paused
 			preview->Update(0);
-			// Remove Preview.
+			// Remove Preview
 			plant_lawn[y - 1][x - 1] = preview;
 			preview->SetPos(y - 1,x - 1);
 			preview = nullptr;
@@ -345,7 +345,7 @@ void PlayScene::OnKeyDown(int keyCode) {
 		}
 	}
 	else if (keyCode >= ALLEGRO_KEY_0 && keyCode <= ALLEGRO_KEY_9) {
-		// Hotkey for Speed up.
+		// Hotkey for Speed up
 		SpeedMult = keyCode - ALLEGRO_KEY_0;
 	}
 }
@@ -368,13 +368,13 @@ void PlayScene::EarnMoney(int money) {
 }
 
 void PlayScene::ReadMap() {
-	// Store map in 2d array.
+	// Store map in 2d array
 	mapState = std::vector<std::vector<TileType>>(MapHeight, std::vector<TileType>(MapWidth));
 }
 
 void PlayScene::ReadEnemyWave() {
     std::string filename = std::string("Resource/zombie" + std::to_string(MapId) + ".txt");
-	// Read enemy file.
+	// Read zombie file
 	float type, wait, repeat, lane;
 	zombieWaveData.clear();
 	std::ifstream fin(filename);

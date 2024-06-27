@@ -17,7 +17,6 @@ enum class ZombieType {
 
 class Zombie : public Engine::Sprite {
 protected:
-	int index;
 	float speed;
     float originalSpeed;
 	float hp;

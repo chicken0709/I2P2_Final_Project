@@ -54,14 +54,14 @@ add_executable(2024_I2P2_Final_Project
         Bullet/BombBowlingBall.hpp
 
         // UI
-        UI/Component/Image.cpp
-        UI/Component/Image.hpp
-        UI/Component/ImageButton.cpp
-        UI/Component/ImageButton.hpp
-        UI/Component/Label.cpp
-        UI/Component/Label.hpp
-        UI/Component/Slider.cpp
-        UI/Component/Slider.hpp
+        UI/Image.cpp
+        UI/Image.hpp
+        UI/ImageButton.cpp
+        UI/ImageButton.hpp
+        UI/Label.cpp
+        UI/Label.hpp
+        UI/Slider.cpp
+        UI/Slider.hpp
         UI/Animation/PlantAnimation.cpp
         UI/Animation/PlantAnimation.hpp
 

@@ -4,8 +4,8 @@
 #include "Engine/GameEngine.hpp"
 
 #include "StartScene.hpp"
-#include "UI/Component/ImageButton.hpp"
-#include "UI/Component/Label.hpp"
+#include "UI/ImageButton.hpp"
+#include "UI/Label.hpp"
 
 std::shared_ptr<ALLEGRO_SAMPLE_INSTANCE> bgmInstance;
 

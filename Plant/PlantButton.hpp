@@ -4,7 +4,7 @@
 
 #include "Engine/Sprite.hpp"
 
-#include "UI/Component/ImageButton.hpp"
+#include "../UI/ImageButton.hpp"
 
 class PlayScene;
 

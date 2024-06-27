@@ -1,6 +1,3 @@
-#include <allegro5/allegro.h>
-#include <allegro5/allegro_image.h>
-#include <allegro5/allegro_primitives.h>
 #include <cmath>
 #include "PlantAnimation.hpp"
 #include "Engine/GameEngine.hpp"

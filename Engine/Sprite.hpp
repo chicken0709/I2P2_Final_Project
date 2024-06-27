@@ -1,9 +1,8 @@
 #ifndef SPRITE_HPP
 #define SPRITE_HPP
 #include <allegro5/color.h>
-#include <string>
 
-#include "UI/Component/Image.hpp"
+#include "UI/Image.hpp"
 #include "Engine/Point.hpp"
 
 namespace Engine {

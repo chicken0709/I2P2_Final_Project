@@ -6,7 +6,7 @@ class Zombie;
 class PlayScene;
 class Plant;
 namespace Engine {
-struct Point;
+	struct Point;
 }  // namespace Engine
 
 enum class BulletType {
@@ -26,7 +26,7 @@ public:
 	explicit Bullet(std::string img, float speed, float damage, Engine::Point position);
 	explicit Bullet(std::string name, int totalFrameCount, int frameWidth, int frameHeight, float speed, float damage, Engine::Point position);
 	void Update(float deltaTime) override;
-	int index = 0;
+	// Animation
 	float timeTicks = 0;
 	float timeSpan = 1.5;
 	int frameWidth;

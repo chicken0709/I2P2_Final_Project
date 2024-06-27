@@ -1,5 +1,3 @@
-#include <allegro5/base.h>
-
 #include "BasicPea.hpp"
 #include "Zombie/Zombie.hpp"
 

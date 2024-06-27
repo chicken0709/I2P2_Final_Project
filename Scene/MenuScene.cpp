@@ -6,9 +6,9 @@
 #include "MenuScene.hpp"
 #include "PlayScene.hpp"
 #include "StartScene.hpp"
-#include "UI/Component/ImageButton.hpp"
-#include "UI/Component/Label.hpp"
-#include "UI/Component/Slider.hpp"
+#include "UI/ImageButton.hpp"
+#include "UI/Label.hpp"
+#include "UI/Slider.hpp"
 
 void MenuScene::Initialize() {
     AddNewObject(new Engine::Image("menu/menu_background.jpg", 0, 0, 1600, 900));

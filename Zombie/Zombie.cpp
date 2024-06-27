@@ -196,7 +196,7 @@ void Zombie::Update(float deltaTime) {
 		}
 		if(RageAnimation) {
 			animationIndex = 4;
-			speed = 50;
+			speed = 30;
 			RageAnimation = false;
 			FinishedRageAnimation = true;
 		}

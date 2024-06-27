@@ -2,8 +2,8 @@
 #define SLIDER_HPP
 #include <functional>
 
-#include "UI/Component/Image.hpp"
-#include "UI/Component/ImageButton.hpp"
+#include "Image.hpp"
+#include "ImageButton.hpp"
 
 class Slider : public Engine::ImageButton {
 private:

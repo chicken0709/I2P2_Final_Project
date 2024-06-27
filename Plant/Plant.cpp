@@ -48,22 +48,12 @@ void Plant::Update(float deltaTime) {
 		}
 		return;
 	}
-	// CRASH !!!
-	/*if (Target) {
-		Engine::Point diff = Target->Position - Position;
-		if (diff.Magnitude() > CollisionRadius) {
-			Target->lockedPlants.erase(lockedPlantIterator);
-			Target = nullptr;
-			lockedPlantIterator = std::list<Plant*>::iterator();
-		}
-	}*/
 	if (!Target) {
 		// Lock first seen target.
 		for (auto& it : scene->EnemyGroup->GetObjects()) {
 			if (static_cast<int>(it->Position.y / 150) == static_cast<int>(Position.y / 150)) {
 				Target = dynamic_cast<Zombie*>(it);
 				Target->lockedPlants.push_back(this);
-				lockedPlantIterator = std::prev(Target->lockedPlants.end());
 				break;
 			}
 		}
@@ -78,9 +68,11 @@ void Plant::Update(float deltaTime) {
 		}
 	}
 }
+
 void Plant::Draw() const {
 	Sprite::Draw();
 }
+
 int Plant::GetPrice() const {
 	return price;
 }
@@ -105,7 +97,6 @@ void Plant::SetPos(int x, int y) {
 	pos_x = x;
 	pos_y = y;
 }
-
 
 PlantType Plant::GetPlantType() {
 	return plantType;

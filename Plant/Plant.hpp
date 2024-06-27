@@ -21,7 +21,6 @@ protected:
     int pos_x = 0;
     int pos_y = 0;
     PlantType plantType = PlantType::NUL;
-    std::list<Plant*>::iterator lockedPlantIterator;
     PlayScene* getPlayScene();
     Plant(std::string img, float x, float y, int hp, int price, float coolDown, PlantType plantType, std::string name, int totalFrameCount, int frameWidth, int frameHeight, std::vector<int> animationFrameCount);
     virtual void CreatePea() = 0;
