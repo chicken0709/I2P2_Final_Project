@@ -25,7 +25,6 @@ namespace Engine {
 		/// <param name="anchorY">The centerY of the object. (0, 1) means bottom-left, while (1, 1) means bottom-right.</param>
 		explicit Image(std::string img, float x, float y, float w = 0, float h = 0, float anchorX = 0, float anchorY = 0);
 
-		Image(int isAnimation,int frameCount, std::string img, float x, float y, float w, float h, float anchorX, float anchorY);
 		/// <summary>
 		/// Draw the loaded image.
 		/// </summary>
@@ -43,6 +42,8 @@ namespace Engine {
 		/// </summary>
 		/// <returns>Height of the original or scaled bitmap.</returns>
 		int GetBitmapHeight() const;
+
+		void ScaleImage(float x, float y);
 	};
 }
 #endif // IMAGE_HPP

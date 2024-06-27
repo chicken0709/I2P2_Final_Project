@@ -473,7 +473,7 @@ void PlayScene::ConstructUI() {
     UIGroup->AddNewObject(new Engine::Label(std::to_string(CherryBomb::Price), "komika.ttf", 16, 924, 92.5));
     // Button 9 shovel
     btn = new PlantButton("play/shovel_button.png", "play/shovel_button.png",
-                          Engine::Sprite(0,0,"play/shovel_button.png", 1030, 0, 0, 0, 0, 0,0,0),
+                          Engine::Sprite("play/shovel_button.png", 1030, 0, 0, 0, 0, 0,0,0),
                           Engine::Sprite("play/shovel.png", 1036, 6, 100, 104, 0, 0)
             , 1030, 0, 0);
     btn->SetOnClickCallback(std::bind(&PlayScene::UIBtnClicked, this, 8));
