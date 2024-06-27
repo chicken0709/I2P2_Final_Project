@@ -23,6 +23,9 @@ Plant(
     Anchor.y += 8.0f / GetBitmapHeight();
 }
 
+void Wallnut::CreatePea() {
+}
+
 void Wallnut::TakeDamage(float damage, bool shovel) {
     hp -= damage;
     if (hp <= 0) {

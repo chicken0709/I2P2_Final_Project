@@ -19,3 +19,6 @@ Plant(
 ) {
     Anchor.y += 8.0f / GetBitmapHeight();
 }
+
+void Bombnut::CreatePea() {
+}
