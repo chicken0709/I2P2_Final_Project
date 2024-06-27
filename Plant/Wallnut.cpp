@@ -8,17 +8,17 @@ const int Wallnut::Price = 50;
 
 Wallnut::Wallnut(float x, float y) :
 Plant(
-    "play/wallnut.png",
-    x, y,
-    200,
-    Price,
-    0,
-    PlantType::WALLNUT,
     "wallnut",
     51,
     65,
     73,
-    {17,17,17}
+    {17,17,17},
+    x,
+    y,
+    200,
+    Price,
+    0,
+    PlantType::WALLNUT
 ) {
     Anchor.y += 8.0f / GetBitmapHeight();
 }

@@ -10,17 +10,17 @@ const int Sunflower::Price = 50;
 
 Sunflower::Sunflower(float x, float y) :
 Plant(
-    "play/sunflower.png",
-    x, y,
-    10,
-    Price,
-    20,
-    PlantType::SUNFLOWER,
     "sunflower",
     25,
     73,
     74,
-    {25}
+    {25},
+    x,
+    y,
+    10,
+    Price,
+    20,
+    PlantType::SUNFLOWER
 ) {
     Anchor.y += 8.0f / GetBitmapHeight();
     reload = 10;

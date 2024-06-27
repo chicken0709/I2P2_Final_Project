@@ -11,17 +11,17 @@ const int SnowPeashooter::Price = 175;
 
 SnowPeashooter::SnowPeashooter(float x, float y) :
 Plant(
-    "play/snow_peashooter.png",
-    x, y,
-    10,
-    Price,
-    1.5,
-    PlantType::PEASHOOTER,
     "snowpeashooter",
     25,
     71,
     71,
-    {25}
+    {25},
+    x,
+    y,
+    10,
+    Price,
+    1.5,
+    PlantType::PEASHOOTER
 ) {
     Anchor.y += 8.0f / GetBitmapHeight();
 }

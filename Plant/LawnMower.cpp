@@ -9,17 +9,14 @@
 
 LawnMower::LawnMower(float x, float y) :
 Plant(
-    "play/lawnmower.png",
-    x, y,
-    0,
-    0,
-    0,
-    PlantType::LAWNMOWER,
     "lawnmower",
+    "play/lawnmower.png",
+    x,
+    y,
     0,
     0,
     0,
-    {}
+    PlantType::LAWNMOWER
 ) {
     Anchor.y += 8.0f / GetBitmapHeight();
 }

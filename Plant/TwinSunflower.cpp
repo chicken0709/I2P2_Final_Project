@@ -10,17 +10,17 @@ const int TwinSunflower::Price = 200;
 
 TwinSunflower::TwinSunflower(float x, float y) :
 Plant(
-    "play/twin_sunflower.png",
-    x, y,
-    10,
-    Price,
-    20,
-    PlantType::SUNFLOWER,
     "twinsunflower",
     25,
     83,
     84,
-    {25}
+    {25},
+    x,
+    y,
+    10,
+    Price,
+    20,
+    PlantType::SUNFLOWER
 ) {
     Anchor.y += 8.0f / GetBitmapHeight();
     reload = 10;

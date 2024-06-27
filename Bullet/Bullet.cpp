@@ -23,7 +23,9 @@ Bullet::Bullet(
 	float damage,
 	Engine::Point position
 ) :
-	Sprite(img, position.x, position.y), speed(speed), damage(damage)
+	Sprite(img, position.x, position.y),
+	speed(speed),
+	damage(damage)
 {
 	Velocity = forwardDirection.Normalize() * speed;
 	CollisionRadius = 4;

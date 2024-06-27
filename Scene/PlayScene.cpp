@@ -42,9 +42,6 @@
 #include "Zombie/FootballZombie.hpp"
 #include "Zombie/NewspaperZombie.hpp"
 
-// Animation
-#include "UI/Animation/PlantAnimation.hpp"
-
 bool PlayScene::DebugMode = false;
 const int PlayScene::MapWidth = 9, PlayScene::MapHeight = 5;
 const int PlayScene::BlockSize = 150;
@@ -317,9 +314,6 @@ void PlayScene::OnMouseUp(int button, int mx, int my) {
 			preview->Preview = false;
 			preview->Tint = al_map_rgba(255, 255, 255, 0);
 			PlantGroup->AddNewObject(preview);
-
-			//Add Animation
-			EffectGroup->AddNewObject(new PlantAnimation(preview->name,preview->totalFrameCount,x * BlockSize + BlockSize / 2, y * BlockSize + BlockSize / 2 - 35,x,y));
 
 			// To keep responding when paused
 			preview->Update(0);

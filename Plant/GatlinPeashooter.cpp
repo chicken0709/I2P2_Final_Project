@@ -11,17 +11,17 @@ const int GatlinPeashooter::Price = 450;
 
 GatlinPeashooter::GatlinPeashooter(float x, float y) :
 Plant(
-    "play/gatlin_peashooter.png",
-    x, y,
-    10,
-    Price,
-    0.3,
-    PlantType::PEASHOOTER,
     "gatlinpeashooter",
     13,
     88,
     84,
-    {13}
+    {13},
+    x,
+    y,
+    10,
+    Price,
+    0.3,
+    PlantType::PEASHOOTER
 ) {
     Anchor.y += 8.0f / GetBitmapHeight();
 }

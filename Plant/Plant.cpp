@@ -3,6 +3,7 @@
 #include "Engine/IScene.hpp"
 #include "Engine/AudioHelper.hpp"
 #include "Engine/LOG.hpp"
+#include "Engine/Resources.hpp"
 
 #include "Plant.hpp"
 #include "Zombie/Zombie.hpp"
@@ -12,61 +13,122 @@ PlayScene* Plant::getPlayScene() {
 	return dynamic_cast<PlayScene*>(Engine::GameEngine::GetInstance().GetActiveScene());
 }
 
-Plant::Plant(std::string img, float x, float y, int hp, int price, float coolDown, PlantType plantType, std::string name, int totalFrameCount, int frameWidth, int frameHeight, std::vector<int> animationFrameCount) :
-	Sprite(img, x, y, 0, 0), hp(hp), price(price), coolDown(coolDown), plantType(plantType), name(name), totalFrameCount(totalFrameCount), frameWidth(frameWidth), frameHeight(frameHeight) ,animationFrameCount(animationFrameCount){
+Plant::Plant(
+	std::string name,
+	std::string img,
+	float x,
+	float y,
+	int hp,
+	int price,
+	float coolDown,
+	PlantType plantType
+) :
+	Sprite(img, x, y),
+	name(name),
+	hp(hp),
+	price(price),
+	coolDown(coolDown),
+	plantType(plantType)
+{
+}
+
+Plant::Plant(
+	std::string name,
+	int totalFrameCount,
+	int frameWidth,
+	int frameHeight,
+	std::vector<int> animationFrameCount,
+	float x,
+	float y,
+	int hp,
+	int price,
+	float coolDown,
+	PlantType plantType
+) :
+	Sprite(1,totalFrameCount,"play/" + name + "_animation_1.png", x, y),
+	name(name),
+	totalFrameCount(totalFrameCount),
+	frameWidth(frameWidth),
+	frameHeight(frameHeight),
+	animationFrameCount(animationFrameCount),
+	hp(hp),
+	price(price),
+	coolDown(coolDown),
+	plantType(plantType)
+{
+	spriteSheet = Engine::Resources::GetInstance().GetBitmap("play/" + name + "_animation_1.png");
 }
 
 void Plant::Update(float deltaTime) {
-	Sprite::Update(deltaTime);
 	PlayScene* scene = getPlayScene();
-
 	if (!Enabled)
 		return;
-    if(plantType == PlantType::SUNFLOWER || plantType == PlantType::OTHER) {
+    if(plantType == PlantType::SUNFLOWER) {
         reload -= deltaTime;
         if (reload <= 0) {
-            // shoot.
             reload = coolDown;
             CreatePea();
         }
-        return;
     }
 	if(plantType == PlantType::CHERRYBOMB) {
 		reload -= deltaTime;
 		if (reload <= 0) {
-			// shoot.
 			reload = coolDown;
 			CreatePea();
+			return;
 		}
-		return;
 	}
 	if(plantType == PlantType::LAWNMOWER) {
 		if (Target) {
 			CreatePea();
 			Target = nullptr;
 			TakeDamage(INT16_MAX, true);
+			return;
 		}
-		return;
 	}
-	if (!Target) {
-		// Lock first seen target.
-		for (auto& it : scene->EnemyGroup->GetObjects()) {
-			if (static_cast<int>(it->Position.y / 150) == static_cast<int>(Position.y / 150)) {
-				Target = dynamic_cast<Zombie*>(it);
-				Target->lockedPlants.push_back(this);
-				break;
+	if (plantType == PlantType::PEASHOOTER) {
+		if (!Target) {
+			// Lock first seen target
+			for (auto& it : scene->EnemyGroup->GetObjects()) {
+				if (static_cast<int>(it->Position.y / 150) == static_cast<int>(Position.y / 150)) {
+					Target = dynamic_cast<Zombie*>(it);
+					Target->lockedPlants.push_back(this);
+					break;
+				}
+			}
+		}
+		if (Target) {
+			// Shoot reload
+			reload -= deltaTime;
+			if (reload <= 0) {
+				// Shoot
+				reload = coolDown;
+				CreatePea();
 			}
 		}
 	}
-	if (Target) {
-		// Shoot reload.
-		reload -= deltaTime;
-		if (reload <= 0) {
-			// shoot.
-			reload = coolDown;
-			CreatePea();
-		}
+
+	// Animation
+	if (plantType == PlantType::LAWNMOWER || plantType == PlantType::OTHER) {
+		Sprite::Update(deltaTime);
+		return;
 	}
+
+	int buffer = 0;
+	currentFrameCount = animationFrameCount[animationIndex];
+	for (int i = 0; i < animationIndex; i++) {
+		buffer += animationFrameCount[i] * frameWidth;
+	}
+
+	timeTicks += deltaTime;
+	if (timeTicks >= timeSpan) {
+		timeTicks = 0;
+	}
+	int phase = floor(timeTicks / timeSpan * currentFrameCount);
+
+	ALLEGRO_BITMAP* subBitmap = al_create_sub_bitmap(spriteSheet.get(), buffer + phase * frameWidth, 0, frameWidth, frameHeight);
+	bmp.reset(subBitmap, al_destroy_bitmap);
+	Sprite::Update(deltaTime);
 }
 
 void Plant::Draw() const {

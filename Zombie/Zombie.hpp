@@ -28,7 +28,6 @@ protected:
 	// Animation
 	std::shared_ptr<ALLEGRO_BITMAP> spriteSheet;
 	std::shared_ptr<ALLEGRO_BITMAP> rageSpriteSheet;
-	int frameCount;
 	int frameWidth;
 	int frameHeight;
 	int currentFrameCount;
@@ -37,8 +36,6 @@ protected:
 	std::vector<int> animationFrameCount;
 	float timeTicks = 0;
 	float timeSpan = 3.5;
-	float posX;
-	float posY;
 	bool FinalAnimation = false;
 	bool RageAnimation = false;
 	bool FinishedRageAnimation = false;

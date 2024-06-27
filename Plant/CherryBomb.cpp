@@ -11,17 +11,17 @@ const int CherryBomb::Price = 150;
 
 CherryBomb::CherryBomb(float x, float y) :
 Plant(
-    "play/cherrybomb.png",
-    x, y,
-    INT16_MAX,
-    Price,
-    0,
-    PlantType::CHERRYBOMB,
-    "cherrybomb",
+"cherrybomb",
     27,
     112,
     81,
-    {14,13}
+    {14,13},
+    x,
+    y,
+    INT16_MAX,
+    Price,
+    0,
+    PlantType::CHERRYBOMB
 ) {
     Anchor.y += 8.0f / GetBitmapHeight();
     reload = 1.5;

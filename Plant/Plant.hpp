@@ -9,7 +9,7 @@ class Zombie;
 class PlayScene;
 
 enum class PlantType {
-    SUNFLOWER, PEASHOOTER, LAWNMOWER, WALLNUT, CHERRYBOMB, OTHER, NUL,
+    SUNFLOWER, PEASHOOTER, LAWNMOWER, WALLNUT, CHERRYBOMB, OTHER
 };
 
 class Plant: public Engine::Sprite {
@@ -20,11 +20,21 @@ protected:
     int hp;
     int pos_x = 0;
     int pos_y = 0;
-    PlantType plantType = PlantType::NUL;
+    PlantType plantType = PlantType::OTHER;
     PlayScene* getPlayScene();
-    Plant(std::string img, float x, float y, int hp, int price, float coolDown, PlantType plantType, std::string name, int totalFrameCount, int frameWidth, int frameHeight, std::vector<int> animationFrameCount);
+    Plant(std::string name, std::string img, float x, float y, int hp, int price, float coolDown, PlantType plantType);
+    Plant(std::string name, int totalFrameCount, int frameWidth, int frameHeight, std::vector<int> animationFrameCount, float x, float y, int hp, int price, float coolDown, PlantType plantType);
     virtual void CreatePea() = 0;
-
+    // Animation
+    std::shared_ptr<ALLEGRO_BITMAP> spriteSheet;
+    int frameWidth;
+    int frameHeight;
+    int currentFrameCount;
+    int totalFrameCount;
+    int animationIndex = 0;
+    std::vector<int> animationFrameCount;
+    float timeTicks = 0;
+    float timeSpan = 1.5;
 public:
     std::string name;
     bool Enabled = true;
@@ -36,11 +46,5 @@ public:
     virtual void TakeDamage(float damage, bool shovel);
     void SetPos(int x,int y);
     PlantType GetPlantType();
-
-    int totalFrameCount;
-    int frameWidth;
-    int frameHeight;
-    int animationIndex = 0;
-    std::vector<int> animationFrameCount;
 };
 #endif // PLANT_HPP
