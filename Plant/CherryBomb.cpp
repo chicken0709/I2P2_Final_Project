@@ -11,7 +11,7 @@ const int CherryBomb::Price = 150;
 
 CherryBomb::CherryBomb(float x, float y) :
 Plant(
-"cherrybomb",
+    "cherrybomb",
     27,
     112,
     81,
