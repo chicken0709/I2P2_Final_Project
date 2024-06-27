@@ -45,7 +45,7 @@ Plant::Plant(
 	float coolDown,
 	PlantType plantType
 ) :
-	Sprite(1, totalFrameCount, "play/" + name + "_animation_1.png", x, y),
+	Sprite(1,totalFrameCount,"play/"+ name + ".png", x, y),
 	name(name),
 	totalFrameCount(totalFrameCount),
 	frameWidth(frameWidth),
