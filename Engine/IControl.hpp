@@ -1,7 +1,6 @@
 #ifndef ICONTROL_HPP
 #define ICONTROL_HPP
 #include <list>
-#include <utility>
 
 namespace Engine {
 	/// <summary>
@@ -10,8 +9,8 @@ namespace Engine {
 	class IControl {
 		friend class Group;
 	protected:
-		// The iterator of controls linked-list when added to scene.
-		// Can make removing controls faster.
+		// The iterator of controls linked-list when added to scene
+		// Can make removing controls faster
 		std::list<std::pair<bool, IControl*>>::iterator controlIterator{};
 		/// <summary>
 		/// The interface cannot be instantiated directly, must be inherited.

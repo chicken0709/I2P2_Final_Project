@@ -27,11 +27,11 @@ public:
 	explicit Bullet(std::string name, int totalFrameCount, int frameWidth, int frameHeight, float speed, float damage, Engine::Point position);
 	void Update(float deltaTime) override;
 	// Animation
-	float timeTicks = 0;
-	float timeSpan = 1.5;
+	std::shared_ptr<ALLEGRO_BITMAP> spriteSheet;
 	int frameWidth;
 	int frameHeight;
 	int totalFrameCount;
-	std::shared_ptr<ALLEGRO_BITMAP> spriteSheet;
+	float timeTicks = 0;
+	float timeSpan = 1.5;
 };
 #endif // BULLET_HPP

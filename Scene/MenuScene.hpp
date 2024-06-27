@@ -7,7 +7,7 @@ public:
 	explicit MenuScene() = default;
 	void Initialize() override;
 	void Terminate() override;
-	void PlayOnClick(int stage);
+	void PlayOnClick(int mode);
 	void BGMSlideOnValueChanged(float value);
 	void SFXSlideOnValueChanged(float value);
 };

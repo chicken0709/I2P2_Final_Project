@@ -45,9 +45,9 @@ void MenuScene::Terminate() {
 	IScene::Terminate();
 }
 
-void MenuScene::PlayOnClick(int stage) {
+void MenuScene::PlayOnClick(int mode) {
     PlayScene* scene = dynamic_cast<PlayScene*>(Engine::GameEngine::GetInstance().GetScene("play"));
-    scene->MapId = stage;
+    scene->Mode = mode;
     Engine::GameEngine::GetInstance().ChangeScene("play");
     AudioHelper::PlayAudio("gravebutton.ogg");
 }

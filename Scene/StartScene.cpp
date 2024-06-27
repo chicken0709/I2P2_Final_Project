@@ -14,7 +14,7 @@ void StartScene::Initialize() {
 
     Engine::ImageButton* btn;
     btn = new Engine::ImageButton("start/button_background.png", "start/button_background.png", 536, 730 , 580, 50);
-    btn->SetOnClickCallback(std::bind(&StartScene::PlayOnClick, this, 1));
+    btn->SetOnClickCallback(std::bind(&StartScene::PlayOnClick, this));
     AddNewControlObject(btn);
     AddNewObject(new Engine::Label("Tap to Start", "komika.ttf", 28, 836, 755, 0, 0, 0, 255, 0.5, 0.5));
 
@@ -25,7 +25,7 @@ void StartScene::Terminate() {
     IScene::Terminate();
 }
 
-void StartScene::PlayOnClick(int stage) {
+void StartScene::PlayOnClick() {
     Engine::GameEngine::GetInstance().ChangeScene("menu");
     AudioHelper::PlayAudio("gravebutton.ogg");
 }

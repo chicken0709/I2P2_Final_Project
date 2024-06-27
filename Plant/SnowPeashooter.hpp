@@ -1,5 +1,5 @@
-#ifndef ICEPEASHOOTER_HPP
-#define ICEPEASHOOTER_HPP
+#ifndef SNOWPEASHOOTER_HPP
+#define SNOWPEASHOOTER_HPP
 #include "Plant.hpp"
 
 class SnowPeashooter: public Plant {
@@ -8,5 +8,5 @@ public:
     SnowPeashooter(float x, float y);
     void CreatePea() override;
 };
-#endif // ICEPEASHOOTER_HPP
+#endif // SNOWPEASHOOTER_HPP
 

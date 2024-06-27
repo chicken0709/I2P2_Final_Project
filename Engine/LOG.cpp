@@ -45,7 +45,7 @@ namespace Engine {
 		Enabled = enabled;
 		LogVerbose = logVerbose;
 		FilePath = filePath;
-		// Clear log file content.
+		// Clear log file content
 		std::ofstream ofs(FilePath, std::ofstream::out);
 	}
 }

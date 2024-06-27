@@ -1,5 +1,3 @@
-#include <allegro5/base.h>
-
 #include "SnowPea.hpp"
 #include "Zombie/Zombie.hpp"
 #include "Scene/PlayScene.hpp"

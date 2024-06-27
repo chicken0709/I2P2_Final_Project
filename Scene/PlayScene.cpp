@@ -48,7 +48,7 @@ const int PlayScene::BlockSize = 150;
 const int PlantButtonImageSize = 70;
 const int PlantButtonImageDiffX = 5;
 const int PlantButtonImageDiffY = 27;
-const Engine::Point PlayScene::SpawnGridPoint = Engine::Point(MapWidth + 2, 2);
+const Engine::Point PlayScene::SpawnGridPoint = Engine::Point(MapWidth + 2, 0);
 
 Engine::Point PlayScene::GetClientSize() {
 	return Engine::Point((MapWidth + 1) * BlockSize, MapHeight * BlockSize);
@@ -65,14 +65,13 @@ void PlayScene::Initialize() {
 	// Add groups from bottom to top
 	AddNewObject(TileMapGroup = new Group());
 	AddNewObject(GroundEffectGroup = new Group());
-    // Should support buttons
     AddNewControlObject(UIGroup = new Group());
 	AddNewObject(PlantGroup = new Group());
 	AddNewObject(EnemyGroup = new Group());
 	AddNewObject(BulletGroup = new Group());
 	AddNewObject(EffectGroup = new Group());
     TileMapGroup->AddNewObject(new Engine::Image("play/yard2.jpg", 0, 0, 1600, 900));
-	if (MapId == 2) {
+	if (Mode == 2) {
 		TileMapGroup->AddNewObject(new Engine::Image("play/bowling_line.png", 575, 95, 75, 770));
 	}
 	ReadMap();
@@ -86,7 +85,7 @@ void PlayScene::Initialize() {
 	plant_lawn = std::vector<std::vector<Plant*>>(MapHeight, std::vector<Plant*>(MapWidth));
 
 	// Start BGM
-	if (MapId == 1) {
+	if (Mode == 1) {
 		bgmId = AudioHelper::PlayBGM("grasswalk.mp3");
 	} else {
 		bgmId = AudioHelper::PlayBGM("loonboon.mp3");
@@ -99,24 +98,20 @@ void PlayScene::Initialize() {
 	win_bgm_delay = 4.5;
 	lose_bgm_delay = 10.5;
 
-	//generate lawn mowers
+	// Construct lawn mowers
 	for(int i = 1;i <= MapHeight;i++) {
 		int x = 0;
 		int y = i;
 		preview = new LawnMower(0, 0);
-		// Construct real turret
 		preview->Position.x = x * BlockSize + BlockSize / 2 + 25;
 		preview->Position.y = y * BlockSize + BlockSize / 2;
 		preview->Enabled = true;
 		preview->Preview = false;
 		preview->Tint = al_map_rgba(255, 255, 255, 255);
 		PlantGroup->AddNewObject(preview);
-		// To keep responding when paused
 		preview->Update(0);
-		// Remove Preview
 		mower_available[i - 1] = preview;
 		preview = nullptr;
-
 	}
 }
 
@@ -168,7 +163,7 @@ void PlayScene::Update(float deltaTime) {
 		Zombie* zombie;
 		switch (current.type) {
 			case -2:
-				// Start empty time
+				// Empty time
 				continue;
 			case -1:
 				// First zombie
@@ -286,7 +281,7 @@ void PlayScene::OnMouseUp(int button, int mx, int my) {
 			if (!preview)
 				return;
 			// Bowling mode
-			if(MapId == 2) {
+			if(Mode == 2) {
 				std::string name = preview->name;
 				UIGroup->RemoveObject(preview->GetObjectIterator());
 				preview = nullptr;
@@ -302,9 +297,9 @@ void PlayScene::OnMouseUp(int button, int mx, int my) {
 			}
 			// Plant sound
 			AudioHelper::PlayAudio("plant.ogg");
-			// Purchase.
+			// Purchase
 			EarnMoney(-preview->GetPrice());
-			// Remove Preview
+			// Remove preview
 			preview->GetObjectIterator()->first = false;
 			UIGroup->RemoveObject(preview->GetObjectIterator());
 			// Construct real plant
@@ -367,7 +362,7 @@ void PlayScene::ReadMap() {
 }
 
 void PlayScene::ReadEnemyWave() {
-    std::string filename = std::string("Resource/zombie" + std::to_string(MapId) + ".txt");
+    std::string filename = std::string("Resource/zombie" + std::to_string(Mode) + ".txt");
 	// Read zombie file
 	float type, wait, repeat, lane;
 	zombieWaveData.clear();
@@ -381,7 +376,7 @@ void PlayScene::ReadEnemyWave() {
 
 void PlayScene::ConstructUI() {
 	// Bowling mode
-	if(MapId == 2) {
+	if(Mode == 2) {
 		UIGroup->AddNewObject(new Engine::Image("play/bowlingball_select.png", 800, 0, 180, 136, 0.5, 0));
 		// Button 10 normal wallnut
 		PlantButton *btn;
@@ -403,7 +398,7 @@ void PlayScene::ConstructUI() {
 	// Background
     UIGroup->AddNewObject(new Engine::Image("play/sun_counter.png", 100, 0, 124, 136));
 	UIGroup->AddNewObject(new Engine::Image("play/plant_select.png", 224, 0, 792, 136));
-	// Text
+	// Money (Sun)
 	UIGroup->AddNewObject(UIMoney = new Engine::Label(std::to_string(money), "komika.ttf", 20, 162.5, 115, 0, 0, 0, 255,0.5, 0.5));
 	PlantButton *btn;
 	// Button 1 Sunflower
@@ -411,7 +406,6 @@ void PlayScene::ConstructUI() {
                           Engine::Sprite("play/plant_button_background.png", 229, 8, 0, 0, 0, 0),
                           Engine::Sprite("play/sunflower.png", 239 + PlantButtonImageDiffX, PlantButtonImageDiffY, PlantButtonImageSize, PlantButtonImageSize, 0, 0)
 		, 229, 8, Sunflower::Price);
-	// Reference: Class Member Function Pointer and std::bind.
 	btn->SetOnClickCallback(std::bind(&PlayScene::UIBtnClicked, this, 0));
 	UIGroup->AddNewControlObject(btn);
     UIGroup->AddNewObject(new Engine::Label(std::to_string(Sunflower::Price), "komika.ttf", 16, 264, 92.5));

@@ -26,12 +26,12 @@ ALLEGRO_SAMPLE_ID AudioHelper::PlayBGM(const std::string& audio) {
 	return id;
 }
 void AudioHelper::StopBGM(ALLEGRO_SAMPLE_ID sample) {
-	// No need to stop BGM by ourselves since the audio stops when the sample is destroyed.
+	// No need to stop BGM by ourselves since the audio stops when the sample is destroyed
 	al_stop_sample(&sample);
 	Engine::LOG(Engine::INFO) << "stopped audio (bgm)";
 }
 std::shared_ptr<ALLEGRO_SAMPLE_INSTANCE> AudioHelper::PlaySample(const std::string& audio, bool loop, float volume, float position) {
-	// Not safe if release resource while playing, however we only free while change scene, so it's fine.
+	// Not safe if release resource while playing, however we only free while change scene, so it's fine
 	std::shared_ptr<ALLEGRO_SAMPLE_INSTANCE> smart_ptr = Engine::Resources::GetInstance().GetSampleInstance(audio);
 	ALLEGRO_SAMPLE_INSTANCE* sample_instance = smart_ptr.get();
 	if (!al_set_sample_instance_playmode(sample_instance, loop ? ALLEGRO_PLAYMODE_LOOP : ALLEGRO_PLAYMODE_ONCE))
@@ -65,7 +65,7 @@ unsigned int AudioHelper::GetSampleLength(std::shared_ptr<ALLEGRO_SAMPLE_INSTANC
 void AudioHelper::StopSample(std::shared_ptr<ALLEGRO_SAMPLE_INSTANCE> sample_instance) {
 	if (!al_get_sample_instance_playing(sample_instance.get()))
 		return;
-	// No need to stop BGM by ourselves since the audio stops when the sample is destroyed.
+	// No need to stop BGM by ourselves since the audio stops when the sample is destroyed
 	if (!al_stop_sample_instance(sample_instance.get()))
 		Engine::LOG(Engine::INFO) << "failed to stop audio (sample)";
 	else

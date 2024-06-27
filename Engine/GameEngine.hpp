@@ -16,28 +16,28 @@ namespace Engine {
 	/// </summary>
 	class GameEngine final {
 	private:
-		// Allegro5 settings, frames per second, screen width, screen height, maximum simultaneous audio samples.
+		// Allegro5 settings, frames per second, screen width, screen height, maximum simultaneous audio samples
 		int fps{}, screenW{}, screenH{}, reserveSamples{};
-		// Determines whether to free memory between scenes.
+		// Determines whether to free memory between scenes
 		bool freeMemoryOnSceneChanged{};
-		// Max delta time for update multiplier. If delta time exceeds this threshold, lag occurs.
+		// Max delta time for update multiplier. If delta time exceeds this threshold, lag occurs
 		float deltaTimeThreshold{};
-		// All scenes are stored in hash table for easy access.
+		// All scenes are stored in hash table for easy access
 		// Reference: Data Structure - Hash table
 		std::unordered_map<std::string, IScene*> scenes;
-		// The active scene that occupies the game's update, draw and various events.
+		// The active scene that occupies the game's update, draw and various events
 		IScene* activeScene{};
-		// Allegro5 display for window creation.
+		// Allegro5 display for window creation
 		ALLEGRO_DISPLAY* display{};
-		// Allegro5 event queue.
+		// Allegro5 event queue
 		ALLEGRO_EVENT_QUEUE* event_queue{};
-		// Allegro5 timer to inject update & draw event into the event queue.
+		// Allegro5 timer to inject update & draw event into the event queue
 		ALLEGRO_TIMER* update_timer{};
-		// The window's title text.
+		// The window's title text
 		const char* title{};
 		// The window's icon.
 		const char* icon{};
-		// The scene to change to at next update.
+		// The scene to change to at next update
 		std::string nextScene{};
 
 		/// <summary>
@@ -76,7 +76,7 @@ namespace Engine {
 		/// <param name="name">The name of the scene you want to change to.</param>
 		void changeScene(const std::string& name);
 	public:
-		// Note: We'll ignore C++11's move constructor, move assignment operator in this project for simplicity.
+		// Note: We'll ignore C++11's move constructor, move assignment operator in this project for simplicity
 		/// <summary>
 		/// Copy constructor is deleted, no copying allowed.
 		/// </summary>
