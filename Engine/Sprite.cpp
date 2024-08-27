@@ -1,5 +1,5 @@
 #include <allegro5/allegro.h>
-
+#include <string>
 #include "Sprite.hpp"
 
 namespace Engine {

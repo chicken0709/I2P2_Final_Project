@@ -1,6 +1,7 @@
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/color.h>
 #include <string>
+#include <cmath>
 
 #include "Engine/LOG.hpp"
 #include "Engine/Resources.hpp"

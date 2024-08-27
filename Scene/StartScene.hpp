@@ -1,5 +1,6 @@
 #ifndef STARTSCENE_HPP
 #define STARTSCENE_HPP
+#include <memory>
 #include <allegro5/allegro_audio.h>
 
 #include "Engine/IScene.hpp"

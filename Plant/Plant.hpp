@@ -1,6 +1,6 @@
 #ifndef PLANT_HPP
 #define PLANT_HPP
-#include <list>
+#include <vector>
 #include <string>
 
 #include "Engine/Sprite.hpp"

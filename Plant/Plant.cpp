@@ -1,3 +1,5 @@
+#include <cmath>
+
 #include "Engine/GameEngine.hpp"
 #include "Engine/Group.hpp"
 #include "Engine/IScene.hpp"
